@@ -8,8 +8,6 @@ import { Button } from "../ui/button";
 import WidthConstraint from "../shared/width-constraint";
 import { NEWSLETTER_FEATURES } from "@/lib/constants/general";
 import { Spinner } from "../ui/spinner";
-import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
 import patterns from "@/public/elements/pattern-2.svg";
 import Image from "next/image";
 
