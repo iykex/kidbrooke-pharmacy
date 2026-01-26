@@ -31,6 +31,7 @@ export default function useNewsletter() {
           date: serverTimestamp(),
         },
       );
+      setIsSubscribed(true);
       toast.success("Successfully subscribed to newsletter");
       reset();
     } catch (error) {
