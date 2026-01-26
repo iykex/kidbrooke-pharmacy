@@ -9,6 +9,7 @@ import FAQChatbot from "@/components/faq-chatbot/faq-chatbot";
 import CookieConsent from "@/components/general/cookie-consent";
 import PageTracker from "@/components/providers/analytics/page-tracker";
 import "@/styles//hide-dev-overlay.css";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = getMetadata();
 
@@ -36,6 +37,7 @@ export default function RootLayout({
             <FAQChatbot />
             <CookieConsent />
           </PageTracker>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
