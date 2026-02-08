@@ -11,28 +11,26 @@ commands:
       - run:
           name: Send Telegram Notification
           command: |
+            MESSAGE='<< parameters.message >>'
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
                  -d chat_id="${TELEGRAM_CHAT_ID}" \
                  -d parse_mode="HTML" \
-                 -d text="<< parameters.message >>"
+                 -d text="$MESSAGE"
 
 jobs:
   deploy:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:20.11
 
     steps:
-      # Step 1: Checkout the repository
       - checkout
 
-      # Step 2: Setup Git author (optional, for commit context)
       - run:
           name: Setup Git author for Vercel
           command: |
             git config user.name "iykex"
             git config user.email "aib.quame@gmail.com"
 
-      # Step 3: Notify Telegram — Deployment Started
       - run:
           name: Notify Telegram — Deployment Started
           command: |
@@ -58,81 +56,21 @@ jobs:
                  -d parse_mode="HTML" \
                  -d text="$MESSAGE"
 
-      # Step 4: Debug Git Info
       - run:
-          name: Debug Git Info
+          name: Install & Deploy to Vercel
           command: |
-            echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
-            echo "Current commit (full SHA): $(git rev-parse HEAD)"
-            echo "Current commit (short SHA): $(git rev-parse --short HEAD)"
-            echo "Remote branches:"
-            git branch -r
+            sudo npm install -g vercel
+            
+            # Generate project name from branch: belvedere-dev -> belvederepharmacy
+            # Logic: remove -dev suffix, append pharmacy
+            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+            PROJECT_NAME="${BRANCH_NAME%-dev}pharmacy"
+            
+            echo "Deploying to Vercel project: $PROJECT_NAME"
+            
+            # Deploy using Vercel CLI with custom project name
+            vercel deploy --prod --token $VERCEL_TOKEN --yes --name "$PROJECT_NAME"
 
-      # Step 5: Create Vercel deployment payload (Production)
-      - run:
-          name: Prepare Vercel deployment payload
-          command: |
-            REPO_NAME=$(basename $(git rev-parse --show-toplevel))
-
-            # Hardcoded repo ID to avoid GitHub API auth issues
-            REPO_ID=xxxxxxxx
-
-            echo "{
-              \"name\": \"$REPO_NAME\",
-              \"gitSource\": {
-                \"type\": \"github\",
-                \"repoId\": $REPO_ID,
-                \"ref\": \"${CIRCLE_BRANCH}\"
-              },
-              \"target\": \"production\"
-            }" > payload.json
-
-            echo "✅ Payload created for PRODUCTION deployment"
-            echo "Repo ID: $REPO_ID"
-            echo "Branch: ${CIRCLE_BRANCH}"
-
-      # Step 6: Debug payload
-      - run:
-          name: Debug payload
-          command: cat payload.json
-
-      # Step 7: Trigger Vercel Production Deployment (with retry)
-      - run:
-          name: Trigger Vercel Production Deployment (with retry)
-          command: |
-            ATTEMPT=1
-            MAX_ATTEMPTS=2
-            SUCCESS=false
-
-            while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
-                echo "🔁 Attempt $ATTEMPT of $MAX_ATTEMPTS..."
-                RESPONSE=$(curl -s -o response.json -w "%{http_code}" \
-                  -X POST "https://api.vercel.com/v13/deployments?skipAutoDetectionConfirmation=1" \
-                  -H "Authorization: Bearer $VERCEL_TOKEN" \
-                  -H "Content-Type: application/json" \
-                  -d @payload.json)
-
-                if [ "$RESPONSE" -eq 200 ] || [ "$RESPONSE" -eq 201 ]; then
-                    echo "✅ Deployment successful!"
-                    SUCCESS=true
-                    break
-                else
-                    echo "⚠️ Deployment failed with status code: $RESPONSE"
-                    echo "Response body:"
-                    cat response.json
-                    echo ""
-                    echo "Retrying in 10 seconds..."
-                    sleep 10
-                fi
-                ATTEMPT=$((ATTEMPT+1))
-            done
-
-            if [ "$SUCCESS" = false ]; then
-                echo "❌ Deployment failed after $MAX_ATTEMPTS attempts."
-                exit 1
-            fi
-
-      # Step 8: Notify Telegram — Deployment Success ✅
       - run:
           name: Notify Telegram — Deployment Success
           command: |
@@ -143,7 +81,6 @@ jobs:
                 -d parse_mode="HTML" \
                 -d text="$MESSAGE"
 
-      # Step 9: Notify Telegram — Deployment Failed ❌
       - run:
           name: Notify Telegram — Deployment Failed
           when: on_fail
@@ -162,4 +99,4 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - kidbrooke-dev
