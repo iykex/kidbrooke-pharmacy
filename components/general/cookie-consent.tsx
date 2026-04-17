@@ -2,13 +2,15 @@
 
 import { Cookie, X, Settings, Shield, ChevronLeft, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import Link from "next/link";
 import useCookiesPreferences from "@/hooks/use-cookies-preferences";
-import { COOKIE_PREFERENCES_ITEMS } from "@/lib/constants/cookies";
+import {
+  COOKIE_PREFERENCES_ITEMS,
+  INTERNAL_LINKS,
+  TRACKING_EVENTS,
+} from "@/lib/constants/general";
 import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
-import { INTERNAL_LINKS } from "@/lib/constants/general";
 
 export default function CookieConsentDialogue({
   bubbleStateClassName,
@@ -194,10 +196,10 @@ export default function CookieConsentDialogue({
                       disabled={item.id === "essential" ? true : false}
                       onChange={(e) => {
                         if (item.id !== "essential") {
-                          setCookiePreferences((prev) => ({
-                            ...prev,
+                          setCookiePreferences({
+                            ...cookiePreferences,
                             [item.key]: e.target.checked,
-                          }));
+                          });
                         }
                       }}
                       className="sr-only peer"

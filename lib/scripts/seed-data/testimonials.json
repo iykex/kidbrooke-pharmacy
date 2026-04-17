@@ -1,0 +1,238 @@
+{
+  "belvedere": {
+    "items": [
+      {
+        "authorName": "Adam Pearce",
+        "authorRole": "Local Guide",
+        "quote": "Often busy but well organised, well stocked and normally pretty quick if they need to order in. Very helpful if you call regarding prescriptions.",
+        "rating": 5,
+        "assetKey": "testimonials/adam-peace.png"
+      },
+      {
+        "authorName": "Elizabeth Vousden",
+        "authorRole": "Local Guide",
+        "quote": "Always polite, happy and they remember me by name every time. Glad they are always there for me when needed.",
+        "rating": 5,
+        "assetKey": "testimonials/elizabeth-vousden.png"
+      },
+      {
+        "authorName": "Sawen Ali",
+        "authorRole": "Customer",
+        "quote": "They are miles better than any experience I had away from home. Especially fantastic when I've needed emergency prescriptions and they've gone out of their way to sort things out. Always kind and professional.",
+        "rating": 5,
+        "assetKey": "testimonials/sawen-ali.png"
+      },
+      {
+        "authorName": "Lesley Sellman",
+        "authorRole": "Local Guide",
+        "quote": "Absolutely brilliant staff. I regularly pick up my medication from them. Always helpful and pleasant. I also have my flu and COVID vaccinations with them.",
+        "rating": 5,
+        "assetKey": "testimonials/lesley-sellman.png"
+      },
+      {
+        "authorName": "Jennifer Stevens",
+        "authorRole": "Customer",
+        "quote": "I got my vaccine booster done here and the whole team were amazing. They were working incredibly hard under pressure with closing time approaching. What a lovely team!",
+        "rating": 5,
+        "assetKey": "testimonials/jennifer-stevens.png"
+      },
+      {
+        "authorName": "Sebastian Podborny",
+        "authorRole": "Customer",
+        "quote": "First time I feel like someone really cares about the customer. They did more than I expected. Many thanks to Aisha and her team.",
+        "rating": 5,
+        "assetKey": "testimonials/sebastian_podborny.png"
+      },
+      {
+        "authorName": "Colin Bradbury",
+        "authorRole": "Local Guide",
+        "quote": "Went in for a COVID booster jab. I was politely directed and attended to quickly. Nice people — polite and professional.",
+        "rating": 5,
+        "assetKey": "testimonials/colin-bradbury.png"
+      },
+      {
+        "authorName": "Ann Marie Marcroft",
+        "authorRole": "Customer",
+        "quote": "The staff are very friendly, reliable and welcoming.",
+        "rating": 5,
+        "assetKey": "testimonials/ann-marie-marcroft.png"
+      },
+      {
+        "authorName": "Alfrina Thomas",
+        "authorRole": "Customer",
+        "quote": "Top box service from a local pharmacy. Efficient, helpful and pleasant staff.",
+        "rating": 5,
+        "assetKey": "testimonials/alfrina-thomas.png"
+      },
+      {
+        "authorName": "Kenneth Shore",
+        "authorRole": "Local Guide",
+        "quote": "Great local pharmacy with very helpful and knowledgeable staff.",
+        "rating": 5,
+        "assetKey": "testimonials/kenneth-shore.png"
+      },
+      {
+        "authorName": "OEBEN",
+        "authorRole": "Customer",
+        "quote": "Awesome environment and fast response.",
+        "rating": 5,
+        "assetKey": "testimonials/oeben.png"
+      },
+      {
+        "authorName": "Kimberley Ellis",
+        "authorRole": "Local Guide",
+        "quote": "Service was quick and friendly.",
+        "rating": 5,
+        "assetKey": "testimonials/kimberley-ellis.png"
+      }
+    ]
+  },
+  "kidbrooke": {
+    "items": [
+      {
+        "authorName": "Yomster A",
+        "authorRole": "Local Guide",
+        "quote": "Very friendly and helpful staff with excellent customer service. The pharmacists give good advice on medication and prices are very reasonable.",
+        "rating": 5,
+        "assetKey": "testimonials/yomster.png"
+      },
+      {
+        "authorName": "Carolyn Watkins",
+        "authorRole": "Customer",
+        "quote": "A brilliant local pharmacy, well run, polite and helpful, with a well-stocked shop.",
+        "rating": 5,
+        "assetKey": "testimonials/carolynWatkins.png"
+      },
+      {
+        "authorName": "Maria K-E",
+        "authorRole": "Customer",
+        "quote": "Exceptional service. Even though I'm not a local customer, they promptly helped me with a prescription I couldn't find anywhere else.",
+        "rating": 5,
+        "assetKey": "testimonials/mariaKE.png"
+      },
+      {
+        "authorName": "Danielle Marcroft",
+        "authorRole": "Customer",
+        "quote": "They always go above and beyond for their customers, keeping us informed and even sourcing items from other chemists when needed.",
+        "rating": 5,
+        "assetKey": "testimonials/danielleMarcroft.png"
+      },
+      {
+        "authorName": "Laura Andrus",
+        "authorRole": "Customer",
+        "quote": "Wonderful, helpful staff. I've been using this pharmacy for over 20 years without any complaints.",
+        "rating": 5,
+        "assetKey": "testimonials/lauraAndrus.png"
+      },
+      {
+        "authorName": "Cally Marley",
+        "authorRole": "Customer",
+        "quote": "I've never been treated so well in any pharmacy. Michael, the owner, is one of the kindest and most caring pharmacists I've ever met.",
+        "rating": 5,
+        "assetKey": "testimonials/callyMarley.png"
+      },
+      {
+        "authorName": "Anonymous Reviewer",
+        "authorRole": "Customer",
+        "quote": "I've been using this pharmacy for years. Great customer service — they remember my name and give excellent medical advice.",
+        "rating": 5,
+        "assetKey": "testimonials/anonymous.png"
+      },
+      {
+        "authorName": "Alison Graves",
+        "authorRole": "Local Guide",
+        "quote": "The owner and team are incredibly caring, reassuring and encouraging. I couldn't ask for better service.",
+        "rating": 5,
+        "assetKey": "testimonials/alisonGraves.png"
+      },
+      {
+        "authorName": "Norma Ferguson",
+        "authorRole": "Local Guide",
+        "quote": "The staff are always polite, helpful and professional. They genuinely care about my health and I've never been disappointed.",
+        "rating": 5,
+        "assetKey": "testimonials/normaFerguson.png"
+      },
+      {
+        "authorName": "William Johncock",
+        "authorRole": "Local Guide",
+        "quote": "Polite staff who were able to get medication my usual chemist could not.",
+        "rating": 5,
+        "assetKey": "testimonials/williamJohncock.png"
+      }
+    ]
+  },
+  "lowfield": {
+    "items": [
+      {
+        "authorName": "Tracey Sharman",
+        "authorRole": "Customer",
+        "quote": "The staff are incredibly helpful and always keep me informed. Their service is first class and genuinely caring.",
+        "rating": 5,
+        "assetKey": "testimonials/traceySharman.png"
+      },
+      {
+        "authorName": "Hannah-Mary Darcy",
+        "authorRole": "Local Guide",
+        "quote": "Amazing support with my ADHD medication during a shortage. Kindness and dedication like this really makes a difference.",
+        "rating": 5,
+        "assetKey": "testimonials/hannahMaryDarcy.png"
+      },
+      {
+        "authorName": "Angela Kessel",
+        "authorRole": "Local Guide",
+        "quote": "The best pharmacy by miles. The staff are amazing and incredibly helpful.",
+        "rating": 5,
+        "assetKey": "testimonials/angelaKessel.png"
+      },
+      {
+        "authorName": "Gary Harris",
+        "authorRole": "Customer",
+        "quote": "Always polite and helpful. The pharmacist takes time to discuss issues when asked, which is very reassuring.",
+        "rating": 5,
+        "assetKey": "testimonials/garyHarris.png"
+      },
+      {
+        "authorName": "J Kirk",
+        "authorRole": "Local Guide",
+        "quote": "Lovely, friendly staff who go out of their way to help. I can't fault anything here — kindness really goes both ways.",
+        "rating": 5,
+        "assetKey": "testimonials/jKirk.png"
+      },
+      {
+        "authorName": "Rose Reed",
+        "authorRole": "Customer",
+        "quote": "Always really helpful. I wouldn't go anywhere else.",
+        "rating": 5,
+        "assetKey": "testimonials/roseReed.png"
+      },
+      {
+        "authorName": "Hannah Davies",
+        "authorRole": "Customer",
+        "quote": "Friendly, helpful staff who actually care. By far better than other pharmacies I've used — professional and approachable.",
+        "rating": 5,
+        "assetKey": "testimonials/hannahDavies.png"
+      },
+      {
+        "authorName": "Chloe L",
+        "authorRole": "Local Guide",
+        "quote": "I was in a panic close to closing time and they went above and beyond to help me collect my mum's prescription. Truly grateful.",
+        "rating": 5,
+        "assetKey": "testimonials/chloeL.png"
+      },
+      {
+        "authorName": "Nicki Janes",
+        "authorRole": "Customer",
+        "quote": "Very understanding and caring. The pharmacist is always willing to discuss changes and ensure the best care for my mum.",
+        "rating": 5,
+        "assetKey": "testimonials/nickiJanes.png"
+      },
+      {
+        "authorName": "Katie Knight-Coney",
+        "authorRole": "Customer",
+        "quote": "They helped me get medication after every other chemist failed. Cheerful, helpful, and made a difficult situation easier.",
+        "rating": 5,
+        "assetKey": "testimonials/katieKnightConey.png"
+      }
+    ]
+  }
+}

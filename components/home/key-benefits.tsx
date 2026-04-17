@@ -1,14 +1,22 @@
+"use client";
+
 import WidthConstraint from "@/components/shared/width-constraint";
 import { Button } from "@/components/ui/button";
-import {
-  EXTERNAL_LINKS,
-  INTERNAL_LINKS,
-  KEY_BENEFITS_TEXTS,
-} from "@/lib/constants/general";
+import { INTERNAL_LINKS } from "@/lib/constants/general";
 import { ArrowRight, Check, HandHelping } from "lucide-react";
 import Link from "next/link";
+import type { MarketingBlocksDoc } from "@/lib/types/firestore";
+import Skeleton from "react-loading-skeleton";
 
-export default function KeyBenefits() {
+export default function KeyBenefits({
+  marketing,
+  orderPrescriptionsUrl,
+}: {
+  marketing: MarketingBlocksDoc | null;
+  orderPrescriptionsUrl: string | null;
+}) {
+  const items = marketing?.keyBenefits ?? [];
+
   return (
     <section className="bg-white dark:bg-background">
       {/* Background Pattern */}
@@ -54,7 +62,7 @@ export default function KeyBenefits() {
 
         {/* Benefits Grid */}
         <div className="grid gap-8 sm:grid-cols-3 py-4 relative overflow-hidden">
-          {KEY_BENEFITS_TEXTS.map((item, index) => {
+          {items.map((item, index) => {
             return (
               <div
                 key={item.title}
@@ -85,14 +93,19 @@ export default function KeyBenefits() {
                   ))}
                 </ul>
 
-                {/* CTA Link */}
-                <Link
-                  href={EXTERNAL_LINKS.actions.orderPrescriptions}
-                  className="group/link inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors mt-auto"
-                >
-                  Get Started
-                  <ArrowRight className="size-4 transition-transform group-hover/link:translate-x-1" />
-                </Link>
+                {orderPrescriptionsUrl ? (
+                  <Link
+                    href={orderPrescriptionsUrl}
+                    className="group/link inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors mt-auto"
+                  >
+                    Get Started
+                    <ArrowRight className="size-4 transition-transform group-hover/link:translate-x-1" />
+                  </Link>
+                ) : (
+                  <div className="mt-auto inline-flex items-center gap-2">
+                    <Skeleton width={88} height={16} />
+                  </div>
+                )}
               </div>
             );
           })}

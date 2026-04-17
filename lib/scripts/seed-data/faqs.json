@@ -1,0 +1,116 @@
+{
+  "belvedere": [
+    {
+      "id": "faq_opening_hours",
+      "question": "What are your opening hours?",
+      "answer": "We are open Monday to Friday from 9am to 6:30pm, and Saturday from 9am to 2pm. We are closed on Sundays and bank holidays (including dates advertised on our contact page). For urgent medical advice when we are closed, call NHS 111.",
+      "published": true
+    },
+    {
+      "id": "faq_pharmacy_first_appointment",
+      "question": "Do I need to make an appointment for Pharmacy First services?",
+      "answer": "While walk-ins are welcome, we recommend booking an appointment to minimise waiting times and ensure our pharmacist is available to assist you.",
+      "published": true
+    },
+    {
+      "id": "faq_pharmacy_first_free",
+      "question": "Are your Pharmacy First services free?",
+      "answer": "Yes, NHS Pharmacy First services are free for patients who are eligible for free NHS prescriptions. Others may need to pay the standard NHS prescription charge.",
+      "published": true
+    },
+    {
+      "id": "faq_repeat_prescription",
+      "question": "How do I order a repeat prescription?",
+      "answer": "You can order repeat prescriptions through our website, mobile app, by phone, or in person at the pharmacy. We also offer prescription delivery within the local area where available.",
+      "published": true
+    },
+    {
+      "id": "faq_medication_reviews",
+      "question": "Do you offer medication reviews?",
+      "answer": "Yes, we offer free medication reviews to help ensure you're getting the most from your medicines and to address any concerns or side effects you may be experiencing.",
+      "published": true
+    },
+    {
+      "id": "faq_vaccinations",
+      "question": "Can I get vaccinations at your pharmacy?",
+      "answer": "Yes, we offer various vaccinations including flu, COVID-19, travel vaccines, and more. Some are available on the NHS while others are private services.",
+      "published": true
+    }
+  ],
+  "kidbrooke": [
+    {
+      "id": "faq_opening_hours",
+      "question": "What are your opening hours?",
+      "answer": "We are open Monday to Friday from 9am to 6:30pm, and Saturday from 9am to 1pm. We are closed on Sundays and bank holidays when advertised. For urgent medical advice when we are closed, call NHS 111.",
+      "published": true
+    },
+    {
+      "id": "faq_pharmacy_first_appointment",
+      "question": "Do I need to make an appointment for Pharmacy First services?",
+      "answer": "While walk-ins are welcome, we recommend booking an appointment to minimise waiting times. You can book online through our website or call us directly. For Pharmacy First, booking helps ensure our pharmacist is available.",
+      "published": true
+    },
+    {
+      "id": "faq_pharmacy_first_free",
+      "question": "Are your Pharmacy First services free?",
+      "answer": "Yes, NHS Pharmacy First services are free for patients who are eligible for free NHS prescriptions. Others may need to pay the standard NHS prescription charge. Private services vary — contact us for pricing.",
+      "published": true
+    },
+    {
+      "id": "faq_repeat_prescription",
+      "question": "How do I order a repeat prescription?",
+      "answer": "You can order repeat prescriptions through our website, Kidbrooke Pharmacy app, by phone, or in person at the pharmacy. Delivery may be available locally — ask the team.",
+      "published": true
+    },
+    {
+      "id": "faq_medication_reviews",
+      "question": "Do you offer medication reviews?",
+      "answer": "Yes, we offer medication reviews to help ensure you're getting the most from your medicines and to address concerns about side effects or how to take your medicines safely.",
+      "published": true
+    },
+    {
+      "id": "faq_vaccinations",
+      "question": "Can I get vaccinations at your pharmacy?",
+      "answer": "Yes, we offer various vaccinations including flu, COVID-19, and travel vaccines. Some are available on the NHS for eligible patients; others are private. Booking helps ensure stock and pharmacist time.",
+      "published": true
+    }
+  ],
+  "lowfield": [
+    {
+      "id": "faq_opening_hours",
+      "question": "What are your opening hours?",
+      "answer": "We are open Monday to Friday from 9am to 7pm, and Saturday from 9am to 7pm. We are closed on Sundays and bank holidays when advertised. For urgent medical advice when we are closed, call NHS 111.",
+      "published": true
+    },
+    {
+      "id": "faq_pharmacy_first_appointment",
+      "question": "Do I need to make an appointment for Pharmacy First services?",
+      "answer": "Walk-ins are welcome; booking reduces waiting. You can book online or call us. Pharmacy First bookings help ensure our pharmacist is available when you need them.",
+      "published": true
+    },
+    {
+      "id": "faq_pharmacy_first_free",
+      "question": "Are your Pharmacy First services free?",
+      "answer": "NHS Pharmacy First is free for those eligible for free NHS prescriptions; others may pay the standard NHS prescription charge. Private service prices vary — ask in branch.",
+      "published": true
+    },
+    {
+      "id": "faq_repeat_prescription",
+      "question": "How do I order a repeat prescription?",
+      "answer": "You can order repeat prescriptions through our website, the Lowfield Pharmacy app, by phone, or in person. Delivery may be available — ask Lowfield Pharmacy.",
+      "published": true
+    },
+    {
+      "id": "faq_medication_reviews",
+      "question": "Do you offer medication reviews?",
+      "answer": "Yes, we offer medication reviews to help you use your medicines safely and effectively. Speak to our team to book or find out more.",
+      "published": true
+    },
+    {
+      "id": "faq_vaccinations",
+      "question": "Can I get vaccinations at your pharmacy?",
+      "answer": "Yes — flu, COVID-19, and travel vaccines are among the options we offer, subject to NHS eligibility, stock, and pharmacist availability. Booking is recommended.",
+      "published": true
+    }
+  ]
+}

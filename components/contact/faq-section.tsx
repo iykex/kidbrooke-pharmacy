@@ -1,14 +1,33 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FAQS_CONTACTS_PAGE } from "@/lib/constants/data";
 import WidthConstraint from "../shared/width-constraint";
 import { MessageCircle, Sparkles } from "lucide-react";
+import { getTenantSlug } from "@/lib/config/tenant";
+import { getFaqsForTenant } from "@/lib/services/firestore/queries";
+import type { FaqDoc } from "@/lib/types/firestore";
 
 export default function FAQSection() {
+  const [faqs, setFaqs] = useState<FaqDoc[]>([]);
+
+  useEffect(() => {
+    getFaqsForTenant(getTenantSlug())
+      .then(setFaqs)
+      .catch(() => {});
+  }, []);
+
+  const items = faqs.map((f, i) => ({
+    question: f.question,
+    answer: f.answer,
+    value: `item-${f.id ?? i}`,
+  }));
+
   return (
     <section>
       <WidthConstraint className="space-y-10">
@@ -62,9 +81,9 @@ export default function FAQSection() {
             type="single"
             collapsible
             className="w-full"
-            defaultValue="item-1"
+            defaultValue={items[0]?.value}
           >
-            {FAQS_CONTACTS_PAGE.map((faq) => {
+            {items.map((faq) => {
               return (
                 <AccordionItem value={faq.value} key={faq.value}>
                   <AccordionTrigger className="text-base text-left">

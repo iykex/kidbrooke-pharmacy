@@ -8,16 +8,21 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Button } from "../ui/button";
-import {
-  CONTACT_ITEMS_CONTACTS_PAGE,
-  EXTERNAL_LINKS,
-  OPENING_HOURS_CONTACTS_PAGE,
-} from "@/lib/constants/general";
 import Link from "next/link";
 import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
+import { TRACKING_EVENTS } from "@/lib/constants/general";
+import { useContactsColumn } from "@/hooks/use-contacts-column";
+import { ContactsColumnSkeleton } from "@/components/shared/tenant-skeletons";
 
 export default function ContactsColumn() {
+  const column = useContactsColumn();
+
+  if (!column.isReady) {
+    return <ContactsColumnSkeleton />;
+  }
+
+  const { tenant, phoneHref, emailHref, contactRows } = column;
+
   return (
     <Card className="border-0 shadow-lg overflow-hidden max-w-md z-10">
       <CardHeader>
@@ -31,7 +36,7 @@ export default function ContactsColumn() {
         </div>
       </CardHeader>
       <CardContent className="sm:px-6 space-y-6">
-        {CONTACT_ITEMS_CONTACTS_PAGE.map((item) => {
+        {contactRows.map((item) => {
           const IconComponent = item.icon;
           return (
             <div
@@ -68,23 +73,33 @@ export default function ContactsColumn() {
               Opening Hours
             </p>
             <div className="space-y-2 text-sm">
-              {OPENING_HOURS_CONTACTS_PAGE.map((item, index) => (
-                <div
-                  key={index}
-                  className={
-                    item.isClosed
-                      ? "flex justify-between items-center pt-2 border-t"
-                      : "flex justify-between items-center"
-                  }
-                >
-                  <span className="text-gray-600 dark:text-white/60">
-                    {item.day}
-                  </span>
-                  <span className={`font-medium ${item.color}`}>
-                    {item.hours}
-                  </span>
-                </div>
-              ))}
+              {tenant.openingHours.map((item, index) => {
+                const isClosed = item.closed;
+                const hoursDisplay = isClosed
+                  ? "Closed"
+                  : `${item.open} – ${item.close}`;
+                const dayLabel =
+                  item.day.charAt(0).toUpperCase() + item.day.slice(1);
+                return (
+                  <div
+                    key={index}
+                    className={
+                      isClosed
+                        ? "flex justify-between items-center pt-2 border-t"
+                        : "flex justify-between items-center"
+                    }
+                  >
+                    <span className="text-gray-600 dark:text-white/60">
+                      {dayLabel}
+                    </span>
+                    <span
+                      className={`font-medium ${isClosed ? "text-red-600" : "text-gray-900 dark:text-white/60"}`}
+                    >
+                      {hoursDisplay}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -94,12 +109,9 @@ export default function ContactsColumn() {
           <div className="flex flex-col gap-3">
             <Button className="w-full justify-center" variant="default" asChild>
               <Link
-                href={EXTERNAL_LINKS.socials.phone}
+                href={phoneHref}
                 onClick={() => {
-                  track(
-                    TRACKING_EVENTS.phoneContactClick,
-                    EXTERNAL_LINKS.socials.phone
-                  );
+                  track(TRACKING_EVENTS.phoneContactClick, phoneHref);
                 }}
               >
                 <Phone className="mr-2 h-4 w-4" />
@@ -108,12 +120,9 @@ export default function ContactsColumn() {
             </Button>
             <Button className="w-full justify-center" variant="outline" asChild>
               <Link
-                href={EXTERNAL_LINKS.socials.email}
+                href={emailHref}
                 onClick={() => {
-                  track(
-                    TRACKING_EVENTS.emailClick,
-                    EXTERNAL_LINKS.socials.email
-                  );
+                  track(TRACKING_EVENTS.emailClick, emailHref);
                 }}
               >
                 <Mail className="mr-2 h-4 w-4" />

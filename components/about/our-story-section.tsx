@@ -28,13 +28,13 @@ export default function OurStorySection() {
                 patients.
               </p>
               <p>
-                Over the years, we've expanded our services beyond traditional
+                Over the years, we&apos;ve expanded our services beyond traditional
                 pharmacy care to include a wide range of health services, from
                 vaccinations and health screenings to medication management and
                 chronic disease support.
               </p>
               <p>
-                Despite our growth, we've never lost sight of our core values:
+                Despite our growth, we&apos;ve never lost sight of our core values:
                 compassion, accessibility, and excellence in care. Every member
                 of our team is committed to treating each patient with respect
                 and dignity.

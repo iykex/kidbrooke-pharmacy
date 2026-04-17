@@ -1,0 +1,1295 @@
+{
+  "belvedere": [
+    {
+      "id": "kb_opening_hours",
+      "keywords": [
+        "opening",
+        "hours",
+        "open",
+        "close",
+        "time",
+        "when"
+      ],
+      "answer": "We're open Monday to Friday from 9:00am to 6:30pm, and Saturday from 9:00am to 2:00pm. We're closed on Sundays and on bank holidays (including Early May Bank Holiday when advertised). For urgent medical advice when we're closed, call NHS 111.",
+      "actions": [
+        {
+          "label": "Call Us",
+          "href": "tel:+442083114087",
+          "icon": "phone"
+        },
+        {
+          "label": "Find Us",
+          "href": "/contact-us",
+          "icon": "location"
+        }
+      ],
+      "priority": 100,
+      "published": true
+    },
+    {
+      "id": "kb_appointment_book",
+      "keywords": [
+        "appointment",
+        "book",
+        "schedule",
+        "pharmacy first"
+      ],
+      "answer": "While walk-ins are welcome, we recommend booking an appointment to minimise waiting times. You can book online through our website or call us directly. For Pharmacy First services, booking helps ensure our pharmacist is available.",
+      "actions": [
+        {
+          "label": "Book Appointment",
+          "href": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+          "icon": "calendar"
+        },
+        {
+          "label": "Pharmacy First",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        }
+      ],
+      "priority": 95,
+      "published": true
+    },
+    {
+      "id": "kb_nhs_cost",
+      "keywords": [
+        "free",
+        "cost",
+        "price",
+        "pay",
+        "nhs",
+        "charge"
+      ],
+      "answer": "NHS Pharmacy First services are free for patients eligible for free NHS prescriptions. Others may need to pay the standard NHS prescription charge. Private services have varying costs — please contact us for specific pricing.",
+      "actions": [
+        {
+          "label": "View Services",
+          "href": "/services",
+          "icon": "external"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/contact-us",
+          "icon": "phone"
+        }
+      ],
+      "priority": 90,
+      "published": true
+    },
+    {
+      "id": "kb_prescription_order",
+      "keywords": [
+        "prescription",
+        "repeat",
+        "order",
+        "refill",
+        "medicine"
+      ],
+      "answer": "You can order repeat prescriptions through our website, mobile app, by phone, or in person. We also offer prescription delivery within the local area where available. Same-day dispensing is available for many prescriptions — ask the team.",
+      "actions": [
+        {
+          "label": "Order Prescription",
+          "href": "https://app.belvederepharmacy.net/#/auth/signin",
+          "icon": "prescription"
+        },
+        {
+          "label": "Download App",
+          "href": "#download-app",
+          "icon": "external"
+        }
+      ],
+      "priority": 88,
+      "published": true
+    },
+    {
+      "id": "kb_medication_review",
+      "keywords": [
+        "medication",
+        "review",
+        "side effect",
+        "advice"
+      ],
+      "answer": "We offer medication reviews to help ensure you're getting the most from your medicines. Our pharmacists can address concerns about side effects and help optimise your regimen.",
+      "actions": [
+        {
+          "label": "Book Review",
+          "href": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 85,
+      "published": true
+    },
+    {
+      "id": "kb_vaccination",
+      "keywords": [
+        "vaccination",
+        "vaccine",
+        "flu",
+        "covid",
+        "jab",
+        "immunization"
+      ],
+      "answer": "We offer various vaccinations including flu, COVID-19, and travel vaccines. Some are available on the NHS for eligible patients; others are private. Walk-ins may be possible — booking helps ensure stock and pharmacist time.",
+      "actions": [
+        {
+          "label": "Book Vaccination",
+          "href": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+          "icon": "calendar"
+        },
+        {
+          "label": "View Services",
+          "href": "/services",
+          "icon": "external"
+        }
+      ],
+      "priority": 82,
+      "published": true
+    },
+    {
+      "id": "kb_delivery",
+      "keywords": [
+        "delivery",
+        "collect",
+        "pickup",
+        "home"
+      ],
+      "answer": "We offer prescription delivery within our local area where available. You can also collect in store. Cut-off times and coverage vary — ask the pharmacy for today's options.",
+      "actions": [
+        {
+          "label": "Order Now",
+          "href": "https://app.belvederepharmacy.net/#/auth/signin",
+          "icon": "prescription"
+        }
+      ],
+      "priority": 80,
+      "published": true
+    },
+    {
+      "id": "kb_location",
+      "keywords": [
+        "location",
+        "address",
+        "where",
+        "find",
+        "directions"
+      ],
+      "answer": "We're at 11 Picardy Street, Belvedere, Kent DA17 5QQ. Ask for nearby parking and public transport on our contact page.",
+      "actions": [
+        {
+          "label": "Get Directions",
+          "href": "https://maps.google.com/?q=11+Picardy+Street,+Belvedere,+DA17+5QQ",
+          "icon": "location"
+        },
+        {
+          "label": "Contact Page",
+          "href": "/contact-us",
+          "icon": "external"
+        }
+      ],
+      "priority": 78,
+      "published": true
+    },
+    {
+      "id": "kb_contact",
+      "keywords": [
+        "contact",
+        "phone",
+        "call",
+        "email",
+        "reach"
+      ],
+      "answer": "Call us on 0208 311 4087, email info@belvederepharmacy.com, or visit us in person. For urgent medical advice when we're closed, call NHS 111.",
+      "actions": [
+        {
+          "label": "Call Now",
+          "href": "tel:+442083114087",
+          "icon": "phone"
+        },
+        {
+          "label": "Send Email",
+          "href": "mailto:info@belvederepharmacy.com",
+          "icon": "external"
+        }
+      ],
+      "priority": 76,
+      "published": true
+    },
+    {
+      "id": "kb_emergency",
+      "keywords": [
+        "emergency",
+        "urgent",
+        "999",
+        "111"
+      ],
+      "answer": "For life-threatening emergencies, call 999. For urgent but non-emergency medical advice, call NHS 111. Our pharmacists can help with minor ailments through NHS Pharmacy First where appropriate.",
+      "actions": [
+        {
+          "label": "Call 111",
+          "href": "tel:111",
+          "icon": "phone"
+        },
+        {
+          "label": "Pharmacy First",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        }
+      ],
+      "priority": 110,
+      "published": true
+    },
+    {
+      "id": "kb_services_general",
+      "keywords": [
+        "service",
+        "what",
+        "offer",
+        "help",
+        "do you",
+        "provide",
+        "available"
+      ],
+      "answer": "We offer NHS Pharmacy First consultations, prescription services, flu and COVID vaccinations, blood pressure checks, medication reviews, travel health, stop smoking support, emergency contraception, and more. What would you like help with?",
+      "actions": [
+        {
+          "label": "View All Services",
+          "href": "/services",
+          "icon": "external"
+        },
+        {
+          "label": "Book Appointment",
+          "href": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 50,
+      "published": true
+    },
+    {
+      "id": "kb_blood_pressure",
+      "keywords": [
+        "blood pressure",
+        "bp",
+        "check",
+        "heart"
+      ],
+      "answer": "We offer blood pressure checks with professional interpretation and follow-up advice. Ask in branch whether you need an appointment.",
+      "actions": [
+        {
+          "label": "Find Us",
+          "href": "/contact-us",
+          "icon": "location"
+        }
+      ],
+      "priority": 72,
+      "published": true
+    },
+    {
+      "id": "kb_smoking",
+      "keywords": [
+        "smoking",
+        "quit",
+        "stop",
+        "nicotine"
+      ],
+      "answer": "Our stop smoking service includes one-to-one support, nicotine replacement therapy where appropriate, and a personalised plan. Ask how to book at Belvedere Pharmacy.",
+      "actions": [
+        {
+          "label": "Book Consultation",
+          "href": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 70,
+      "published": true
+    },
+    {
+      "id": "kb_travel",
+      "keywords": [
+        "travel",
+        "holiday",
+        "abroad",
+        "malaria"
+      ],
+      "answer": "Our travel health clinic offers destination-specific advice, travel vaccinations, malaria prevention, and travel essentials. Book ahead of travel — ideally 6–8 weeks before longer trips.",
+      "actions": [
+        {
+          "label": "Book Travel Clinic",
+          "href": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 68,
+      "published": true
+    },
+    {
+      "id": "kb_uti",
+      "keywords": [
+        "uti",
+        "urinary",
+        "infection",
+        "women"
+      ],
+      "answer": "We provide care for women with UTI symptoms through Pharmacy First where appropriate — assessment and treatment without always needing a GP appointment.",
+      "actions": [
+        {
+          "label": "Learn More",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        },
+        {
+          "label": "Book Now",
+          "href": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 74,
+      "published": true
+    },
+    {
+      "id": "kb_sore_throat",
+      "keywords": [
+        "sore throat",
+        "throat",
+        "cough",
+        "cold"
+      ],
+      "answer": "We offer care for sore throats through Pharmacy First — our pharmacist can assess symptoms and advise treatment.",
+      "actions": [
+        {
+          "label": "Pharmacy First",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        }
+      ],
+      "priority": 73,
+      "published": true
+    },
+    {
+      "id": "kb_superintendent",
+      "keywords": [
+        "superintendent",
+        "pharmacist",
+        "gphc",
+        "registration"
+      ],
+      "answer": "Our Superintendent Pharmacist is Michael Tweneboa-Koduah, GPhC registration number 2057431. Belvedere Pharmacy is operated by Meckay Limited (Company No. 06454698), registered in the UK.",
+      "actions": [
+        {
+          "label": "About Us",
+          "href": "/about-us",
+          "icon": "external"
+        }
+      ],
+      "priority": 40,
+      "published": true
+    },
+    {
+      "id": "kb_company",
+      "keywords": [
+        "company",
+        "meckay",
+        "registered",
+        "business"
+      ],
+      "answer": "Belvedere Pharmacy is operated by Meckay Limited, a UK registered company (Company No. 06454698). Ask in branch for registered office details if you need them.",
+      "actions": [
+        {
+          "label": "About Us",
+          "href": "/about-us",
+          "icon": "external"
+        }
+      ],
+      "priority": 38,
+      "published": true
+    },
+    {
+      "id": "kb_greeting",
+      "keywords": [
+        "hello",
+        "hi",
+        "hey",
+        "good morning",
+        "good afternoon"
+      ],
+      "answer": "Hello! Welcome to Belvedere Pharmacy. I can help with services, opening hours, prescriptions, and appointments. What would you like to know?",
+      "priority": 20,
+      "published": true
+    },
+    {
+      "id": "kb_thanks",
+      "keywords": [
+        "thank",
+        "thanks",
+        "cheers",
+        "appreciate"
+      ],
+      "answer": "You're welcome! If you need anything else about our services or your prescriptions, just ask.",
+      "priority": 15,
+      "published": true
+    }
+  ],
+  "kidbrooke": [
+    {
+      "id": "kb_opening_hours",
+      "keywords": [
+        "opening",
+        "hours",
+        "open",
+        "close",
+        "time",
+        "when"
+      ],
+      "answer": "We're open Monday to Friday from 9:00am to 6:30pm, and Saturday from 9:00am to 1:00pm. We're closed on Sundays and on bank holidays when advertised. For urgent medical advice when we're closed, call NHS 111.",
+      "actions": [
+        {
+          "label": "Call Us",
+          "href": "tel:+442083190115",
+          "icon": "phone"
+        },
+        {
+          "label": "Find Us",
+          "href": "/contact-us",
+          "icon": "location"
+        }
+      ],
+      "priority": 100,
+      "published": true
+    },
+    {
+      "id": "kb_appointment_book",
+      "keywords": [
+        "appointment",
+        "book",
+        "schedule",
+        "pharmacy first"
+      ],
+      "answer": "While walk-ins are welcome, we recommend booking an appointment to minimise waiting times. You can book online through our website or call us directly. For Pharmacy First, booking helps ensure our pharmacist is available.",
+      "actions": [
+        {
+          "label": "Book Appointment",
+          "href": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        },
+        {
+          "label": "Pharmacy First",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        }
+      ],
+      "priority": 95,
+      "published": true
+    },
+    {
+      "id": "kb_nhs_cost",
+      "keywords": [
+        "free",
+        "cost",
+        "price",
+        "pay",
+        "nhs",
+        "charge"
+      ],
+      "answer": "NHS Pharmacy First services are free for patients eligible for free NHS prescriptions. Others may need to pay the standard NHS prescription charge. Private services vary — contact us for pricing.",
+      "actions": [
+        {
+          "label": "View Services",
+          "href": "/services",
+          "icon": "external"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/contact-us",
+          "icon": "phone"
+        }
+      ],
+      "priority": 90,
+      "published": true
+    },
+    {
+      "id": "kb_prescription_order",
+      "keywords": [
+        "prescription",
+        "repeat",
+        "order",
+        "refill",
+        "medicine"
+      ],
+      "answer": "Order repeat prescriptions through our website, Kidbrooke Pharmacy app, by phone, or in person. Delivery may be available locally — ask the team.",
+      "actions": [
+        {
+          "label": "Order Prescription",
+          "href": "https://app.kidbrookepharmacy.com/#/auth/signin",
+          "icon": "prescription"
+        },
+        {
+          "label": "Download App",
+          "href": "#download-app",
+          "icon": "external"
+        }
+      ],
+      "priority": 88,
+      "published": true
+    },
+    {
+      "id": "kb_medication_review",
+      "keywords": [
+        "medication",
+        "review",
+        "side effect",
+        "advice"
+      ],
+      "answer": "We offer medication reviews so you get the most from your medicines, including side effects and optimisation.",
+      "actions": [
+        {
+          "label": "Book Review",
+          "href": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 85,
+      "published": true
+    },
+    {
+      "id": "kb_vaccination",
+      "keywords": [
+        "vaccination",
+        "vaccine",
+        "flu",
+        "covid",
+        "jab",
+        "immunization"
+      ],
+      "answer": "We offer flu, COVID-19, and travel vaccinations. NHS and private options depend on eligibility and stock. Booking is recommended.",
+      "actions": [
+        {
+          "label": "Book Vaccination",
+          "href": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        },
+        {
+          "label": "View Services",
+          "href": "/services",
+          "icon": "external"
+        }
+      ],
+      "priority": 82,
+      "published": true
+    },
+    {
+      "id": "kb_delivery",
+      "keywords": [
+        "delivery",
+        "collect",
+        "pickup",
+        "home"
+      ],
+      "answer": "We offer delivery and collection options where available — ask Kidbrooke Pharmacy for coverage and cut-off times.",
+      "actions": [
+        {
+          "label": "Order Now",
+          "href": "https://app.kidbrookepharmacy.com/#/auth/signin",
+          "icon": "prescription"
+        }
+      ],
+      "priority": 80,
+      "published": true
+    },
+    {
+      "id": "kb_location",
+      "keywords": [
+        "location",
+        "address",
+        "where",
+        "find",
+        "directions"
+      ],
+      "answer": "We're at 134 Rochester Way, Kidbrooke, Blackheath, London SE3 8AR. See our contact page for directions and parking.",
+      "actions": [
+        {
+          "label": "Get Directions",
+          "href": "https://maps.google.com/?q=134+Rochester+Way,+Kidbrooke,+SE3+8AR",
+          "icon": "location"
+        },
+        {
+          "label": "Contact Page",
+          "href": "/contact-us",
+          "icon": "external"
+        }
+      ],
+      "priority": 78,
+      "published": true
+    },
+    {
+      "id": "kb_contact",
+      "keywords": [
+        "contact",
+        "phone",
+        "call",
+        "email",
+        "reach"
+      ],
+      "answer": "Call 0208 319 0115, email info@kidbrookepharmacy.com, or visit us in person. When we're closed, use NHS 111 for urgent advice.",
+      "actions": [
+        {
+          "label": "Call Now",
+          "href": "tel:+442083190115",
+          "icon": "phone"
+        },
+        {
+          "label": "Send Email",
+          "href": "mailto:info@kidbrookepharmacy.com",
+          "icon": "external"
+        }
+      ],
+      "priority": 76,
+      "published": true
+    },
+    {
+      "id": "kb_emergency",
+      "keywords": [
+        "emergency",
+        "urgent",
+        "999",
+        "111"
+      ],
+      "answer": "Emergencies: 999. Urgent non-emergency: NHS 111. Our pharmacists support Pharmacy First for suitable minor conditions.",
+      "actions": [
+        {
+          "label": "Call 111",
+          "href": "tel:111",
+          "icon": "phone"
+        },
+        {
+          "label": "Pharmacy First",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        }
+      ],
+      "priority": 110,
+      "published": true
+    },
+    {
+      "id": "kb_services_general",
+      "keywords": [
+        "service",
+        "what",
+        "offer",
+        "help",
+        "do you",
+        "provide",
+        "available"
+      ],
+      "answer": "Kidbrooke Pharmacy offers NHS Pharmacy First, prescriptions, vaccinations, health checks, travel health, stop smoking, emergency contraception, and more.",
+      "actions": [
+        {
+          "label": "View All Services",
+          "href": "/services",
+          "icon": "external"
+        },
+        {
+          "label": "Book Appointment",
+          "href": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 50,
+      "published": true
+    },
+    {
+      "id": "kb_blood_pressure",
+      "keywords": [
+        "blood pressure",
+        "bp",
+        "check",
+        "heart"
+      ],
+      "answer": "Blood pressure checks with interpretation — ask whether walk-in or appointment suits you best.",
+      "actions": [
+        {
+          "label": "Find Us",
+          "href": "/contact-us",
+          "icon": "location"
+        }
+      ],
+      "priority": 72,
+      "published": true
+    },
+    {
+      "id": "kb_smoking",
+      "keywords": [
+        "smoking",
+        "quit",
+        "stop",
+        "nicotine"
+      ],
+      "answer": "Stop smoking support with one-to-one help, NRT where appropriate, and a personalised quit plan.",
+      "actions": [
+        {
+          "label": "Book Consultation",
+          "href": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 70,
+      "published": true
+    },
+    {
+      "id": "kb_travel",
+      "keywords": [
+        "travel",
+        "holiday",
+        "abroad",
+        "malaria"
+      ],
+      "answer": "Travel vaccines, malaria prevention, and health advice — book ideally 6–8 weeks before travel.",
+      "actions": [
+        {
+          "label": "Book Travel Clinic",
+          "href": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 68,
+      "published": true
+    },
+    {
+      "id": "kb_uti",
+      "keywords": [
+        "uti",
+        "urinary",
+        "infection",
+        "women"
+      ],
+      "answer": "Pharmacy First assessment and treatment for uncomplicated UTIs in women where appropriate.",
+      "actions": [
+        {
+          "label": "Learn More",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        },
+        {
+          "label": "Book Now",
+          "href": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 74,
+      "published": true
+    },
+    {
+      "id": "kb_sore_throat",
+      "keywords": [
+        "sore throat",
+        "throat",
+        "cough",
+        "cold"
+      ],
+      "answer": "Sore throat care through Pharmacy First — assessment and treatment options without always needing a GP.",
+      "actions": [
+        {
+          "label": "Pharmacy First",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        }
+      ],
+      "priority": 73,
+      "published": true
+    },
+    {
+      "id": "kb_superintendent",
+      "keywords": [
+        "superintendent",
+        "pharmacist",
+        "gphc",
+        "registration"
+      ],
+      "answer": "Superintendent Pharmacist: Michael Tweneboa-Koduah, GPhC 2057431. Kidbrooke Pharmacy is operated by Meckay Limited (06454698).",
+      "actions": [
+        {
+          "label": "About Us",
+          "href": "/about-us",
+          "icon": "external"
+        }
+      ],
+      "priority": 40,
+      "published": true
+    },
+    {
+      "id": "kb_company",
+      "keywords": [
+        "company",
+        "meckay",
+        "registered",
+        "business"
+      ],
+      "answer": "Kidbrooke Pharmacy is operated by Meckay Limited (Company No. 06454698), a UK registered company. Ask in branch for registered office details.",
+      "actions": [
+        {
+          "label": "About Us",
+          "href": "/about-us",
+          "icon": "external"
+        }
+      ],
+      "priority": 38,
+      "published": true
+    },
+    {
+      "id": "kb_greeting",
+      "keywords": [
+        "hello",
+        "hi",
+        "hey",
+        "good morning",
+        "good afternoon"
+      ],
+      "answer": "Hello! Welcome to Kidbrooke Pharmacy. I can help with services, opening hours, prescriptions, and more.",
+      "priority": 20,
+      "published": true
+    },
+    {
+      "id": "kb_thanks",
+      "keywords": [
+        "thank",
+        "thanks",
+        "cheers",
+        "appreciate"
+      ],
+      "answer": "You're welcome! Ask anything else about Kidbrooke Pharmacy whenever you need.",
+      "priority": 15,
+      "published": true
+    }
+  ],
+  "lowfield": [
+    {
+      "id": "kb_opening_hours",
+      "keywords": [
+        "opening",
+        "hours",
+        "open",
+        "close",
+        "time",
+        "when"
+      ],
+      "answer": "We're open Monday to Friday 9:00am–7:00pm, and Saturday 9:00am–7:00pm. We're closed on Sundays and on bank holidays when advertised. Urgent advice when closed: NHS 111.",
+      "actions": [
+        {
+          "label": "Call Us",
+          "href": "tel:+441322220779",
+          "icon": "phone"
+        },
+        {
+          "label": "Find Us",
+          "href": "/contact-us",
+          "icon": "location"
+        }
+      ],
+      "priority": 100,
+      "published": true
+    },
+    {
+      "id": "kb_appointment_book",
+      "keywords": [
+        "appointment",
+        "book",
+        "schedule",
+        "pharmacy first"
+      ],
+      "answer": "Walk-ins welcome; booking reduces waiting. Book online or call us. Pharmacy First bookings help ensure pharmacist availability.",
+      "actions": [
+        {
+          "label": "Book Appointment",
+          "href": "https://shop.lowfieldpharmacy.net/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        },
+        {
+          "label": "Pharmacy First",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        }
+      ],
+      "priority": 95,
+      "published": true
+    },
+    {
+      "id": "kb_nhs_cost",
+      "keywords": [
+        "free",
+        "cost",
+        "price",
+        "pay",
+        "nhs",
+        "charge"
+      ],
+      "answer": "NHS Pharmacy First is free for those eligible for free NHS prescriptions; others may pay the standard charge. Private service prices vary.",
+      "actions": [
+        {
+          "label": "View Services",
+          "href": "/services",
+          "icon": "external"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/contact-us",
+          "icon": "phone"
+        }
+      ],
+      "priority": 90,
+      "published": true
+    },
+    {
+      "id": "kb_prescription_order",
+      "keywords": [
+        "prescription",
+        "repeat",
+        "order",
+        "refill",
+        "medicine"
+      ],
+      "answer": "Order repeats via our website, app, phone, or in person. Delivery may be available — ask Lowfield Pharmacy.",
+      "actions": [
+        {
+          "label": "Order Prescription",
+          "href": "https://app.lowfieldpharmacy.net/#/auth/signin",
+          "icon": "prescription"
+        },
+        {
+          "label": "Download App",
+          "href": "#download-app",
+          "icon": "external"
+        }
+      ],
+      "priority": 88,
+      "published": true
+    },
+    {
+      "id": "kb_medication_review",
+      "keywords": [
+        "medication",
+        "review",
+        "side effect",
+        "advice"
+      ],
+      "answer": "Medication reviews to help you use your medicines safely and effectively.",
+      "actions": [
+        {
+          "label": "Book Review",
+          "href": "https://shop.lowfieldpharmacy.net/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 85,
+      "published": true
+    },
+    {
+      "id": "kb_vaccination",
+      "keywords": [
+        "vaccination",
+        "vaccine",
+        "flu",
+        "covid",
+        "jab",
+        "immunization"
+      ],
+      "answer": "Flu, COVID-19, and travel vaccines — NHS and private subject to eligibility and stock. Booking recommended.",
+      "actions": [
+        {
+          "label": "Book Vaccination",
+          "href": "https://shop.lowfieldpharmacy.net/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        },
+        {
+          "label": "View Services",
+          "href": "/services",
+          "icon": "external"
+        }
+      ],
+      "priority": 82,
+      "published": true
+    },
+    {
+      "id": "kb_delivery",
+      "keywords": [
+        "delivery",
+        "collect",
+        "pickup",
+        "home"
+      ],
+      "answer": "Delivery and collection options where we offer them — ask for local coverage and cut-offs.",
+      "actions": [
+        {
+          "label": "Order Now",
+          "href": "https://app.lowfieldpharmacy.net/#/auth/signin",
+          "icon": "prescription"
+        }
+      ],
+      "priority": 80,
+      "published": true
+    },
+    {
+      "id": "kb_location",
+      "keywords": [
+        "location",
+        "address",
+        "where",
+        "find",
+        "directions"
+      ],
+      "answer": "We're at 63 Lowfield Street, Dartford, Kent DA1 1HP.",
+      "actions": [
+        {
+          "label": "Get Directions",
+          "href": "https://maps.google.com/?q=63+Lowfield+Street,+Dartford,+DA1+1HP",
+          "icon": "location"
+        },
+        {
+          "label": "Contact Page",
+          "href": "/contact-us",
+          "icon": "external"
+        }
+      ],
+      "priority": 78,
+      "published": true
+    },
+    {
+      "id": "kb_contact",
+      "keywords": [
+        "contact",
+        "phone",
+        "call",
+        "email",
+        "reach"
+      ],
+      "answer": "Call 01322 220 779, email info@lowfieldpharmacy.com, or visit in person. When closed: NHS 111 for urgent advice.",
+      "actions": [
+        {
+          "label": "Call Now",
+          "href": "tel:+441322220779",
+          "icon": "phone"
+        },
+        {
+          "label": "Send Email",
+          "href": "mailto:info@lowfieldpharmacy.com",
+          "icon": "external"
+        }
+      ],
+      "priority": 76,
+      "published": true
+    },
+    {
+      "id": "kb_emergency",
+      "keywords": [
+        "emergency",
+        "urgent",
+        "999",
+        "111"
+      ],
+      "answer": "999 for emergencies. NHS 111 for urgent non-emergency. Pharmacy First for suitable minor conditions.",
+      "actions": [
+        {
+          "label": "Call 111",
+          "href": "tel:111",
+          "icon": "phone"
+        },
+        {
+          "label": "Pharmacy First",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        }
+      ],
+      "priority": 110,
+      "published": true
+    },
+    {
+      "id": "kb_services_general",
+      "keywords": [
+        "service",
+        "what",
+        "offer",
+        "help",
+        "do you",
+        "provide",
+        "available"
+      ],
+      "answer": "Lowfield Pharmacy offers NHS Pharmacy First, prescriptions, vaccinations, health checks, travel health, stop smoking, emergency contraception, and more.",
+      "actions": [
+        {
+          "label": "View All Services",
+          "href": "/services",
+          "icon": "external"
+        },
+        {
+          "label": "Book Appointment",
+          "href": "https://shop.lowfieldpharmacy.net/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 50,
+      "published": true
+    },
+    {
+      "id": "kb_blood_pressure",
+      "keywords": [
+        "blood pressure",
+        "bp",
+        "check",
+        "heart"
+      ],
+      "answer": "Blood pressure checks with advice — ask walk-in vs appointment.",
+      "actions": [
+        {
+          "label": "Find Us",
+          "href": "/contact-us",
+          "icon": "location"
+        }
+      ],
+      "priority": 72,
+      "published": true
+    },
+    {
+      "id": "kb_smoking",
+      "keywords": [
+        "smoking",
+        "quit",
+        "stop",
+        "nicotine"
+      ],
+      "answer": "Stop smoking support with personalised help and NRT where suitable.",
+      "actions": [
+        {
+          "label": "Book Consultation",
+          "href": "https://shop.lowfieldpharmacy.net/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 70,
+      "published": true
+    },
+    {
+      "id": "kb_travel",
+      "keywords": [
+        "travel",
+        "holiday",
+        "abroad",
+        "malaria"
+      ],
+      "answer": "Travel health advice and vaccines — book well before departure.",
+      "actions": [
+        {
+          "label": "Book Travel Clinic",
+          "href": "https://shop.lowfieldpharmacy.net/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 68,
+      "published": true
+    },
+    {
+      "id": "kb_uti",
+      "keywords": [
+        "uti",
+        "urinary",
+        "infection",
+        "women"
+      ],
+      "answer": "UTI care for women via Pharmacy First where clinically appropriate.",
+      "actions": [
+        {
+          "label": "Learn More",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        },
+        {
+          "label": "Book Now",
+          "href": "https://shop.lowfieldpharmacy.net/appointments/viewallservices/all?pharmacy=377&type=redirection",
+          "icon": "calendar"
+        }
+      ],
+      "priority": 74,
+      "published": true
+    },
+    {
+      "id": "kb_sore_throat",
+      "keywords": [
+        "sore throat",
+        "throat",
+        "cough",
+        "cold"
+      ],
+      "answer": "Sore throat care through Pharmacy First at Lowfield Pharmacy.",
+      "actions": [
+        {
+          "label": "Pharmacy First",
+          "href": "/pharmacy-first",
+          "icon": "external"
+        }
+      ],
+      "priority": 73,
+      "published": true
+    },
+    {
+      "id": "kb_superintendent",
+      "keywords": [
+        "superintendent",
+        "pharmacist",
+        "gphc",
+        "registration"
+      ],
+      "answer": "Superintendent Pharmacist: Michael Tweneboa-Koduah, GPhC 2057431. Lowfield Pharmacy is operated by Meckay Limited (06454698).",
+      "actions": [
+        {
+          "label": "About Us",
+          "href": "/about-us",
+          "icon": "external"
+        }
+      ],
+      "priority": 40,
+      "published": true
+    },
+    {
+      "id": "kb_company",
+      "keywords": [
+        "company",
+        "meckay",
+        "registered",
+        "business"
+      ],
+      "answer": "Lowfield Pharmacy is operated by Meckay Limited (Company No. 06454698). Ask in branch for registered office details.",
+      "actions": [
+        {
+          "label": "About Us",
+          "href": "/about-us",
+          "icon": "external"
+        }
+      ],
+      "priority": 38,
+      "published": true
+    },
+    {
+      "id": "kb_greeting",
+      "keywords": [
+        "hello",
+        "hi",
+        "hey",
+        "good morning",
+        "good afternoon"
+      ],
+      "answer": "Hello! Welcome to Lowfield Pharmacy. How can I help today?",
+      "priority": 20,
+      "published": true
+    },
+    {
+      "id": "kb_thanks",
+      "keywords": [
+        "thank",
+        "thanks",
+        "cheers",
+        "appreciate"
+      ],
+      "answer": "You're welcome — ask us anything else about Lowfield Pharmacy.",
+      "priority": 15,
+      "published": true
+    }
+  ]
+}

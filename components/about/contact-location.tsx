@@ -1,16 +1,36 @@
 import { CircleParking, Clock, Mail, MapPin, Phone } from "lucide-react";
 import WidthConstraint from "../shared/width-constraint";
-import { WORKING_HOURS, CONTACT_LOCATION_INFO } from "@/lib/constants/general";
 import { Badge } from "../ui/badge";
 import SectionHeader from "../general/section-divider-head";
+import { getTenant } from "@/lib/services/firestore/queries";
+import { getTenantSlug } from "@/lib/config/tenant";
+import {
+  formatAddressLines,
+} from "@/lib/utils/format-tenant";
 
-const iconMap = {
-  location: MapPin,
-  phone: Phone,
-  email: Mail,
-};
+export default async function ContactLocationSection() {
+  const tenant = await getTenant(getTenantSlug());
 
-export default function ContactLocationSection() {
+  const contactItems = tenant
+    ? [
+        {
+          icon: MapPin,
+          title: "Location",
+          details: formatAddressLines(tenant),
+        },
+        {
+          icon: Phone,
+          title: "Phone",
+          details: [tenant.phone],
+        },
+        {
+          icon: Mail,
+          title: "Email",
+          details: [tenant.email],
+        },
+      ]
+    : [];
+
   return (
     <section>
       <WidthConstraint className="space-y-12">
@@ -26,7 +46,7 @@ export default function ContactLocationSection() {
         <div className="grid gap-12 lg:grid-cols-2 items-start">
           {/* Left Side - Contact Info */}
           <div className="space-y-8">
-            {CONTACT_LOCATION_INFO.map((info, index) => {
+            {contactItems.map((info, index) => {
               const IconComponent = info.icon;
               return (
                 <div key={index} className="flex items-start gap-4 group">
@@ -48,31 +68,41 @@ export default function ContactLocationSection() {
             })}
 
             {/* Opening Hours */}
-            <div className="flex items-start gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-                <Clock className="h-6 w-6 text-primary" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-                  Opening Hours
-                </h3>
-                <div className="space-y-3 max-w-xs">
-                  {WORKING_HOURS.map((schedule, idx) => (
-                    <div
-                      key={idx}
-                      className="flex justify-between items-center pb-3 border-b border-gray-100 last:border-0"
-                    >
-                      <span className="font-medium text-gray-900 dark:text-white">
-                        {schedule.days}
-                      </span>
-                      <span className="text-gray-600 dark:text-white/60">
-                        {schedule.hours}
-                      </span>
-                    </div>
-                  ))}
+            {tenant && (
+              <div className="flex items-start gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                  <Clock className="h-6 w-6 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                    Opening Hours
+                  </h3>
+                  <div className="space-y-3 max-w-xs">
+                    {tenant.openingHours.map((schedule, idx) => {
+                      const dayLabel =
+                        schedule.day.charAt(0).toUpperCase() +
+                        schedule.day.slice(1);
+                      const hoursLabel = schedule.closed
+                        ? "Closed"
+                        : `${schedule.open} – ${schedule.close}`;
+                      return (
+                        <div
+                          key={idx}
+                          className="flex justify-between items-center pb-3 border-b border-gray-100 last:border-0"
+                        >
+                          <span className="font-medium text-gray-900 dark:text-white">
+                            {dayLabel}
+                          </span>
+                          <span className="text-gray-600 dark:text-white/60">
+                            {hoursLabel}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Right Side - Map */}

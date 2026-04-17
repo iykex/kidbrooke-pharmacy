@@ -1,0 +1,577 @@
+[
+  {
+    "id": "flu_vaccination_nhs",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "vaccination",
+    "title": "Flu vaccination (NHS)",
+    "description": "NHS seasonal flu vaccination for eligible patients. Book via your pharmacy appointment links.",
+    "features": [
+      "NHS-funded (when eligible)",
+      "Quick and painless",
+      "Professional administration",
+      "Eligibility checked against current seasonal programme rules"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://app.belvederepharmacy.net/#/guest/appointments?pharmacyId=378&serviceId=5340",
+      "kidbrooke": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5335",
+      "lowfield": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5335"
+    },
+    "published": true
+  },
+  {
+    "id": "flu_vaccination_private",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "private",
+    "group": "vaccination",
+    "title": "Flu vaccination (private)",
+    "description": "Private paid flu vaccination. Book via Pharmadoctor for your branch.",
+    "features": [
+      "Paid seasonal flu jab when not eligible on the NHS",
+      "Book a convenient appointment for your branch",
+      "Pharmacist-led vaccination and aftercare advice",
+      "Subject to stock and eligibility checks"
+    ],
+    "fundingLabel": "Paid",
+    "tenantBookingUrls": {
+      "belvedere": "https://pharmadoctor.co.uk/patient/location-referrer/2483",
+      "kidbrooke": "https://pharmadoctor.co.uk/patient/location-referrer/500",
+      "lowfield": "https://pharmadoctor.co.uk/patient/location-referrer/6430"
+    },
+    "published": true
+  },
+  {
+    "id": "covid_19_vaccination_nhs",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "vaccination",
+    "title": "COVID-19 vaccination (NHS)",
+    "description": "NHS COVID-19 vaccination (including boosters and walk-in cohorts when offered). Confirm eligibility and age bands locally.",
+    "features": [
+      "NHS service",
+      "Booster doses when offered",
+      "Safe environment",
+      "Post-vaccination advice"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/book/service/COVID-19%20Vaccine?pharmacy=378&originalServiceId=5342&type=redirection",
+      "kidbrooke": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5334",
+      "lowfield": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5334"
+    },
+    "published": true
+  },
+  {
+    "id": "covid_19_vaccination_private",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "private",
+    "group": "private",
+    "title": "COVID-19 vaccination (private)",
+    "description": "Private COVID-19 vaccination where offered. Book via Pharmadoctor for your branch.",
+    "features": [
+      "Private paid COVID-19 vaccination where locally available",
+      "Suitable when outside current NHS campaign criteria",
+      "Appointment-based service at your pharmacy",
+      "Advice on dosing and common side effects"
+    ],
+    "fundingLabel": "Paid",
+    "tenantBookingUrls": {
+      "belvedere": "https://pharmadoctor.co.uk/patient/location-referrer/2483",
+      "kidbrooke": "https://pharmadoctor.co.uk/patient/location-referrer/500",
+      "lowfield": "https://pharmadoctor.co.uk/patient/location-referrer/6430"
+    },
+    "published": true
+  },
+  {
+    "id": "blood_pressure_check",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "screening",
+    "title": "Blood pressure check",
+    "description": "NHS blood pressure check service — regular monitoring to support cardiovascular health.",
+    "features": [
+      "Quick and painless",
+      "Immediate results",
+      "Professional interpretation",
+      "Follow-up advice"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://app.belvederepharmacy.net/#/guest/appointments?pharmacyId=378&serviceId=5343",
+      "kidbrooke": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5336",
+      "lowfield": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5336"
+    },
+    "published": true
+  },
+  {
+    "id": "stop_smoking_nhs",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "healthy_living",
+    "title": "Stop smoking service (NHS)",
+    "description": "NHS-funded stop smoking support where you are eligible.",
+    "features": [
+      "One-to-one support",
+      "Nicotine replacement therapy",
+      "Regular check-ins",
+      "Personalized quit plan"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://app.belvederepharmacy.net/#/guest/appointments?pharmacyId=378&serviceId=5341",
+      "kidbrooke": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5337",
+      "lowfield": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5337"
+    },
+    "published": true
+  },
+  {
+    "id": "stop_smoking_private",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "private",
+    "group": "healthy_living",
+    "title": "Stop smoking service (private)",
+    "description": "Private paid stop smoking support. Book via Pharmadoctor for your branch.",
+    "features": [
+      "Private consultation for quitting support",
+      "Access to suitable nicotine replacement or aids where appropriate",
+      "Ongoing motivation and follow-up with your pharmacist",
+      "Flexible booking outside purely NHS-funded pathways"
+    ],
+    "fundingLabel": "Paid",
+    "tenantBookingUrls": {
+      "belvedere": "https://pharmadoctor.co.uk/patient/location-referrer/2483",
+      "kidbrooke": "https://pharmadoctor.co.uk/patient/location-referrer/500",
+      "lowfield": "https://pharmadoctor.co.uk/patient/location-referrer/6430"
+    },
+    "published": true
+  },
+  {
+    "id": "emergency_contraception_nhs",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "contraception",
+    "title": "Emergency contraception (NHS)",
+    "description": "NHS pathway for emergency contraception where you are eligible for free NHS prescriptions.",
+    "features": [
+      "Confidential consultation",
+      "Same-day service",
+      "Follow-up advice",
+      "Future contraception planning"
+    ],
+    "fundingLabel": "NHS – Free",
+    "tenantBookingUrls": {
+      "belvedere": "https://app.belvederepharmacy.net/#/guest/appointments?pharmacyId=378&serviceId=5339",
+      "kidbrooke": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5338",
+      "lowfield": "https://app.kidbrookepharmacy.com/#/guest/appointments?pharmacyId=377&serviceId=5338"
+    },
+    "published": true
+  },
+  {
+    "id": "emergency_contraception_private",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "private",
+    "group": "contraception",
+    "title": "Emergency contraception (paid)",
+    "description": "Paid emergency contraception service (e.g. ages 16+ where applicable). Book via Pharmadoctor for your branch.",
+    "features": [
+      "Confidential discussion with a pharmacist",
+      "Same-day access where clinically appropriate",
+      "Clear explanation of options and time windows",
+      "Signposting to ongoing contraception care"
+    ],
+    "fundingLabel": "Paid – 16+",
+    "tenantBookingUrls": {
+      "belvedere": "https://pharmadoctor.co.uk/patient/location-referrer/2483",
+      "kidbrooke": "https://pharmadoctor.co.uk/patient/location-referrer/500",
+      "lowfield": "https://pharmadoctor.co.uk/patient/location-referrer/6430"
+    },
+    "published": true
+  },
+  {
+    "id": "nhs_pharmacy_contraception_service",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "contraception",
+    "title": "NHS pharmacy contraception service",
+    "description": "Contraception services delivered through the pharmacy. Add booking links when you wire this row to your appointment system.",
+    "features": [
+      "NHS-funded contraception advice and supply where commissioned",
+      "Suitable oral contraception and other methods per local service",
+      "Confidential consultations with a pharmacist",
+      "Follow-up and review in line with national protocols"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "inhaler_disposal",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "prescription",
+    "title": "Inhaler disposal",
+    "description": "Safe disposal of used inhalers. Confirm locally how this is offered.",
+    "features": [
+      "Environmentally responsible disposal of empty or used inhalers",
+      "Helps reduce landfill and harmful propellant release",
+      "Drop-off at participating pharmacies",
+      "Ask staff which inhaler types are accepted"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "medical_supplies_appliances",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "prescription",
+    "title": "Medical supplies (appliances)",
+    "description": "Medical appliances and supplies. Add booking or enquiry links when available.",
+    "features": [
+      "Ordering and supply of NHS-prescribed appliances (e.g. dressings, supports)",
+      "Advice on correct use and care of products",
+      "Repeat ordering when your prescription allows",
+      "Referral back to prescriber if your needs change"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "medical_supplies_review_service",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "prescription",
+    "title": "Medical supplies review service",
+    "description": "Review of appliance and supply needs. Add booking links when available.",
+    "features": [
+      "Scheduled review of stoma, continence or other appliance needs",
+      "Check product fit, comfort and effectiveness",
+      "Adjust supply quantities with prescriber where needed",
+      "Holistic support for independent living at home"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "needle_syringe_exchange",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "prescription",
+    "title": "Needle and syringe exchange",
+    "description": "Needle exchange where commissioned. Confirm availability at your branch.",
+    "features": [
+      "Sterile needles and syringes to reduce infection risk",
+      "Safe return of used equipment",
+      "Signposting to local drug and alcohol services",
+      "Non-judgmental, confidential pharmacy support"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "new_medicine_service",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "prescription",
+    "title": "New medicine service",
+    "description": "Support when you start selected new medicines. Add booking links when available.",
+    "features": [
+      "Extra support in the first weeks of a new medicine",
+      "Check understanding of how and when to take it",
+      "Discuss early side effects and what to report",
+      "Reinforce lifestyle advice from your prescriber"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "online_repeat_prescription_management",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "prescription",
+    "title": "Online repeat prescription management",
+    "description": "Manage repeat prescriptions online where your branch supports it.",
+    "features": [
+      "Order repeats via the pharmacy app or website where enabled",
+      "Fewer phone calls — track status of your request",
+      "Optional reminders when your next order is due",
+      "Secure link to your nominated pharmacy"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "prescription_delivery_service",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "prescription",
+    "title": "Prescription delivery service",
+    "description": "Delivery options for eligible patients — confirm coverage with your branch.",
+    "features": [
+      "Home delivery of dispensed NHS prescriptions where offered",
+      "May include vulnerable or housebound patients by arrangement",
+      "Delivery windows and charges (if any) confirmed locally",
+      "Bagged and labelled safely for your household"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "stoma_bag_support_service",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "prescription",
+    "title": "Stoma bag support service",
+    "description": "Advice and support for stoma products. Add booking links when available.",
+    "features": [
+      "Help choosing and fitting stoma appliances",
+      "Advice on skin care and leak prevention",
+      "Ordering supplies on NHS prescription where appropriate",
+      "Empathetic support from trained pharmacy staff"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "covid_19_lateral_flow_tests",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "nhs",
+    "group": "screening",
+    "title": "COVID-19 lateral flow tests",
+    "description": "Availability depends on current NHS guidance — ask your branch.",
+    "features": [
+      "Rapid antigen tests when nationally supplied or stocked",
+      "Guidance on when to test and how to read results",
+      "Signposting to NHS 111 or GP if you are unwell",
+      "Subject to current government and NHS policy"
+    ],
+    "fundingLabel": "NHS",
+    "tenantBookingUrls": {
+      "belvedere": "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+      "kidbrooke": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection",
+      "lowfield": "https://shop.kidbrookepharmacy.com/appointments/viewallservices/all?pharmacy=377&type=redirection"
+    },
+    "published": true
+  },
+  {
+    "id": "hepatitis_b",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "private",
+    "group": "private",
+    "title": "Hepatitis B",
+    "description": "Private vaccination and advice. Book via Pharmadoctor using your branch link.",
+    "features": [
+      "Protection against hepatitis B for travel, occupation or personal risk",
+      "Course scheduling and booster reminders explained",
+      "Pharmacist assessment of suitability before vaccination",
+      "Private fee applies — book through Pharmadoctor"
+    ],
+    "fundingLabel": "Paid",
+    "tenantBookingUrls": {
+      "belvedere": "https://pharmadoctor.co.uk/patient/location-referrer/2483",
+      "kidbrooke": "https://pharmadoctor.co.uk/patient/location-referrer/500",
+      "lowfield": "https://pharmadoctor.co.uk/patient/location-referrer/6430"
+    },
+    "published": true
+  },
+  {
+    "id": "meningitis_b",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "private",
+    "group": "private",
+    "title": "Meningitis B",
+    "description": "Private vaccination and advice. Book via Pharmadoctor using your branch link.",
+    "features": [
+      "Private MenB vaccination for infants and other eligible groups per guidance",
+      "Discussion of schedule, doses and common side effects",
+      "Aligned with national immunisation advice where relevant",
+      "Book and pay via your branch Pharmadoctor link"
+    ],
+    "fundingLabel": "Paid",
+    "tenantBookingUrls": {
+      "belvedere": "https://pharmadoctor.co.uk/patient/location-referrer/2483",
+      "kidbrooke": "https://pharmadoctor.co.uk/patient/location-referrer/500",
+      "lowfield": "https://pharmadoctor.co.uk/patient/location-referrer/6430"
+    },
+    "published": true
+  },
+  {
+    "id": "travel_health",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "private",
+    "group": "private",
+    "title": "Travel health & travel clinic",
+    "description": "Travel vaccines and health advice (private). Book via Pharmadoctor using your branch link.",
+    "features": [
+      "Destination-specific risk assessment and vaccine planning",
+      "Yellow fever and other travel jabs where stocked or ordered",
+      "Malaria prophylaxis and bite avoidance advice",
+      "Private fees — book your consultation via Pharmadoctor"
+    ],
+    "fundingLabel": "Paid",
+    "tenantBookingUrls": {
+      "belvedere": "https://pharmadoctor.co.uk/patient/location-referrer/2483",
+      "kidbrooke": "https://pharmadoctor.co.uk/patient/location-referrer/500",
+      "lowfield": "https://pharmadoctor.co.uk/patient/location-referrer/6430"
+    },
+    "published": true
+  },
+  {
+    "id": "weight_management_private",
+    "tenantIds": [
+      "belvedere",
+      "kidbrooke",
+      "lowfield"
+    ],
+    "serviceKind": "private",
+    "group": "private",
+    "title": "Weight management",
+    "description": "Private weight management support. Book via Pharmadoctor using your branch link.",
+    "features": [
+      "One-to-one support for sustainable weight goals",
+      "Lifestyle and nutrition guidance tailored to you",
+      "May include suitable products or referrals per pharmacist assessment",
+      "Private service — continuity of care with your branch"
+    ],
+    "fundingLabel": "Paid",
+    "tenantBookingUrls": {
+      "belvedere": "https://pharmadoctor.co.uk/patient/location-referrer/2483",
+      "kidbrooke": "https://pharmadoctor.co.uk/patient/location-referrer/500",
+      "lowfield": "https://pharmadoctor.co.uk/patient/location-referrer/6430"
+    },
+    "published": true
+  }
+]

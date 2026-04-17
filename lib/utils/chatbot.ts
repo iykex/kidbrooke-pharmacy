@@ -5,9 +5,8 @@ import {
   CHAT_LAST_ACTIVITY_KEY,
   CACHE_DURATION_MS,
   IDLE_THRESHOLD_MS,
-  KNOWLEDGE_BASE,
-} from "@/lib/constants/chatbot";
-import { Message, ActionButton } from "@/lib/types/general";
+} from "@/lib/constants/general";
+import type { ActionButton, KnowledgeBaseItem, Message } from "@/lib/types/chatbot";
 
 // Visitor name helpers
 export function getVisitorName(): string | null {
@@ -38,11 +37,15 @@ export function getChatHistory(): Message[] | null {
     const history = localStorage.getItem(CHAT_HISTORY_KEY);
     if (!history) return null;
 
-    const parsed = JSON.parse(history);
-    return parsed.map((msg: Message & { timestamp: string }) => ({
-      ...msg,
-      timestamp: new Date(msg.timestamp),
-    }));
+    const parsed = JSON.parse(history) as Array<Message & { timestamp: string }>;
+    if (!Array.isArray(parsed)) return null;
+    return parsed.map((msg) => {
+      const d = new Date(msg.timestamp);
+      return {
+        ...msg,
+        timestamp: Number.isNaN(d.getTime()) ? new Date() : d,
+      };
+    });
   } catch {
     return null;
   }
@@ -72,19 +75,44 @@ export function isIdleForTooLong(): boolean {
   return Date.now() - lastActivity > IDLE_THRESHOLD_MS;
 }
 
-// Knowledge base search
-export function findBestResponse(query: string): { answer: string; actions?: ActionButton[] } {
+function sharedPrefixLength(a: string, b: string): number {
+  const n = Math.min(a.length, b.length);
+  let i = 0;
+  while (i < n && a[i] === b[i]) i++;
+  return i;
+}
+
+/** Match user text to a keyword (substring, word overlap, or shared prefix for e.g. located/location). */
+function keywordMatchesQuery(lowerQuery: string, rawKeyword: string): boolean {
+  const kw = String(rawKeyword).toLowerCase();
+  if (kw.length < 2) return false;
+  if (lowerQuery.includes(kw)) return true;
+  for (const word of lowerQuery.split(/\W+/)) {
+    if (word.length < 3) continue;
+    if (word.includes(kw) || kw.includes(word)) return true;
+    if (kw.length >= 4 && word.length >= 4 && sharedPrefixLength(word, kw) >= 4) return true;
+  }
+  return false;
+}
+
+// Knowledge base search (entries loaded from Firestore at runtime)
+export function findBestResponse(
+  query: string,
+  knowledgeBase: KnowledgeBaseItem[],
+): { answer: string; actions?: ActionButton[] } {
   const lowerQuery = query.toLowerCase();
 
   let bestMatch = { score: 0, answer: "", actions: undefined as ActionButton[] | undefined };
 
-  for (const item of KNOWLEDGE_BASE) {
-    const matchCount = item.keywords.filter((keyword) =>
-      lowerQuery.includes(keyword.toLowerCase())
+  for (const item of knowledgeBase) {
+    const keywords = Array.isArray(item.keywords) ? item.keywords : [];
+    const matchCount = keywords.filter((keyword) =>
+      keywordMatchesQuery(lowerQuery, keyword)
     ).length;
 
     if (matchCount > bestMatch.score) {
-      bestMatch = { score: matchCount, answer: item.answer, actions: item.actions };
+      const answer = typeof item.answer === "string" ? item.answer : "";
+      bestMatch = { score: matchCount, answer, actions: item.actions };
     }
   }
 
@@ -96,7 +124,7 @@ export function findBestResponse(query: string): { answer: string; actions?: Act
     answer:
       "I'm not sure about that specific question, but I'd be happy to help! You can ask me about our opening hours, services, prescriptions, vaccinations, or contact information. Alternatively, please call us or visit us in store for personalized assistance.",
     actions: [
-      { label: "Call Us", href: "tel:+441234567890", icon: "phone" },
+      { label: "Call Us", href: "tel:+442083114087", icon: "phone" },
       { label: "View Services", href: "/services", icon: "external" },
     ],
   };

@@ -1,5 +1,5 @@
 "use client";
-import UseTracker from "@/hooks/analytics/use-tracker";
+import UseTracker from "@/hooks/use-tracker";
 import { ReactNode } from "react";
 
 export default function PageTracker({ children }: { children: ReactNode }) {

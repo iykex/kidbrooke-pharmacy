@@ -5,7 +5,7 @@ import { track } from "@/lib/analytics/tracker";
 import {
   CACHED_LOCATION_KEY,
   TRACKING_EVENTS,
-} from "@/lib/constants/analytics";
+} from "@/lib/constants/general";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 

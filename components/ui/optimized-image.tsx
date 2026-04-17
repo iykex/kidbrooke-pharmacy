@@ -2,7 +2,7 @@
 
 import Image, { ImageProps } from "next/image";
 import { getResponsiveSizes, getBlurDataURL } from "@/lib/image-cdn";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 
 interface OptimizedImageProps extends Omit<ImageProps, "sizes"> {
   /**

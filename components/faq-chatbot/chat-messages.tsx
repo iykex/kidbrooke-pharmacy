@@ -1,15 +1,12 @@
 import { useEffect, useRef } from "react";
 import { Bot } from "lucide-react";
 import { ChatMessage } from "./chat-message";
-import { Message } from "@/lib/types/general";
+import type { Message } from "@/lib/types/chatbot";
 
-interface ChatMessagesProps {
-  messages: Message[];
+
+export function ChatMessages({ messages, isTyping }: {  messages: Message[];
   isTyping: boolean;
-  onScrollEnd: (ref: HTMLDivElement | null) => void;
-}
-
-export function ChatMessages({ messages, isTyping }: ChatMessagesProps) {
+  onScrollEnd: (ref: HTMLDivElement | null) => void;}) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

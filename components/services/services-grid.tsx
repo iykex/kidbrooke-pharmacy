@@ -2,10 +2,24 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ServiceCard from "./service-card";
 import { SERVICE_CATEGORIES } from "@/lib/constants/general";
-import { SERVICES_LIST } from "@/lib/constants/data";
 import WidthConstraint from "../shared/width-constraint";
+import { useServicesList } from "@/hooks/use-services";
 
 export function ServicesGrid() {
+  const { services, loading } = useServicesList();
+
+  if (loading || services.length === 0) {
+    return (
+      <section>
+        <WidthConstraint>
+          <p className="text-center text-muted-foreground py-16">
+            Loading services…
+          </p>
+        </WidthConstraint>
+      </section>
+    );
+  }
+
   return (
     <section>
       <WidthConstraint>
@@ -32,11 +46,21 @@ export function ServicesGrid() {
 
           {SERVICE_CATEGORIES.map((category) => (
             <TabsContent key={category.id} value={category.id} className="mt-8">
-              <div className="grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-                {SERVICES_LIST.filter(
+              {(() => {
+                const filtered = services.filter(
                   (service) =>
-                    category.id === "all" || service.category === category.id
-                ).map((service, index) => {
+                    category.id === "all" || service.category === category.id,
+                );
+                if (filtered.length === 0) {
+                  return (
+                    <p className="py-10 text-center text-muted-foreground">
+                      No services available in this category yet.
+                    </p>
+                  );
+                }
+                return (
+                  <div className="grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                    {filtered.map((service, index) => {
                   const IconComponent = service.icon;
                   return (
                     <ServiceCard
@@ -46,15 +70,18 @@ export function ServicesGrid() {
                       link={service.link}
                       title={service.title}
                       features={service.features}
-                      borderColor=""
-                      category=""
-                      color=""
+                      borderColor={service.borderColor}
+                      category={service.category}
+                      color={service.color}
                       icon={IconComponent}
                       tracking={service.tracking}
+                      fundingLabel={service.fundingLabel}
                     />
                   );
                 })}
-              </div>
+                  </div>
+                );
+              })()}
             </TabsContent>
           ))}
         </Tabs>

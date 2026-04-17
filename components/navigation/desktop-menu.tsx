@@ -1,13 +1,14 @@
 "use client";
-import { EXTERNAL_LINKS, MENU_LINKS } from "@/lib/constants/general";
-import { cn } from "@/lib/utils";
+import { MENU_LINKS, TRACKING_EVENTS } from "@/lib/constants/general";
+import { useTenantContext } from "@/components/providers/tenant-provider";
+import { DesktopNavActionsSkeleton } from "@/components/shared/tenant-skeletons";
+import ModeToggle from "../shared/theme-mode-toggle";
+import { cn } from "@/lib/utils/utils";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
-import ModeToggle from "../shared/theme-mode-toggle";
 import useNavigationMenu from "@/hooks/use-navigation-menu";
 import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
 
 export function DesktopMenu() {
   const { hasDarkHero, isScrolled, pathname } = useNavigationMenu();
@@ -59,6 +60,16 @@ export function DesktopMenu() {
 
 export function DesktopMenuButtons() {
   const { hasDarkHero, isScrolled } = useNavigationMenu();
+  const { tenant, isTenantReady } = useTenantContext();
+
+  if (!isTenantReady || !tenant) {
+    return (
+      <div className="hidden lg:flex items-center gap-x-3">
+        <DesktopNavActionsSkeleton />
+        <ModeToggle />
+      </div>
+    );
+  }
 
   return (
     <div className="hidden lg:flex items-center gap-x-3">
@@ -66,10 +77,10 @@ export function DesktopMenuButtons() {
         onClick={() => {
           track(
             TRACKING_EVENTS.orderPrescriptionButton,
-            EXTERNAL_LINKS.actions.orderPrescriptions
+            tenant.orderPrescriptionsUrl
           );
         }}
-        href={EXTERNAL_LINKS.actions.orderPrescriptions}
+        href={tenant.orderPrescriptionsUrl}
         className={cn(
           "group relative px-4 py-2 text-sm font-semibold transition-all duration-300 overflow-hidden rounded-lg hover:text-primary",
           hasDarkHero
@@ -96,10 +107,10 @@ export function DesktopMenuButtons() {
           onClick={() => {
             track(
               TRACKING_EVENTS.bookAppointmentButton,
-              EXTERNAL_LINKS.actions.bookAppointment
+              tenant.bookAppointmentUrl
             );
           }}
-          href={EXTERNAL_LINKS.actions.bookAppointment}
+          href={tenant.bookAppointmentUrl}
           className="flex items-center gap-2"
         >
           {/* Shine effect */}

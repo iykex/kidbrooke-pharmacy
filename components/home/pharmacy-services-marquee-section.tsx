@@ -1,9 +1,10 @@
 import { Card, CardContent } from "../ui/card";
-import { ComponentType } from "react";
-import { cn } from "@/lib/utils";
-import { TRUST_BADGES_MARQUEE } from "@/lib/constants/general";
+import { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils/utils";
+import { trustBadgesToView } from "@/lib/utils/marketing-present";
+import type { MarketingBlocksDoc } from "@/lib/types/firestore";
 import WidthConstraint from "../shared/width-constraint";
-import SectionHeader from "@/components/general/section-divider-head";
+import SectionHeader from "./section-divider-head";
 
 export const TrustBadgeCard = ({
   title,
@@ -14,13 +15,13 @@ export const TrustBadgeCard = ({
 }: {
   title: string;
   subtitle: string;
-  icon: ComponentType<{ className?: string }>;
+  icon: LucideIcon;
   color: string;
   bgColor: string;
 }) => {
   const Icon = icon;
   return (
-    <Card className="w-60 shrink-0 bg-card hover:shadow-md transition-all duration-300 border-border/60 hover:border-primary/30 mx-3 group hover:-translate-y-2 shadow-md dark:shadow-md/30">
+    <Card className="w-60 shrink-0 bg-white dark:bg-[#003b5c] hover:shadow-md transition-all duration-300 border-border/60 hover:border-primary/30 mx-3 group hover:-translate-y-2 shadow-md dark:shadow-md/30">
       <CardContent className="p-6 flex flex-col items-center text-center">
         <div
           className={cn(
@@ -41,7 +42,13 @@ export const TrustBadgeCard = ({
   );
 };
 
-export default function PharmacyServicesMarquee() {
+export default function PharmacyServicesMarquee({
+  marketing,
+}: {
+  marketing: MarketingBlocksDoc | null;
+}) {
+  const badges = trustBadgesToView(marketing?.trustBadges ?? []);
+
   return (
     <section className="relative">
       {/* Updated Background Decorations */}
@@ -70,11 +77,9 @@ export default function PharmacyServicesMarquee() {
             <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-linear-to-l from-background to-transparent z-10 pointer-events-none"></div>
 
             <div className="flex w-max animate-scroll group-hover:paused gap-6 py-4">
-              {[...TRUST_BADGES_MARQUEE, ...TRUST_BADGES_MARQUEE].map(
-                (badge, i) => (
-                  <TrustBadgeCard key={i} {...badge} />
-                )
-              )}
+              {[...badges, ...badges].map((badge, i) => (
+                <TrustBadgeCard key={i} {...badge} />
+              ))}
             </div>
           </div>
 

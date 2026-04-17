@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import useNavigationMenu from "@/hooks/use-navigation-menu";
 import InfoBar from "../navigation/info-bar";
 import Brand from "../navigation/brand";

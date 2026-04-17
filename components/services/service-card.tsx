@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { track } from "@/lib/analytics/tracker";
 import { Service } from "@/lib/types/general";
@@ -15,6 +16,7 @@ export default function ServiceCard({
   image,
   link,
   tracking,
+  fundingLabel,
 }: Service) {
   return (
     <Card className="max-w-lg mx-auto p-0 bg-background rounded-none relative rounded-tr-4xl rounded-bl-4xl border-0 shadow-none outline-0 overflow-hidden gap-0">
@@ -35,6 +37,13 @@ export default function ServiceCard({
         <Button className="absolute top-0 left-0 rounded-none rounded-br-lg w-full max-w-2xs bg-background backdrop-blur-sm shadow-none border-0 h-10 z-20 text-foreground font-bold text-base hover:bg-background">
           {title}
         </Button>
+
+        {/* Funding label badge */}
+        {fundingLabel && (
+          <Badge className="absolute top-0 right-0 rounded-none rounded-bl-lg bg-primary/90 text-white text-xs font-semibold px-2 py-1 z-20">
+            {fundingLabel}
+          </Badge>
+        )}
       </div>
 
       {/* Content - Always visible */}

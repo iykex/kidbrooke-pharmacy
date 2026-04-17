@@ -4,10 +4,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { INTERNAL_LINKS } from "@/lib/constants/general";
 import WidthConstraint from "../shared/width-constraint";
-import { NHS_PHARMACY_FIRST_SERVICES } from "@/lib/constants/data";
 import { track } from "@/lib/analytics/tracker";
+import { iconForConditionId, type NhsPfpHomeCard } from "@/lib/utils/service-ui";
 
-export function NHSPharmacyFirstSection() {
+export function NHSPharmacyFirstSection({
+  cards,
+}: {
+  cards: NhsPfpHomeCard[];
+}) {
   return (
     <section className="relative overflow-hidden">
       {/* Background Pattern */}
@@ -28,7 +32,7 @@ export function NHSPharmacyFirstSection() {
               </div>
 
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide sm:tracking-tight text-gray-900 dark:text-white mb-2 leading-tight">
-                Can't Get to the GP?
+                Can&apos;t Get to the GP?
               </h2>
               <h2 className="text-primary text-3xl sm:text-4xl md:text-5xl font-bold sm:tracking-tight mb-5 leading-tight">
                 We Can Help
@@ -58,8 +62,8 @@ export function NHSPharmacyFirstSection() {
 
           {/* Services Grid */}
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 py-4">
-            {NHS_PHARMACY_FIRST_SERVICES.map((service, index) => {
-              const Icon = service.icon;
+            {cards.map((service, index) => {
+              const Icon = iconForConditionId(service.conditionId);
               return (
                 <div
                   key={index}

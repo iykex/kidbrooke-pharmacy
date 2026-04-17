@@ -1,6 +1,5 @@
 "use client";
 
-import { ChatInputProps } from "@/lib/types/chatbot";
 import { KeyboardEvent, useEffect, useRef } from "react";
 
 export default function useChatInput(

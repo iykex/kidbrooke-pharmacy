@@ -1,10 +1,8 @@
 import { renderTablerIcon } from "@/components/ui/icon-renderer";
 
-interface ActionIconProps {
-  icon?: "calendar" | "phone" | "location" | "external" | "prescription";
-}
 
-export function ActionIcon({ icon }: ActionIconProps) {
+export function ActionIcon({ icon }: {  icon?: "calendar" | "phone" | "location" | "external" | "prescription";
+}) {
   let iconName:
     | "IconCalendar"
     | "IconPhone"

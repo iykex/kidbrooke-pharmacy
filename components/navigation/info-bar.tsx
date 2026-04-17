@@ -1,15 +1,47 @@
 "use client";
 
+import { Clock, MapPin, PhoneOutgoing } from "lucide-react";
 import useNavigationMenu from "@/hooks/use-navigation-menu";
-import { ABOUT_US_INFO_BANNER } from "@/lib/constants/general";
-import { cn } from "@/lib/utils";
+import { useTenantContext } from "@/components/providers/tenant-provider";
+import { InfoBarRowSkeleton } from "@/components/shared/tenant-skeletons";
+import {
+  formatAddressInline,
+  formatOpeningHoursSummary,
+} from "@/lib/utils/format-tenant";
+import { cn } from "@/lib/utils/utils";
 
 export default function InfoBar() {
   const { hasDarkHero, isScrolled } = useNavigationMenu();
+  const { tenant, isTenantReady } = useTenantContext();
+
+  if (!isTenantReady || !tenant) {
+    return (
+      <div
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }}
+        className={cn(
+          "py-2 px-3 transition-all duration-300 ease-in-out backdrop-blur-3xl cursor-pointer",
+          hasDarkHero && "text-white",
+          isScrolled && "bg-background text-foreground"
+        )}
+      >
+        <InfoBarRowSkeleton />
+      </div>
+    );
+  }
+
+  const items = [
+    { title: "Find Us", description: formatAddressInline(tenant), icon: MapPin },
+    { title: "Opening Hours", description: formatOpeningHoursSummary(tenant), icon: Clock },
+    { title: "Call Us", description: tenant.phone, icon: PhoneOutgoing },
+  ];
+
   return (
     <div
       onClick={(e) => {
-        // Scroll to top when clicking empty areas of the info bar
         if (e.target === e.currentTarget) {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -21,7 +53,7 @@ export default function InfoBar() {
       )}
     >
       <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:gap-x-4 md:gap-x-8">
-        {ABOUT_US_INFO_BANNER.map((item) => {
+        {items.map((item) => {
           const Icon = item.icon;
           return (
             <div

@@ -12,12 +12,6 @@ export interface Message {
   actions?: ActionButton[];
 }
 
-export interface QuickAction {
-  label: string;
-  query: string;
-  icon: React.ReactNode;
-}
-
 export interface KnowledgeBaseItem {
   keywords: string[];
   answer: string;

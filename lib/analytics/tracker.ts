@@ -1,15 +1,12 @@
 import { nanoid } from "nanoid";
 import {
-  COOKIE_CONSENT_KEY,
-  COOKIE_PREFERENCES_KEY,
-} from "../constants/cookies";
-import {
   CACHED_LOCATION_KEY,
+  COOKIE_CONSENT_KEY,
   SESSION_ID_KEY,
   SESSION_TIMEOUT,
   TRACKING_ROUTE,
   USER_ID_KEY,
-} from "../constants/analytics";
+} from "../constants/general";
 import z4 from "zod/v4";
 import { analyticsPayloadSchema } from "../schema";
 import { GeolocationData } from "../types/analytics";

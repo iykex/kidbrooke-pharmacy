@@ -1,10 +1,10 @@
 "use client";
 import { MessageCircle, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { Button } from "../ui/button";
-import { ChatToggleButtonProps } from "@/lib/types/general";
+import type { ChatToggleButtonProps } from "@/lib/types/chatbot";
 import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
+import { TRACKING_EVENTS } from "@/lib/constants/general";
 
 export function ChatToggleButton({ isOpen, onClick }: ChatToggleButtonProps) {
   return (

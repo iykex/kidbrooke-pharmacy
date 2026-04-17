@@ -15,7 +15,7 @@ export default function useContactForm() {
     },
   });
   const { control, formState, handleSubmit, reset } = contactForm;
-  function onSubmit(data: z4.infer<typeof contactFormSchema>) {}
+  function onSubmit(_data: z4.infer<typeof contactFormSchema>) {}
 
   return { control, formState, handleSubmit, reset, onSubmit };
 }

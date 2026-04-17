@@ -1,9 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import Menu from "@/components/navigation/navigation-menu";
 import WidthConstraint from "@/components/shared/width-constraint";
 import CTASection from "@/components/shared/cta-section";
-import { COOKIE_POLICY_DATA } from "@/lib/constants/legal";
+import { useLegalDocument } from "@/hooks/use-legal-document";
 
 export default function CookiePolicyPage() {
+  const legal = useLegalDocument("cookie");
+  const sections: any[] = legal?.sections ?? [];
+
   return (
     <div className="overflow-hidden space-y-18 pb-30">
       <header className="fixed top-0 w-full z-50">
@@ -19,9 +25,11 @@ export default function CookiePolicyPage() {
           <p className="text-lg text-gray-600 dark:text-white/60 max-w-2xl mx-auto z-10">
             Understanding how we use cookies to enhance your experience
           </p>
-          <p className="text-sm text-gray-500 dark:text-white/60 z-10">
-            Last updated: 1st May 2024
-          </p>
+          {legal?.effectiveDate && (
+            <p className="text-sm text-gray-500 dark:text-white/60 z-10">
+              Last updated: {legal.effectiveDate}
+            </p>
+          )}
         </WidthConstraint>
       </section>
 
@@ -29,7 +37,7 @@ export default function CookiePolicyPage() {
       <section className="bg-white dark:bg-transparent">
         <WidthConstraint className="py-8 lg:py-12">
           <div className="max-w-4xl mx-auto space-y-12 px-6 sm:px-10 lg:px-16">
-            {COOKIE_POLICY_DATA.map((section, idx) => (
+            {sections.map((section: any, idx: number) => (
               <article key={idx} className="space-y-4">
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white z-10 flex items-center gap-3">
                   <span className="text-primary font-bold text-4xl">
@@ -64,18 +72,18 @@ export default function CookiePolicyPage() {
                         const textColor = isPrimary
                           ? "text-primary"
                           : isChart2
-                          ? "text-chart-2"
-                          : "text-chart-3";
+                            ? "text-chart-2"
+                            : "text-chart-3";
                         const bgColor = isPrimary
                           ? "bg-primary/10"
                           : isChart2
-                          ? "bg-chart-2/10"
-                          : "bg-chart-3/10";
+                            ? "bg-chart-2/10"
+                            : "bg-chart-3/10";
                         const borderColor = isPrimary
                           ? "border-primary/20"
                           : isChart2
-                          ? "border-chart-2/20"
-                          : "border-chart-3/20";
+                            ? "border-chart-2/20"
+                            : "border-chart-3/20";
 
                         return (
                           <div

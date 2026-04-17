@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { flushSync } from "react-dom";
 import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
+import { TRACKING_EVENTS } from "@/lib/constants/general";
 
 export default function ModeToggle() {
   const { setTheme } = useTheme();

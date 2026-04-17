@@ -1,11 +1,29 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { INTERNAL_LINKS, OUR_PROCESS_STEPS } from "@/lib/constants/general";
+import { INTERNAL_LINKS } from "@/lib/constants/general";
+import { PROCESS_STEP_STYLES } from "@/lib/utils/marketing-present";
+import type { MarketingBlocksDoc } from "@/lib/types/firestore";
 import WidthConstraint from "../shared/width-constraint";
 import SectionHeader from "@/components/general/section-divider-head";
 
-export function OurProcessSection() {
+export function OurProcessSection({
+  marketing,
+}: {
+  marketing: MarketingBlocksDoc | null;
+}) {
+  const steps = (marketing?.ourProcessSteps ?? []).map((step, i) => {
+    const style = PROCESS_STEP_STYLES[i % PROCESS_STEP_STYLES.length]!;
+    return {
+      number: step.number,
+      title: step.title,
+      description: step.description,
+      icon: style.icon,
+      color: style.color,
+      bgColor: style.bgColor,
+    };
+  });
+
   return (
     <section className="bg-white dark:bg-background">
       {/* Background Pattern */}
@@ -27,7 +45,7 @@ export function OurProcessSection() {
 
           {/* Steps Grid */}
           <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4">
-            {OUR_PROCESS_STEPS.map((step, index) => {
+            {steps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <div key={index} className="relative group">

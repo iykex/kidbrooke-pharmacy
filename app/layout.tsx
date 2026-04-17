@@ -8,8 +8,10 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import FAQChatbot from "@/components/faq-chatbot/faq-chatbot";
 import CookieConsent from "@/components/general/cookie-consent";
 import PageTracker from "@/components/providers/analytics/page-tracker";
-import "@/styles//hide-dev-overlay.css";
+import "@/styles/hide-dev-overlay.css";
 import { Toaster } from "@/components/ui/sonner";
+import { TenantProvider } from "@/components/providers/tenant-provider";
+import { AppSkeletonTheme } from "@/components/providers/app-skeleton-theme";
 
 export const metadata: Metadata = getMetadata();
 
@@ -29,15 +31,21 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PageTracker>
-            <main className="dashed-grid-bg min-h-screen">{children}</main>
-            <footer className="w-full bg-foreground dark:bg-background">
-              <Footer />
-            </footer>
-            <FAQChatbot />
-            <CookieConsent />
-          </PageTracker>
-          <Toaster />
+          <AppSkeletonTheme>
+          <TenantProvider>
+            <PageTracker>
+              <main className="dashed-grid-bg min-h-screen">{children}</main>
+              <footer className="w-full bg-foreground dark:bg-background">
+                <Footer />
+              </footer>
+
+              <FAQChatbot />
+
+              <CookieConsent />
+            </PageTracker>
+            <Toaster />
+          </TenantProvider>
+          </AppSkeletonTheme>
         </ThemeProvider>
       </body>
     </html>

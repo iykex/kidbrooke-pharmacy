@@ -1,9 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import Menu from "@/components/navigation/navigation-menu";
 import WidthConstraint from "@/components/shared/width-constraint";
 import CTASection from "@/components/shared/cta-section";
-import { TERMS_AND_CONDITIONS } from "@/lib/constants/legal";
+import { useLegalDocument } from "@/hooks/use-legal-document";
 
 export default function TermsPage() {
+  const legal = useLegalDocument("terms");
+  const sections: any[] = legal?.sections ?? [];
+
   return (
     <div className="overflow-hidden space-y-18 pb-30">
       <header className="fixed top-0 w-full z-50">
@@ -19,9 +25,11 @@ export default function TermsPage() {
           <p className="text-lg text-gray-600 dark:text-white/60 max-w-2xl mx-auto z-10">
             Please read these terms carefully before using our pharmacy services
           </p>
-          <p className="text-sm text-gray-500 dark:text-white/60">
-            Last updated: 1st May 2024
-          </p>
+          {legal?.effectiveDate && (
+            <p className="text-sm text-gray-500 dark:text-white/60">
+              Last updated: {legal.effectiveDate}
+            </p>
+          )}
         </WidthConstraint>
       </section>
 
@@ -29,7 +37,7 @@ export default function TermsPage() {
       <section className="bg-white dark:bg-transparent">
         <WidthConstraint className="py-8 lg:py-12">
           <div className="max-w-4xl mx-auto space-y-12 px-6 sm:px-10 lg:px-16">
-            {TERMS_AND_CONDITIONS.map((section, idx) => (
+            {sections.map((section: any, idx: number) => (
               <article key={idx} className="space-y-4">
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                   <span className="text-primary font-bold text-4xl">
@@ -40,7 +48,7 @@ export default function TermsPage() {
 
                 {/* Paragraphs Type */}
                 {section.type === "paragraphs" &&
-                  section.content?.map((paragraph, pIdx) => (
+                  section.content?.map((paragraph: string, pIdx: number) => (
                     <p
                       key={pIdx}
                       className="text-gray-700 dark:text-white/60 leading-relaxed"
@@ -58,7 +66,7 @@ export default function TermsPage() {
                       </p>
                     )}
                     <ul className="space-y-2 ml-6">
-                      {section.bulletPoints?.map((point, bIdx) => (
+                      {section.bulletPoints?.map((point: string, bIdx: number) => (
                         <li
                           key={bIdx}
                           className="text-gray-700 dark:text-white/60 flex items-start gap-3"
@@ -79,7 +87,7 @@ export default function TermsPage() {
                 {/* Subsections Type */}
                 {section.type === "subsections" && (
                   <div className="space-y-3">
-                    {section.subsections?.map((subsection, sIdx) => (
+                    {section.subsections?.map((subsection: any, sIdx: number) => (
                       <div key={sIdx}>
                         <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
                           {subsection.title}

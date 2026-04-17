@@ -16,12 +16,11 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import useContactForm from "@/hooks/use-contact-form";
-import { CONTACT_FORM_FIELD_ITEMS } from "@/lib/constants/general";
+import { CONTACT_FORM_FIELD_ITEMS, TRACKING_EVENTS } from "@/lib/constants/general";
 import { Controller } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import EmergencyContact from "./emergency-contact";
 import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
 
 export function ContactForm() {
   const { control, formState, handleSubmit, onSubmit } = useContactForm();
@@ -31,7 +30,7 @@ export function ContactForm() {
         <CardHeader className="space-y-2">
           <CardTitle className="text-card-title">Send Us a Message</CardTitle>
           <CardDescription className="text-card-[20px]">
-            Fill out the form below and we'll get back to you as soon as
+            Fill out the form below and we&apos;ll get back to you as soon as
             possible
           </CardDescription>
         </CardHeader>

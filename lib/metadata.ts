@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import { BUSINESS_PROFILE } from "./constants/general";
 
 // Site configuration - uses environment variable or defaults to production URL

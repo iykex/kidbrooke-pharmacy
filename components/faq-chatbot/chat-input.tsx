@@ -1,11 +1,11 @@
 "use client";
 import { Send, Slash } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { ChatInputProps } from "@/lib/types/chatbot";
 import useChatInput from "@/hooks/use-chatbot-input";
 import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
+import { TRACKING_EVENTS } from "@/lib/constants/general";
 
 export function ChatInput({
   input,

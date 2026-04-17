@@ -1,4 +1,4 @@
-import { GEO_LOCATION_PROVIDER } from "../constants/analytics";
+import { GEO_LOCATION_PROVIDER } from "../constants/general";
 import { GeolocationData } from "../types/analytics";
 
 export async function getGeolocation(): Promise<GeolocationData | null> {

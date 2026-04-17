@@ -3,18 +3,19 @@ import Image from "next/image";
 import WidthConstraint from "../shared/width-constraint";
 import { Button } from "../ui/button";
 import { ArrowRight, Calendar, CheckCircle, Video } from "lucide-react";
-import bookingCouple from "@/public/ui/booking.png";
+import elderlyCouple from "@/public/ui/elderly-couple.jpg";
 import Link from "next/link";
-import { EXTERNAL_LINKS } from "@/lib/constants/general";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
+import { TRACKING_EVENTS } from "@/lib/constants/general";
 import { track } from "@/lib/analytics/tracker";
-import curvedArrow from "@/public/elements/curved-arrow.svg";
+import { useTenantContext } from "@/components/providers/tenant-provider";
+import { PrimaryCtaSkeleton } from "@/components/shared/tenant-skeletons";
 
 export function ServicesHeading() {
+  const { tenant, isTenantReady } = useTenantContext();
   return (
-    <section className="pt-32 pb-20 bg-background">
+    <section className="pt-45 pb-20 bg-background">
       <WidthConstraint className="relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 place-items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* LEFT COL - Content */}
           <div className="space-y-6 max-w-xl">
             {/* Badge */}
@@ -32,7 +33,7 @@ export function ServicesHeading() {
 
             {/* Description */}
             <p className="text-gray-600 dark:text-white/60 text-lg leading-relaxed">
-              At Kidbrooke Pharmacy, our pharmacists offer a comprehensive range
+              At Belvedere Pharmacy, our pharmacists offer a comprehensive range
               of NHS-commissioned and private healthcare services. Get expert
               help from the comfort of your home with our video consultation
               service.
@@ -55,42 +56,48 @@ export function ServicesHeading() {
             </div>
 
             {/* CTA Button */}
-            <div className="pt-2 space-y-4">
-              <Button
-                asChild
-                size="lg"
-                className="group bg-primary hover:bg-primary/90 text-white font-semibold px-8 rounded-xl shadow-lg transition-all duration-300"
-              >
-                <Link
-                  href={EXTERNAL_LINKS.actions.bookAppointment}
-                  onClick={() => {
-                    track(
-                      TRACKING_EVENTS.bookAppointmentButton,
-                      EXTERNAL_LINKS.actions.bookAppointment
-                    );
-                  }}
-                  className="flex items-center gap-2"
+            <div className="pt-2">
+              {!isTenantReady || !tenant ? (
+                <PrimaryCtaSkeleton className="!w-64 !h-12" />
+              ) : (
+                <Button
+                  asChild
+                  size="lg"
+                  className="group bg-primary hover:bg-primary/90 text-white font-semibold px-8 rounded-xl shadow-lg transition-all duration-300"
                 >
-                  <Calendar className="w-5 h-5" />
-                  Book an Appointment
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-              <Image src={curvedArrow} alt="arrow" width={100} height={100} />
+                  <Link
+                    href={tenant.bookAppointmentUrl}
+                    onClick={() => {
+                      track(
+                        TRACKING_EVENTS.bookAppointmentButton,
+                        tenant.bookAppointmentUrl
+                      );
+                    }}
+                    className="flex items-center gap-2"
+                  >
+                    <Calendar className="w-5 h-5" />
+                    Book an Appointment
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
 
           {/* RIGHT COL - Image */}
-
-          <Image
-            src={bookingCouple}
-            alt="Healthcare Services"
-            width={600}
-            height={400}
-            className="w-full h-auto object-cover"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            placeholder="blur"
-          />
+          <div className="hidden lg:block relative">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <Image
+                src={elderlyCouple}
+                alt="Healthcare Services"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                placeholder="blur"
+              />
+            </div>
+          </div>
         </div>
       </WidthConstraint>
     </section>

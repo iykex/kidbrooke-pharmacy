@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { useChatbot } from "@/hooks/use-chat-bot";
 import { ChatToggleButton } from "./chat-toggle-button";
 import { ChatHeader } from "./chat-header";
@@ -9,10 +9,11 @@ import { QuickActionsPanel } from "./quick-actions-panel";
 import { ContinueChatPrompt } from "./continue-chat-prompt";
 import { ChatInput } from "./chat-input";
 import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
+import { TRACKING_EVENTS } from "@/lib/constants/general";
 
 export default function FAQChatbot() {
   const {
+    isTenantReady,
     isOpen,
     visitorName,
     isAskingName,
@@ -30,6 +31,10 @@ export default function FAQChatbot() {
     toggleQuickActions,
     setIsOpen,
   } = useChatbot();
+
+  if (!isTenantReady) {
+    return null;
+  }
 
   return (
     <div>

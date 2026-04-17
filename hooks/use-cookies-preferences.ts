@@ -1,86 +1,68 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useReducer, useEffect } from "react";
+import { useIsMounted } from "./use-is-mounted";
 import {
   ALL_PREFERENCES,
   COOKIE_CONSENT_KEY,
   COOKIE_PREFERENCES_KEY,
   DEFAULT_PREFERENCES,
-} from "@/lib/constants/cookies";
-import { CookiePreferences } from "@/lib/types/general";
+} from "@/lib/constants/general";
+import type { CookiePreferences } from "@/lib/types/general";
+import {
+  cookiePreferencesInitialState,
+  cookiePreferencesReducer,
+  parseStoredCookiePreferencesJson,
+} from "@/lib/utils/cookie-preferences-reducer";
 
 export default function useCookiesPreferences() {
-  const [mounted, setMounted] = useState(false);
-  const [isCookieDialogueBoxVisible, setIsCookieDialogueBoxVisible] =
-    useState(false);
-  const [showAllCookiePreferences, setShowAllCookiePreferences] =
-    useState(false);
-  const [cookiePreferences, setCookiePreferences] =
-    useState<CookiePreferences>(DEFAULT_PREFERENCES);
-  const [hasConsented, setHasConsented] = useState(false);
-
-  function handleAcceptAllCookies() {
-    saveCookiePreferences(ALL_PREFERENCES);
-  }
-
-  function handleAcceptEssentialCookiesOnly() {
-    saveCookiePreferences(DEFAULT_PREFERENCES);
-  }
-
-  function handleCustomCookies() {
-    saveCookiePreferences(cookiePreferences);
-  }
-
-  function saveCookiePreferences(prefs: CookiePreferences) {
-    localStorage.setItem(COOKIE_CONSENT_KEY, "true");
-    localStorage.setItem(COOKIE_PREFERENCES_KEY, JSON.stringify(prefs));
-    setCookiePreferences(prefs);
-    setHasConsented(true);
-    setIsCookieDialogueBoxVisible(false);
-    setShowAllCookiePreferences(false);
-  }
-
-  function handleOpenSettings() {
-    setIsCookieDialogueBoxVisible(true);
-    setShowAllCookiePreferences(false);
-  }
+  const mounted = useIsMounted();
+  const [state, dispatch] = useReducer(
+    cookiePreferencesReducer,
+    cookiePreferencesInitialState,
+  );
 
   useEffect(() => {
-    setMounted(true);
-
-    let cookieModalTimer: NodeJS.Timeout;
     const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
     const savedPreferences = localStorage.getItem(COOKIE_PREFERENCES_KEY);
 
     if (consent && savedPreferences) {
-      setHasConsented(true);
-      setIsCookieDialogueBoxVisible(false);
-      try {
-        setCookiePreferences(JSON.parse(savedPreferences));
-      } catch (e) {
-        // If parsing fails, use default preferences
-        setCookiePreferences(DEFAULT_PREFERENCES);
-      }
-    } else {
-      cookieModalTimer = setTimeout(
-        () => setIsCookieDialogueBoxVisible(true),
-        1500
+      const parsed = parseStoredCookiePreferencesJson(
+        savedPreferences,
+        DEFAULT_PREFERENCES,
       );
+      dispatch({ type: "INIT_CONSENTED", preferences: parsed });
+    } else {
+      const timer = setTimeout(
+        () => dispatch({ type: "SHOW_MODAL" }),
+        1500,
+      );
+      return () => clearTimeout(timer);
     }
-    return () => clearTimeout(cookieModalTimer);
   }, []);
+
+  function saveCookiePreferences(prefs: CookiePreferences) {
+    localStorage.setItem(COOKIE_CONSENT_KEY, "true");
+    localStorage.setItem(COOKIE_PREFERENCES_KEY, JSON.stringify(prefs));
+    dispatch({ type: "SAVE", preferences: prefs });
+  }
 
   return {
     mounted,
-    hasConsented,
-    handleAcceptEssentialCookiesOnly,
-    handleAcceptAllCookies,
-    handleOpenSettings,
-    isCookieDialogueBoxVisible,
-    setIsCookieDialogueBoxVisible,
-    showAllCookiePreferences,
-    cookiePreferences,
-    setCookiePreferences,
-    handleCustomCookies,
-    setShowAllCookiePreferences,
+    hasConsented: state.hasConsented,
+    isCookieDialogueBoxVisible: state.isCookieDialogueBoxVisible,
+    showAllCookiePreferences: state.showAllCookiePreferences,
+    cookiePreferences: state.cookiePreferences,
+    setIsCookieDialogueBoxVisible: (v: boolean) =>
+      dispatch({ type: v ? "SHOW_MODAL" : "HIDE_MODAL" }),
+    setCookiePreferences: (prefs: CookiePreferences) =>
+      dispatch({ type: "SET_PREFERENCES", preferences: prefs }),
+    setShowAllCookiePreferences: (v: boolean) =>
+      dispatch({ type: "TOGGLE_ALL_PREFERENCES", show: v }),
+    handleAcceptAllCookies: () => saveCookiePreferences(ALL_PREFERENCES),
+    handleAcceptEssentialCookiesOnly: () =>
+      saveCookiePreferences(DEFAULT_PREFERENCES),
+    handleCustomCookies: () => saveCookiePreferences(state.cookiePreferences),
+    handleOpenSettings: () => dispatch({ type: "OPEN_SETTINGS" }),
   };
 }

@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Bot, User } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { ActionIcon } from "./action-icon";
-import { Message } from "@/lib/types/general";
-import { ChatMessageProps } from "@/lib/types/chatbot";
+import type { ChatMessageProps } from "@/lib/types/chatbot";
 
 export function ChatMessage({ message }: ChatMessageProps) {
   return (
@@ -39,10 +38,13 @@ export function ChatMessage({ message }: ChatMessageProps) {
                 : "text-gray-400 dark:text-gray-500"
             )}
           >
-            {message.timestamp.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {message.timestamp instanceof Date &&
+            !Number.isNaN(message.timestamp.getTime())
+              ? message.timestamp.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              : ""}
           </span>
         </div>
 

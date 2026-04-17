@@ -1,4 +1,4 @@
-import { getChatHistory, clearChatHistory } from "@/lib/chatbot";
+import { getChatHistory, clearChatHistory } from "@/lib/utils/chatbot";
 import { ContinueChatPromptProps } from "@/lib/types/chatbot";
 import { Button } from "../ui/button";
 

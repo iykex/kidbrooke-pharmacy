@@ -37,8 +37,6 @@ export function getOptimizedImageUrl(
     src: string,
     options: ImageTransformOptions = {}
 ): string {
-    const { width, height, quality = 80, format = 'auto', fit = 'cover' } = options;
-
     // If it's a data URL or external URL, return as-is
     if (src.startsWith('data:') || src.startsWith('http')) {
         return src;

@@ -3,11 +3,6 @@ import { contactFormSchema } from "../schema";
 import { FieldPath } from "react-hook-form";
 import { StaticImageData } from "next/image";
 
-export interface ServiceCategory {
-  id: string;
-  label: string;
-}
-
 export interface Service {
   title: string;
   description: string;
@@ -19,19 +14,7 @@ export interface Service {
   color: string;
   borderColor: string;
   tracking: string;
-}
-
-export interface ServicesGridProps {
-  categories: ServiceCategory[];
-  services: Service[];
-}
-
-export interface WhyChooseUsFeature {
-  title: string;
-  description: string;
-  icon: React.ComponentType<{ className?: string }>;
-  color: string;
-  borderColor: string;
+  fundingLabel: string;
 }
 
 export type ButtonVariants =
@@ -44,8 +27,8 @@ export type ButtonVariants =
   | null
   | undefined;
 
-export type ContactFormType = z4.infer<typeof contactFormSchema>;
-export type ContactFormFieldNames = FieldPath<ContactFormType>;
+type ContactFormType = z4.infer<typeof contactFormSchema>;
+type ContactFormFieldNames = FieldPath<ContactFormType>;
 
 export type ContactFormFieldsMap = {
   name: ContactFormFieldNames;
@@ -59,34 +42,18 @@ export interface CookiePreferences {
   marketing: boolean;
 }
 
-// Chatbot types
-export interface ActionButton {
-  label: string;
-  href: string;
-  icon?: "calendar" | "phone" | "location" | "external" | "prescription";
-}
+export type CookiePreferencesState = {
+  isCookieDialogueBoxVisible: boolean;
+  showAllCookiePreferences: boolean;
+  cookiePreferences: CookiePreferences;
+  hasConsented: boolean;
+};
 
-export interface Message {
-  id: string;
-  role: "user" | "bot";
-  content: string;
-  timestamp: Date;
-  actions?: ActionButton[];
-}
-
-export interface QuickAction {
-  label: string;
-  query: string;
-  icon: React.ReactNode;
-}
-
-export interface KnowledgeBaseItem {
-  keywords: string[];
-  answer: string;
-  actions?: ActionButton[];
-}
-
-export interface ChatToggleButtonProps {
-  isOpen: boolean;
-  onClick: () => void;
-}
+export type CookiePreferencesAction =
+  | { type: "INIT_CONSENTED"; preferences: CookiePreferences }
+  | { type: "SHOW_MODAL" }
+  | { type: "HIDE_MODAL" }
+  | { type: "SAVE"; preferences: CookiePreferences }
+  | { type: "OPEN_SETTINGS" }
+  | { type: "SET_PREFERENCES"; preferences: CookiePreferences }
+  | { type: "TOGGLE_ALL_PREFERENCES"; show: boolean };

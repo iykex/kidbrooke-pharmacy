@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 export type GeolocationData = {
   country: string;
   country_code: string;

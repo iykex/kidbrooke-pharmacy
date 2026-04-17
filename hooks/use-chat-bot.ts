@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import { useTenantContext } from "@/components/providers/tenant-provider";
 import {
-  getVisitorName,
-  setVisitorName,
-  getChatHistory,
-  saveChatHistory,
-  isIdleForTooLong,
   findBestResponse,
-} from "@/lib/chatbot";
-import { Message, ActionButton } from "@/lib/types/general";
+  getChatHistory,
+  getVisitorName,
+  isIdleForTooLong,
+  saveChatHistory,
+  setVisitorName,
+} from "@/lib/utils/chatbot";
+import { getChatbotEntriesForTenant } from "@/lib/services/firestore/queries";
+import type { ActionButton, KnowledgeBaseItem, Message } from "@/lib/types/chatbot";
+import { useEffect, useRef, useState } from "react";
 
 export function useChatbot() {
+  const { tenant, slug, isTenantReady } = useTenantContext();
   const [isOpen, setIsOpen] = useState(false);
   const [visitorName, setVisitorNameState] = useState<string | null>(null);
   const [isAskingName, setIsAskingName] = useState(false);
@@ -18,9 +21,40 @@ export function useChatbot() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
+  const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseItem[]>([]);
+  /** Latest KB for async handlers — state captured before `await` is often still []. */
+  const knowledgeBaseRef = useRef<KnowledgeBaseItem[]>([]);
+  knowledgeBaseRef.current = knowledgeBase;
 
-  // Initialize on mount
+  const tenantInitKeyRef = useRef<string | null>(null);
+
   useEffect(() => {
+    let cancelled = false;
+    getChatbotEntriesForTenant(slug)
+      .then((entries) => {
+        if (!cancelled) {
+          setKnowledgeBase(
+            entries.map((e) => ({
+              keywords: e.keywords,
+              answer: e.answer,
+              actions: e.actions,
+            })),
+          );
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+
+  useEffect(() => {
+    if (!isTenantReady || !tenant) return;
+
+    const initKey = `${slug}:${tenant.displayName}:${tenant.bookAppointmentUrl}:${tenant.orderPrescriptionsUrl}`;
+    if (tenantInitKeyRef.current === initKey) return;
+    tenantInitKeyRef.current = initKey;
+
     const cachedName = getVisitorName();
     const chatHistory = getChatHistory();
     const isIdle = isIdleForTooLong();
@@ -45,17 +79,17 @@ export function useChatbot() {
           {
             id: "welcome",
             role: "bot",
-            content: `Welcome back, ${cachedName}! 👋 I'm Bella, your Kidbrooke Pharmacy assistant. How can I help you today?`,
+            content: `Welcome back, ${cachedName}! 👋 I'm Bella, your ${tenant.displayName} assistant. How can I help you today?`,
             timestamp: new Date(),
             actions: [
               {
                 label: "Book Appointment",
-                href: "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+                href: tenant.bookAppointmentUrl,
                 icon: "calendar",
               },
               {
                 label: "Order Prescription",
-                href: "https://app.belvederepharmacy.net/#/auth/signin",
+                href: tenant.orderPrescriptionsUrl,
                 icon: "prescription",
               },
             ],
@@ -68,15 +102,13 @@ export function useChatbot() {
         {
           id: "ask-name",
           role: "bot",
-          content:
-            "Hello! 👋 I'm Bella, your Kidbrooke Pharmacy assistant. Before we start, may I know your name?",
+          content: `Hello! 👋 I'm Bella, your ${tenant.displayName} assistant. Before we start, may I know your name?`,
           timestamp: new Date(),
         },
       ]);
     }
-  }, []);
+  }, [isTenantReady, tenant, slug]);
 
-  // Save chat history when messages change
   useEffect(() => {
     if (messages.length > 0 && !showContinuePrompt) {
       saveChatHistory(messages);
@@ -84,6 +116,7 @@ export function useChatbot() {
   }, [messages, showContinuePrompt]);
 
   const handleSend = async (messageText?: string) => {
+    if (!isTenantReady || !tenant) return;
     const text = messageText || input.trim();
     if (!text) return;
 
@@ -99,43 +132,56 @@ export function useChatbot() {
     setIsTyping(true);
     setShowQuickActions(false);
 
-    // Simulate typing delay
     await new Promise((resolve) =>
-      setTimeout(resolve, 800 + Math.random() * 700)
+      setTimeout(resolve, 800 + Math.random() * 700),
     );
 
-    let response: { answer: string; actions?: ActionButton[] };
+    try {
+      let response: { answer: string; actions?: ActionButton[] };
 
-    if (isAskingName) {
-      const name = text.trim();
-      setVisitorName(name);
-      setVisitorNameState(name);
-      setIsAskingName(false);
-      response = {
-        answer: `Nice to meet you, ${name}! 😊 I'm here to help you with any questions about Kidbrooke Pharmacy. You can ask me about our services, opening hours, prescriptions, vaccinations, and more. What would you like to know?`,
-        actions: [
-          { label: "View Services", href: "/services", icon: "external" },
-          {
-            label: "Book Appointment",
-            href: "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
-            icon: "calendar",
-          },
-        ],
+      if (isAskingName) {
+        const name = text.trim();
+        setVisitorName(name);
+        setVisitorNameState(name);
+        setIsAskingName(false);
+        response = {
+          answer: `Nice to meet you, ${name}! 😊 I'm here to help you with any questions about ${tenant.displayName}. You can ask me about our services, opening hours, prescriptions, vaccinations, and more. What would you like to know?`,
+          actions: [
+            { label: "View Services", href: "/services", icon: "external" },
+            {
+              label: "Book Appointment",
+              href: tenant.bookAppointmentUrl,
+              icon: "calendar",
+            },
+          ],
+        };
+      } else {
+        response = findBestResponse(text, knowledgeBaseRef.current);
+      }
+
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "bot",
+        content: response.answer,
+        timestamp: new Date(),
+        actions: response.actions,
       };
-    } else {
-      response = findBestResponse(text);
+
+      setMessages((prev) => [...prev, botMessage]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          role: "bot",
+          content:
+            "Sorry — something went wrong while I was replying. Please try again, or use the quick questions or contact options.",
+          timestamp: new Date(),
+        },
+      ]);
+    } finally {
+      setIsTyping(false);
     }
-
-    const botMessage: Message = {
-      id: (Date.now() + 1).toString(),
-      role: "bot",
-      content: response.answer,
-      timestamp: new Date(),
-      actions: response.actions,
-    };
-
-    setIsTyping(false);
-    setMessages((prev) => [...prev, botMessage]);
   };
 
   const handleQuickAction = (query: string) => {
@@ -143,12 +189,13 @@ export function useChatbot() {
     handleSend(query);
   };
 
-  const handleContinueChat = (messages: Message[]) => {
-    setMessages(messages);
+  const handleContinueChat = (messagesArg: Message[]) => {
+    setMessages(messagesArg);
     setShowContinuePrompt(false);
   };
 
   const handleStartNew = () => {
+    if (!isTenantReady || !tenant) return;
     setShowContinuePrompt(false);
     setMessages([
       {
@@ -159,12 +206,12 @@ export function useChatbot() {
         actions: [
           {
             label: "Book Appointment",
-            href: "https://shop.belvederepharmacy.net/appointments/viewallservices/all?pharmacy=378&type=redirection",
+            href: tenant.bookAppointmentUrl,
             icon: "calendar",
           },
           {
             label: "Order Prescription",
-            href: "https://app.belvederepharmacy.net/#/auth/signin",
+            href: tenant.orderPrescriptionsUrl,
             icon: "prescription",
           },
         ],
@@ -176,6 +223,7 @@ export function useChatbot() {
   const toggleQuickActions = () => setShowQuickActions(!showQuickActions);
 
   return {
+    isTenantReady,
     isOpen,
     visitorName,
     isAskingName,

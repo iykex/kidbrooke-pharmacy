@@ -54,5 +54,5 @@ export default function useMenuScroll(
         clearTimeout(scrollTimeout);
       }
     };
-  }, []);
+  }, [navMenu]);
 }

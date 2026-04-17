@@ -1,0 +1,506 @@
+{
+  "belvedere": {
+    "trustBadges": [
+      { "title": "NHS Accredited", "subtitle": "Registered Pharmacy" },
+      { "title": "Same Day Service", "subtitle": "Fast & Reliable" },
+      { "title": "Free Delivery", "subtitle": "Local Area" },
+      { "title": "Expert Pharmacists", "subtitle": "20+ Years Experience" },
+      { "title": "500+ Weekly", "subtitle": "Prescriptions Filled" },
+      { "title": "Community Care", "subtitle": "Trusted Locally" },
+      { "title": "GPhC Registered", "subtitle": "Professional Standards" },
+      { "title": "98% Satisfaction", "subtitle": "Customer Rated" },
+      { "title": "Emergency Services", "subtitle": "Always Here for You" },
+      { "title": "Private Consultations", "subtitle": "Confidential Care" },
+      { "title": "1000+ Reviews", "subtitle": "Highly Recommended" }
+    ],
+    "aboutHeroStats": [
+      { "value": "5000+", "label": "Happy Patients" },
+      { "value": "5+", "label": "Years Serving" },
+      { "value": "NHS", "label": "Accredited" }
+    ],
+    "aboutHeroBadges": [
+      { "text": "Trusted since 2020" },
+      { "text": "Community First" }
+    ],
+    "keyBenefits": [
+      {
+        "title": "All your medicine needs in one place",
+        "bullets": [
+          "Search and find all kinds of medicines",
+          "We support special-case treatments",
+          "Get notified when your medicine is available"
+        ]
+      },
+      {
+        "title": "Get your medicines at your doorstep",
+        "bullets": [
+          "Straight delivery to your doorstep",
+          "We deliver within 24 hours of request",
+          "We guarantee a speedy response"
+        ]
+      },
+      {
+        "title": "Set up your profile and refill easily",
+        "bullets": [
+          "When you are a member, refills are easier",
+          "With one click your medicine is on its way",
+          "Choose support from our healthcare team"
+        ]
+      }
+    ],
+    "whyChooseUs": [
+      {
+        "title": "24/7 Support",
+        "description": "Extended hours and emergency support whenever you need us"
+      },
+      {
+        "title": "Expert Team",
+        "description": "Qualified healthcare professionals with years of specialized experience"
+      },
+      {
+        "title": "NHS Approved",
+        "description": "Fully accredited and registered with all relevant healthcare bodies."
+      },
+      {
+        "title": "Personalized",
+        "description": "Tailored services designed for your unique health needs and goals"
+      }
+    ],
+    "ourProcessSteps": [
+      {
+        "number": "1",
+        "title": "Prescriptions",
+        "description": "Order your prescriptions online or in-person with our easy-to-use system."
+      },
+      {
+        "number": "2",
+        "title": "Health Advice",
+        "description": "Get expert health advice from our qualified pharmacists and healthcare team."
+      },
+      {
+        "number": "3",
+        "title": "Vaccinations",
+        "description": "Schedule your vaccinations with our professional healthcare providers."
+      },
+      {
+        "number": "4",
+        "title": "Consultations",
+        "description": "Book a consultation with our healthcare professionals for personalized care."
+      }
+    ],
+    "ctaFeatureLines": [
+      "Same-day prescription fulfillment",
+      "Free medication delivery in Belvedere",
+      "Private consultation rooms",
+      "No-appointment health checks",
+      "Emergency on-call service",
+      "Expert medication reviews"
+    ],
+    "newsletterFeatures": [
+      {
+        "title": "Health Tips & Advice",
+        "description": "Expert wellness tips delivered to your inbox weekly"
+      },
+      {
+        "title": "Exclusive Offers",
+        "description": "Special discounts and promotions for subscribers only"
+      },
+      {
+        "title": "New Services",
+        "description": "Be the first to know about our latest healthcare services"
+      }
+    ],
+    "downloadAppFeatures": [
+      {
+        "title": "Medication Reminders",
+        "description": "Never miss a dose with personalized medication reminders"
+      },
+      {
+        "title": "Easy Appointment Booking",
+        "description": "Book and manage your appointments with just a few taps"
+      },
+      {
+        "title": "Health Tracking",
+        "description": "Monitor your health metrics and see your progress over time"
+      }
+    ],
+    "pfpBenefits": [
+      {
+        "title": "Convenience",
+        "description": "Skip the GP appointment and get treated for common ailments at your local pharmacy."
+      },
+      {
+        "title": "Accessibility",
+        "description": "Enjoy extended hours and easier access compared to traditional GP surgeries."
+      },
+      {
+        "title": "Expertise",
+        "description": "Our qualified pharmacists provide professional advice and treatment for numerous conditions."
+      },
+      {
+        "title": "Reduced NHS Pressure",
+        "description": "By using Pharmacy First, GP workloads decrease, enhancing patient care access."
+      }
+    ],
+    "ourValues": [
+      {
+        "title": "Compassion",
+        "description": "We treat every patient with kindness, empathy, and respect, recognising that each person's healthcare journey is unique."
+      },
+      {
+        "title": "Trust",
+        "description": "We build lasting relationships based on honesty, reliability, and a commitment to always acting in our patients' best interests."
+      },
+      {
+        "title": "Community",
+        "description": "We're proud to be part of the Belvedere community and are dedicated to improving the health and wellbeing of our neighbours."
+      },
+      {
+        "title": "Excellence",
+        "description": "We strive for the highest standards in everything we do, from the quality of our services to the expertise of our staff."
+      }
+    ],
+    "quickActions": [
+      { "label": "Opening Hours", "query": "What are your opening hours?",  "iconName": "Clock"  },
+      { "label": "Contact Info",  "query": "How can I contact you?",        "iconName": "Phone"  },
+      { "label": "Our Location",  "query": "Where are you located?",        "iconName": "MapPin" },
+      { "label": "Our Services",  "query": "What services do you offer?",   "iconName": "Pill"   }
+    ]
+  },
+  "kidbrooke": {
+    "trustBadges": [
+      { "title": "NHS Accredited", "subtitle": "Registered Pharmacy" },
+      { "title": "Same Day Service", "subtitle": "Fast & Reliable" },
+      { "title": "Free Delivery", "subtitle": "Local Area" },
+      { "title": "Expert Pharmacists", "subtitle": "20+ Years Experience" },
+      { "title": "500+ Weekly", "subtitle": "Prescriptions Filled" },
+      { "title": "Community Care", "subtitle": "Trusted Locally" },
+      { "title": "GPhC Registered", "subtitle": "Professional Standards" },
+      { "title": "98% Satisfaction", "subtitle": "Customer Rated" },
+      { "title": "Emergency Services", "subtitle": "Always Here for You" },
+      { "title": "Private Consultations", "subtitle": "Confidential Care" },
+      { "title": "1000+ Reviews", "subtitle": "Highly Recommended" }
+    ],
+    "aboutHeroStats": [
+      { "value": "5000+", "label": "Happy Patients" },
+      { "value": "5+", "label": "Years Serving" },
+      { "value": "NHS", "label": "Accredited" }
+    ],
+    "aboutHeroBadges": [
+      { "text": "Trusted since 2020" },
+      { "text": "Serving Kidbrooke & Blackheath" }
+    ],
+    "keyBenefits": [
+      {
+        "title": "All your medicine needs in one place",
+        "bullets": [
+          "Search and find all kinds of medicines",
+          "We support special-case treatments",
+          "Get notified when your medicine is available"
+        ]
+      },
+      {
+        "title": "Get your medicines at your doorstep",
+        "bullets": [
+          "Straight delivery to your doorstep",
+          "We deliver within 24 hours of request",
+          "We guarantee a speedy response"
+        ]
+      },
+      {
+        "title": "Set up your profile and refill easily",
+        "bullets": [
+          "When you are a member, refills are easier",
+          "With one click your medicine is on its way",
+          "Choose support from our healthcare team"
+        ]
+      }
+    ],
+    "whyChooseUs": [
+      {
+        "title": "24/7 Support",
+        "description": "Extended hours and emergency support whenever you need us"
+      },
+      {
+        "title": "Expert Team",
+        "description": "Qualified healthcare professionals with years of specialized experience"
+      },
+      {
+        "title": "NHS Approved",
+        "description": "Fully accredited and registered with all relevant healthcare bodies."
+      },
+      {
+        "title": "Personalized",
+        "description": "Tailored services designed for your unique health needs and goals"
+      }
+    ],
+    "ourProcessSteps": [
+      {
+        "number": "1",
+        "title": "Prescriptions",
+        "description": "Order your prescriptions online or in-person with our easy-to-use system."
+      },
+      {
+        "number": "2",
+        "title": "Health Advice",
+        "description": "Get expert health advice from our qualified pharmacists and healthcare team."
+      },
+      {
+        "number": "3",
+        "title": "Vaccinations",
+        "description": "Schedule your vaccinations with our professional healthcare providers."
+      },
+      {
+        "number": "4",
+        "title": "Consultations",
+        "description": "Book a consultation with our healthcare professionals for personalized care."
+      }
+    ],
+    "ctaFeatureLines": [
+      "Same-day prescription fulfillment",
+      "Free medication delivery across Kidbrooke and SE3",
+      "Private consultation rooms",
+      "No-appointment health checks",
+      "Emergency on-call service",
+      "Expert medication reviews"
+    ],
+    "newsletterFeatures": [
+      {
+        "title": "Health Tips & Advice",
+        "description": "Expert wellness tips delivered to your inbox weekly"
+      },
+      {
+        "title": "Exclusive Offers",
+        "description": "Special discounts and promotions for subscribers only"
+      },
+      {
+        "title": "New Services",
+        "description": "Be the first to know about our latest healthcare services"
+      }
+    ],
+    "downloadAppFeatures": [
+      {
+        "title": "Medication Reminders",
+        "description": "Never miss a dose with personalized medication reminders"
+      },
+      {
+        "title": "Easy Appointment Booking",
+        "description": "Book and manage your appointments with just a few taps"
+      },
+      {
+        "title": "Health Tracking",
+        "description": "Monitor your health metrics and see your progress over time"
+      }
+    ],
+    "pfpBenefits": [
+      {
+        "title": "Convenience",
+        "description": "Skip the GP appointment and get treated for common ailments at Kidbrooke Pharmacy."
+      },
+      {
+        "title": "Accessibility",
+        "description": "Enjoy extended hours and easier access compared to traditional GP surgeries."
+      },
+      {
+        "title": "Expertise",
+        "description": "Our qualified pharmacists provide professional advice and treatment for numerous conditions."
+      },
+      {
+        "title": "Reduced NHS Pressure",
+        "description": "By using Pharmacy First, GP workloads decrease, enhancing patient care access."
+      }
+    ],
+    "ourValues": [
+      {
+        "title": "Compassion",
+        "description": "We treat every patient with kindness, empathy, and respect, recognising that each person's healthcare journey is unique."
+      },
+      {
+        "title": "Trust",
+        "description": "We build lasting relationships based on honesty, reliability, and a commitment to always acting in our patients' best interests."
+      },
+      {
+        "title": "Community",
+        "description": "We're proud to serve the Kidbrooke and Blackheath community and are dedicated to improving the health and wellbeing of our neighbours."
+      },
+      {
+        "title": "Excellence",
+        "description": "We strive for the highest standards in everything we do, from the quality of our services to the expertise of our staff."
+      }
+    ],
+    "quickActions": [
+      { "label": "Opening Hours", "query": "What are your opening hours?",  "iconName": "Clock"  },
+      { "label": "Contact Info",  "query": "How can I contact you?",        "iconName": "Phone"  },
+      { "label": "Our Location",  "query": "Where are you located?",        "iconName": "MapPin" },
+      { "label": "Our Services",  "query": "What services do you offer?",   "iconName": "Pill"   }
+    ]
+  },
+  "lowfield": {
+    "trustBadges": [
+      { "title": "NHS Accredited", "subtitle": "Registered Pharmacy" },
+      { "title": "Same Day Service", "subtitle": "Fast & Reliable" },
+      { "title": "Free Delivery", "subtitle": "Local Area" },
+      { "title": "Expert Pharmacists", "subtitle": "20+ Years Experience" },
+      { "title": "500+ Weekly", "subtitle": "Prescriptions Filled" },
+      { "title": "Community Care", "subtitle": "Trusted Locally" },
+      { "title": "GPhC Registered", "subtitle": "Professional Standards" },
+      { "title": "98% Satisfaction", "subtitle": "Customer Rated" },
+      { "title": "Emergency Services", "subtitle": "Always Here for You" },
+      { "title": "Private Consultations", "subtitle": "Confidential Care" },
+      { "title": "1000+ Reviews", "subtitle": "Highly Recommended" }
+    ],
+    "aboutHeroStats": [
+      { "value": "5000+", "label": "Happy Patients" },
+      { "value": "5+", "label": "Years Serving" },
+      { "value": "NHS", "label": "Accredited" }
+    ],
+    "aboutHeroBadges": [
+      { "text": "Trusted since 2020" },
+      { "text": "Dartford & Kent" }
+    ],
+    "keyBenefits": [
+      {
+        "title": "All your medicine needs in one place",
+        "bullets": [
+          "Search and find all kinds of medicines",
+          "We support special-case treatments",
+          "Get notified when your medicine is available"
+        ]
+      },
+      {
+        "title": "Get your medicines at your doorstep",
+        "bullets": [
+          "Straight delivery to your doorstep",
+          "We deliver within 24 hours of request",
+          "We guarantee a speedy response"
+        ]
+      },
+      {
+        "title": "Set up your profile and refill easily",
+        "bullets": [
+          "When you are a member, refills are easier",
+          "With one click your medicine is on its way",
+          "Choose support from our healthcare team"
+        ]
+      }
+    ],
+    "whyChooseUs": [
+      {
+        "title": "24/7 Support",
+        "description": "Extended hours and emergency support whenever you need us"
+      },
+      {
+        "title": "Expert Team",
+        "description": "Qualified healthcare professionals with years of specialized experience"
+      },
+      {
+        "title": "NHS Approved",
+        "description": "Fully accredited and registered with all relevant healthcare bodies."
+      },
+      {
+        "title": "Personalized",
+        "description": "Tailored services designed for your unique health needs and goals"
+      }
+    ],
+    "ourProcessSteps": [
+      {
+        "number": "1",
+        "title": "Prescriptions",
+        "description": "Order your prescriptions online or in-person with our easy-to-use system."
+      },
+      {
+        "number": "2",
+        "title": "Health Advice",
+        "description": "Get expert health advice from our qualified pharmacists and healthcare team."
+      },
+      {
+        "number": "3",
+        "title": "Vaccinations",
+        "description": "Schedule your vaccinations with our professional healthcare providers."
+      },
+      {
+        "number": "4",
+        "title": "Consultations",
+        "description": "Book a consultation with our healthcare professionals for personalized care."
+      }
+    ],
+    "ctaFeatureLines": [
+      "Same-day prescription fulfillment",
+      "Free medication delivery in Dartford and nearby",
+      "Private consultation rooms",
+      "No-appointment health checks",
+      "Emergency on-call service",
+      "Expert medication reviews"
+    ],
+    "newsletterFeatures": [
+      {
+        "title": "Health Tips & Advice",
+        "description": "Expert wellness tips delivered to your inbox weekly"
+      },
+      {
+        "title": "Exclusive Offers",
+        "description": "Special discounts and promotions for subscribers only"
+      },
+      {
+        "title": "New Services",
+        "description": "Be the first to know about our latest healthcare services"
+      }
+    ],
+    "downloadAppFeatures": [
+      {
+        "title": "Medication Reminders",
+        "description": "Never miss a dose with personalized medication reminders"
+      },
+      {
+        "title": "Easy Appointment Booking",
+        "description": "Book and manage your appointments with just a few taps"
+      },
+      {
+        "title": "Health Tracking",
+        "description": "Monitor your health metrics and see your progress over time"
+      }
+    ],
+    "pfpBenefits": [
+      {
+        "title": "Convenience",
+        "description": "Skip the GP appointment and get treated for common ailments at Lowfield Pharmacy."
+      },
+      {
+        "title": "Accessibility",
+        "description": "Enjoy extended hours and easier access compared to traditional GP surgeries."
+      },
+      {
+        "title": "Expertise",
+        "description": "Our qualified pharmacists provide professional advice and treatment for numerous conditions."
+      },
+      {
+        "title": "Reduced NHS Pressure",
+        "description": "By using Pharmacy First, GP workloads decrease, enhancing patient care access."
+      }
+    ],
+    "ourValues": [
+      {
+        "title": "Compassion",
+        "description": "We treat every patient with kindness, empathy, and respect, recognising that each person's healthcare journey is unique."
+      },
+      {
+        "title": "Trust",
+        "description": "We build lasting relationships based on honesty, reliability, and a commitment to always acting in our patients' best interests."
+      },
+      {
+        "title": "Community",
+        "description": "We're proud to serve the Dartford community and are dedicated to improving the health and wellbeing of our neighbours."
+      },
+      {
+        "title": "Excellence",
+        "description": "We strive for the highest standards in everything we do, from the quality of our services to the expertise of our staff."
+      }
+    ],
+    "quickActions": [
+      { "label": "Opening Hours", "query": "What are your opening hours?",  "iconName": "Clock"  },
+      { "label": "Contact Info",  "query": "How can I contact you?",        "iconName": "Phone"  },
+      { "label": "Our Location",  "query": "Where are you located?",        "iconName": "MapPin" },
+      { "label": "Our Services",  "query": "What services do you offer?",   "iconName": "Pill"   }
+    ]
+  }
+}

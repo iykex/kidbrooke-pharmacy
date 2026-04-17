@@ -1,28 +1,104 @@
 "use client";
-import { CheckCircle, ArrowRight, Mail } from "lucide-react";
+import { CheckCircle, ArrowRight, Mail, Phone, MapPin, Clock } from "lucide-react";
 import WidthConstraint from "./width-constraint";
-import {
-  CTA_SECTION_FEATURES_LIST,
-  CTA_SECTION_CONTACT_INFO,
-  EXTERNAL_LINKS,
-  INTERNAL_LINKS,
-} from "@/lib/constants/general";
+import { INTERNAL_LINKS, TRACKING_EVENTS } from "@/lib/constants/general";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { track } from "@/lib/analytics/tracker";
-import { TRACKING_EVENTS } from "@/lib/constants/analytics";
-import Image from "next/image";
-import pattern from "@/public/elements/pattern-3.svg";
+import { useTenantContext } from "@/components/providers/tenant-provider";
+import { formatOpeningHoursSummary } from "@/lib/utils/format-tenant";
+import { useMarketingBlocks } from "@/hooks/use-marketing-blocks";
+import {
+  CtaContactCardSkeleton,
+  CtaTenantBlockSkeleton,
+} from "@/components/shared/tenant-skeletons";
 
 export default function CTASection() {
+  const { tenant, isTenantReady } = useTenantContext();
+  const { marketing } = useMarketingBlocks();
+  const featureLines = marketing?.ctaFeatureLines ?? [];
+
+  if (!isTenantReady || !tenant) {
+    return (
+      <section className="overflow-hidden">
+        <WidthConstraint className="relative p-6 md:p-20 bg-[#002f4b] rounded-2xl">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-size-[40px_40px]" />
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <CtaTenantBlockSkeleton />
+            <div className="bg-white dark:bg-[#03456a] rounded-2xl p-4 sm:p-8 shadow-2xl z-10">
+              <CtaContactCardSkeleton />
+            </div>
+          </div>
+        </WidthConstraint>
+      </section>
+    );
+  }
+
+  const phoneHref = `tel:${tenant.phone.replace(/\s/g, "")}`;
+  const mailHref = `mailto:${tenant.email}`;
+  const contactInfo = [
+    {
+      icon: Phone,
+      label: "Call Us",
+      value: tenant.phone,
+      href: phoneHref,
+      isLink: true,
+      bgColor: "bg-primary/5",
+      hoverBgColor: "hover:bg-primary/10",
+      iconBgColor: "bg-primary/10",
+      iconColor: "text-primary",
+      textColor: "text-primary",
+      valueClass: "font-bold",
+      tracking: TRACKING_EVENTS.phoneContactClick,
+    },
+    {
+      icon: Mail,
+      label: "Email Us",
+      value: tenant.email,
+      href: mailHref,
+      isLink: true,
+      bgColor: "bg-gray-50 dark:bg-primary/5",
+      hoverBgColor: "",
+      iconBgColor: "bg-gray-100 dark:bg-primary/10",
+      iconColor: "text-gray-600 dark:text-primary",
+      textColor: "text-gray-900 dark:text-primary/90",
+      valueClass: "font-semibold",
+      tracking: TRACKING_EVENTS.emailClick,
+    },
+    {
+      icon: MapPin,
+      label: "Visit Us",
+      value: tenant.address.line1,
+      href: INTERNAL_LINKS.aboutPage,
+      isLink: false,
+      bgColor: "bg-gray-50 dark:bg-primary/5",
+      hoverBgColor: "",
+      iconBgColor: "bg-gray-100 dark:bg-primary/10",
+      iconColor: "text-gray-600 dark:text-primary",
+      textColor: "text-gray-900 dark:text-primary/90",
+      valueClass: "font-semibold",
+      tracking: "",
+    },
+    {
+      icon: Clock,
+      label: "Opening Hours",
+      value: formatOpeningHoursSummary(tenant),
+      href: INTERNAL_LINKS.aboutPage,
+      isLink: false,
+      bgColor: "bg-gray-50 dark:bg-primary/5",
+      hoverBgColor: "",
+      iconBgColor: "bg-gray-100 dark:bg-primary/10",
+      iconColor: "text-gray-600 dark:text-primary",
+      textColor: "text-gray-900 dark:text-primary/90",
+      valueClass: "font-semibold",
+      tracking: "",
+    },
+  ];
+
   return (
     <section className="overflow-hidden">
-      <WidthConstraint className="relative p-6 md:p-20 bg-foreground dark:bg-background rounded-2xl">
-        <Image
-          src={pattern}
-          alt="pattern"
-          className="absolute inset-0  bg-cover bg-center w-full opacity-50"
-        />
+      <WidthConstraint className="relative p-6 md:p-20 bg-[#002f4b] rounded-2xl">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-size-[40px_40px]" />
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div className="text-white space-y-8">
@@ -31,18 +107,18 @@ export default function CTASection() {
                 Ready to Get Started
               </span>
               <h2 className="text-xl sm:text-4xl font-bold tracking-tight mt-4 mb-4">
-                Experience the Kidbrooke Difference
+                Experience care with {tenant.displayName}
               </h2>
               <p className="text-white/80 sm:text-lg leading-relaxed max-w-lg pr-4 sm:pr-0">
                 Join thousands of satisfied patients who trust us with their
                 healthcare needs. From prescriptions to personalized
-                consultations, we're here for you.
+                consultations, we&apos;re here for you.
               </p>
             </div>
 
             {/* Features List */}
             <div className="space-y-3">
-              {CTA_SECTION_FEATURES_LIST.map((feature, index) => (
+              {featureLines.map((feature, index) => (
                 <div key={index} className="flex items-center gap-3">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 ">
                     <CheckCircle className="h-3 w-3" />
@@ -60,11 +136,11 @@ export default function CTASection() {
                 className="group bg-white text-primary hover:bg-white/90 font-semibold px-8 rounded-xl shadow-lg w-fit z-10"
               >
                 <Link
-                  href={EXTERNAL_LINKS.actions.bookAppointment}
+                  href={tenant.bookAppointmentUrl}
                   onClick={() =>
                     track(
                       TRACKING_EVENTS.bookAppointmentButton,
-                      EXTERNAL_LINKS.actions.bookAppointment
+                      tenant.bookAppointmentUrl
                     )
                   }
                   className="flex items-center gap-2"
@@ -85,19 +161,19 @@ export default function CTASection() {
           </div>
 
           {/* Right Column - Contact Card */}
-          <div className="bg-card rounded-2xl p-4 sm:p-8 shadow-2xl z-10">
+          <div className="bg-white dark:bg-[#03456a] rounded-2xl p-4 sm:p-8 shadow-2xl z-10">
             <div className="mb-6">
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                 Get In Touch
               </h3>
               <p className="text-gray-600 dark:text-white/60">
-                We're here to help with all your healthcare needs
+                We&apos;re here to help with all your healthcare needs
               </p>
             </div>
 
             {/* Contact Info */}
             <div className="space-y-4 mb-6">
-              {CTA_SECTION_CONTACT_INFO.map((contact, index) => {
+              {contactInfo.map((contact, index) => {
                 const IconComponent = contact.icon;
                 const contactContent = (
                   <div className="space-y-2">

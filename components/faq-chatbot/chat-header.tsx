@@ -1,13 +1,21 @@
+'use client';
 import { Bot, ChevronDown, UserSearch as IconUserSearch } from "lucide-react";
 import { Button } from "../ui/button";
-import { todayDate } from "@/lib/utils";
+import { useState } from "react";
 
-interface ChatHeaderProps {
-  visitorName: string | null;
-  onClose: () => void;
-}
 
-export function ChatHeader({ visitorName, onClose }: ChatHeaderProps) {
+export function ChatHeader({ visitorName, onClose }: {  visitorName: string | null;
+  onClose: () => void;}) {
+  const [todayDate] = useState(() => {
+    const date = new Date();
+    const weekday = date.toLocaleDateString("en-GB", { weekday: "short" });
+    const dayMonth = date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+    });
+    return `${weekday} ${dayMonth}`;
+  });
+
   return (
     <div className="bg-card p-4 text-white shrink-0">
       <div className="flex items-center gap-3">
