@@ -5,7 +5,7 @@ import { INTERNAL_LINKS } from "@/lib/constants/general";
 import { PROCESS_STEP_STYLES } from "@/lib/utils/marketing-present";
 import type { MarketingBlocksDoc } from "@/lib/types/firestore";
 import WidthConstraint from "../shared/width-constraint";
-import SectionHeader from "@/components/general/section-divider-head";
+import SectionHeader from "./section-divider-head";
 
 export function OurProcessSection({
   marketing,
@@ -49,7 +49,7 @@ export function OurProcessSection({
               const Icon = step.icon;
               return (
                 <div key={index} className="relative group">
-                  <div className="flex flex-col h-full bg-card rounded-2xl p-6 shadow-md dark:shadow-md/30 transition-all duration-300 hover:shadow-md dark:hover:shadow-md/50 hover:-translate-y-2 border border-border relative z-10">
+                  <div className="flex flex-col h-full bg-white dark:bg-[#003b5c] rounded-2xl p-6 shadow-md dark:shadow-md/30 transition-all duration-300 hover:shadow-md dark:hover:shadow-md/50 hover:-translate-y-2 border border-gray-200 dark:border-[#1a4d6e] relative z-10">
                     {/* Number badge */}
                     <div className="absolute -top-3 -left-3 bg-primary text-white text-sm font-bold rounded-full size-8 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
                       {step.number}

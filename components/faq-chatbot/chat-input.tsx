@@ -20,7 +20,7 @@ export function ChatInput({
   const { textareaRef, handleKeyDown } = useChatInput(disabled, input, onSend);
 
   return (
-    <div className="p-4 border-t border-border bg-card shrink-0">
+    <div className="p-4 border-t border-gray-200 dark:border-[#1a4d6e] bg-gray-50 dark:bg-[#00162a] shrink-0">
       <div className="flex gap-2 items-end">
         {/* Slash button to toggle quick actions */}
         <div className="relative group">
@@ -31,7 +31,7 @@ export function ChatInput({
             onClick={onToggleQuickActions}
             disabled={disabled}
             className={cn(
-              "shrink-0 h-10 w-10 rounded-xl transition-colors border-border",
+              "shrink-0 h-10 w-10 rounded-xl transition-colors border-gray-300 dark:border-[#1a4d6e]",
               showQuickActions
                 ? "bg-primary/10 text-primary border-primary"
                 : "text-gray-500 hover:text-primary hover:border-primary hover:bg-primary/5"
@@ -57,7 +57,7 @@ export function ChatInput({
             isAskingName ? "Enter your name..." : "Type your message..."
           }
           rows={1}
-          className="flex-1 min-h-10 max-h-[120px] px-4 py-2.5 bg-input border border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent resize-none text-sm text-foreground placeholder:text-gray-400 outline-none scrollbar-hide"
+          className="flex-1 min-h-10 max-h-[120px] px-4 py-2.5 bg-white dark:bg-[#002f4b] border border-gray-200 dark:border-[#1a4d6e] rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent resize-none text-sm text-foreground placeholder:text-gray-400 outline-none scrollbar-hide"
         />
 
         <Button
@@ -72,12 +72,12 @@ export function ChatInput({
           <Send className="size-4" />
         </Button>
       </div>
-      <p className="text-[10px] text-gray-400 dark:text-gray-700 text-center mt-2">
+      <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center mt-2">
         Press{" "}
         <kbd className="px-1 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-[9px]">
           Shift+Enter
         </kbd>{" "}
-        for new line • Powered by Kidbrooke Pharmacy
+        for new line • Powered by Belvedere Pharmacy
       </p>
     </div>
   );

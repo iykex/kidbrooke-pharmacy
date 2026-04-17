@@ -26,7 +26,7 @@ export function NHSPharmacyFirstSection({
                 <div className="p-2 bg-[#005EB8]/10 dark:bg-[#005EB8]/20 dark:shadow-sm dark:shadow-black/70 rounded-lg">
                   <Shield className="size-5 text-[#005EB8] dark:text-white" />
                 </div>
-                <span className="text-[#005EB8] dark:text-blue-400 font-semibold text-sm uppercase tracking-wider">
+                <span className="text-[#005EB8] dark:text-primary font-semibold text-sm uppercase tracking-wider">
                   NHS Pharmacy First
                 </span>
               </div>
@@ -67,7 +67,7 @@ export function NHSPharmacyFirstSection({
               return (
                 <div
                   key={index}
-                  className="flex flex-col justify-between group bg-card rounded-2xl p-6 shadow-sm dark:shadow-lg/30 hover:shadow-lg dark:hover:shadow-lg/50 transition-all duration-300 hover:-translate-y-2 border border-border"
+                  className="flex flex-col justify-between group bg-white dark:bg-[#003b5c] rounded-2xl p-6 shadow-sm dark:shadow-lg/30 hover:shadow-lg dark:hover:shadow-lg/50 transition-all duration-300 hover:-translate-y-2 border border-gray-200 dark:border-[#1a4d6e]"
                 >
                   {/* Icon */}
                   <div

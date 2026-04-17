@@ -24,7 +24,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
             "rounded-2xl px-4 py-3 text-sm",
             message.role === "user"
               ? "bg-primary text-white rounded-br-md"
-              : "bg-card text-gray-800 dark:text-gray-200 rounded-bl-md"
+              : "bg-gray-100 dark:bg-[#002f4b] text-gray-800 dark:text-gray-200 rounded-bl-md"
           )}
         >
           <p className="leading-relaxed whitespace-pre-wrap">

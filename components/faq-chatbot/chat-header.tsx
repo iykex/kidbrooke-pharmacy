@@ -17,7 +17,7 @@ export function ChatHeader({ visitorName, onClose }: {  visitorName: string | nu
   });
 
   return (
-    <div className="bg-card p-4 text-white shrink-0">
+    <div className="bg-linear-to-r from-primary to-primary/80 p-4 text-white shrink-0">
       <div className="flex items-center gap-3">
         <div className="relative">
           <div className="size-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
@@ -40,7 +40,7 @@ export function ChatHeader({ visitorName, onClose }: {  visitorName: string | nu
         </div>
         <Button
           onClick={onClose}
-          className="p-2 rounded-full hover:bg-white/20 transition-colors bg-primary/70"
+          className="p-2 rounded-full hover:bg-white/20 transition-colors"
           aria-label="Close chat"
         >
           <ChevronDown className="size-5" />

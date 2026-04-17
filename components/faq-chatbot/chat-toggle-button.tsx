@@ -15,7 +15,7 @@ export function ChatToggleButton({ isOpen, onClick }: ChatToggleButtonProps) {
       }}
       className={cn(
         "fixed bottom-4  lg:bottom-6 right-6 z-50 flex items-center justify-center size-9 lg:size-10 rounded-full shadow-2xl transition-all duration-300 hover:scale-110",
-        "bg-card text-primary border",
+        "bg-linear-to-br from-primary to-primary/80 text-white",
         "hover:shadow-primary/40 hover:shadow-xl ",
         isOpen && "rotate-90"
       )}
