@@ -10,19 +10,40 @@ const DAY_LABEL: Record<string, string> = {
   sunday: "Sun",
 };
 
+const DAY_ORDER = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
 function formatSlot(open: string, close: string, closed: boolean): string {
-  if (closed) return "closed";
-  if (!open || !close) return "closed";
+  if (closed) return "Closed";
+  if (!open || !close) return "Closed";
   return `${open}–${close}`;
 }
 
-/** Short summary for hero/footer copy, e.g. Mon–Fri: 9:00–18:30 · Sat: 9:00–14:00 · Sun: closed */
+/** Short summary for info bar, e.g. Mon–Fri: 09:00–18:30 · Sat: 09:00–14:00 · Sun: Closed */
 export function formatOpeningHoursSummary(tenant: TenantDoc): string {
-  const parts = tenant.openingHours.map((h) => {
-    const label = DAY_LABEL[h.day] ?? h.day;
-    return `${label}: ${formatSlot(h.open, h.close, h.closed)}`;
-  });
-  return parts.join(" · ");
+  const sorted = [...tenant.openingHours].sort(
+    (a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day)
+  );
+
+  // Group consecutive days that share the same slot into ranges
+  const runs: { days: typeof sorted; slot: string }[] = [];
+  for (const h of sorted) {
+    const slot = formatSlot(h.open, h.close, h.closed);
+    const last = runs[runs.length - 1];
+    if (last && last.slot === slot) {
+      last.days.push(h);
+    } else {
+      runs.push({ days: [h], slot });
+    }
+  }
+
+  return runs
+    .map(({ days, slot }) => {
+      const first = DAY_LABEL[days[0].day] ?? days[0].day;
+      if (days.length === 1) return `${first}: ${slot}`;
+      const last = DAY_LABEL[days[days.length - 1].day] ?? days[days.length - 1].day;
+      return `${first}–${last}: ${slot}`;
+    })
+    .join(" · ");
 }
 
 export function formatAddressLines(tenant: TenantDoc): string[] {
