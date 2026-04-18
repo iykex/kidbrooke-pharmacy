@@ -99,6 +99,7 @@ function keywordMatchesQuery(lowerQuery: string, rawKeyword: string): boolean {
 export function findBestResponse(
   query: string,
   knowledgeBase: KnowledgeBaseItem[],
+  phone?: string,
 ): { answer: string; actions?: ActionButton[] } {
   const lowerQuery = query.toLowerCase();
 
@@ -124,8 +125,10 @@ export function findBestResponse(
     answer:
       "I'm not sure about that specific question, but I'd be happy to help! You can ask me about our opening hours, services, prescriptions, vaccinations, or contact information. Alternatively, please call us or visit us in store for personalized assistance.",
     actions: [
-      { label: "Call Us", href: "tel:+442083190115", icon: "phone" },
-      { label: "View Services", href: "/services", icon: "external" },
+      ...(phone
+        ? [{ label: "Call Us", href: `tel:${phone.replace(/\s/g, "")}`, icon: "phone" as const }]
+        : []),
+      { label: "View Services", href: "/services", icon: "external" as const },
     ],
   };
 }

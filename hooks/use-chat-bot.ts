@@ -156,7 +156,7 @@ export function useChatbot() {
           ],
         };
       } else {
-        response = findBestResponse(text, knowledgeBaseRef.current);
+        response = findBestResponse(text, knowledgeBaseRef.current, tenant?.phone);
       }
 
       const botMessage: Message = {
