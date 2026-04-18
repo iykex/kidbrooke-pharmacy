@@ -2,12 +2,15 @@
 "use client";
 
 import Menu from "@/components/navigation/navigation-menu";
+import { useTenantContext } from "@/components/providers/tenant-provider";
 import WidthConstraint from "@/components/shared/width-constraint";
 import CTASection from "@/components/shared/cta-section";
+import { TenantContactCard } from "@/components/shared/tenant-contact-card";
 import { useLegalDocument } from "@/hooks/use-legal-document";
 
 export default function TermsPage() {
   const legal = useLegalDocument("terms");
+  const { tenant, isTenantReady } = useTenantContext();
   const sections: any[] = legal?.sections ?? [];
 
   return (
@@ -66,15 +69,19 @@ export default function TermsPage() {
                       </p>
                     )}
                     <ul className="space-y-2 ml-6">
-                      {section.bulletPoints?.map((point: string, bIdx: number) => (
-                        <li
-                          key={bIdx}
-                          className="text-gray-700 dark:text-white/60 flex items-start gap-3"
-                        >
-                          <span className="text-primary font-bold mt-1">•</span>
-                          <span>{point}</span>
-                        </li>
-                      ))}
+                      {section.bulletPoints?.map(
+                        (point: string, bIdx: number) => (
+                          <li
+                            key={bIdx}
+                            className="text-gray-700 dark:text-white/60 flex items-start gap-3"
+                          >
+                            <span className="text-primary font-bold mt-1">
+                              •
+                            </span>
+                            <span>{point}</span>
+                          </li>
+                        ),
+                      )}
                     </ul>
                     {section.afterText && (
                       <p className="text-gray-700 dark:text-white/60 leading-relaxed mt-4">
@@ -87,50 +94,31 @@ export default function TermsPage() {
                 {/* Subsections Type */}
                 {section.type === "subsections" && (
                   <div className="space-y-3">
-                    {section.subsections?.map((subsection: any, sIdx: number) => (
-                      <div key={sIdx}>
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                          {subsection.title}
-                        </h3>
-                        <p className="text-gray-700 dark:text-white/60 leading-relaxed">
-                          {subsection.description}
-                        </p>
-                      </div>
-                    ))}
+                    {section.subsections?.map(
+                      (subsection: any, sIdx: number) => (
+                        <div key={sIdx}>
+                          <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                            {subsection.title}
+                          </h3>
+                          <p className="text-gray-700 dark:text-white/60 leading-relaxed">
+                            {subsection.description}
+                          </p>
+                        </div>
+                      ),
+                    )}
                   </div>
-                )}
-
-                {/* Contact Type */}
-                {section.type === "contact" && (
-                  <>
-                    {section.beforeText && (
-                      <p className="text-gray-700 dark:text-white/60 leading-relaxed">
-                        {section.beforeText}
-                      </p>
-                    )}
-                    {section.contactInfo && (
-                      <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 space-y-2">
-                        <p className="text-gray-900 dark:text-white font-semibold">
-                          {section.contactInfo.name}
-                        </p>
-                        <p className="text-gray-700 dark:text-white/60">
-                          {section.contactInfo.address1}
-                        </p>
-                        <p className="text-gray-700 dark:text-white/60">
-                          {section.contactInfo.address2}
-                        </p>
-                        <p className="text-gray-700 dark:text-white/60">
-                          Phone: {section.contactInfo.phone}
-                        </p>
-                        <p className="text-gray-700 dark:text-white/60">
-                          Email: {section.contactInfo.email}
-                        </p>
-                      </div>
-                    )}
-                  </>
                 )}
               </article>
             ))}
+          </div>
+          {/* Contact Type */}
+          <div className="max-w-4xl mx-auto space-y-2 px-6 sm:px-10 lg:px-16 mt-10">
+            <p className="text-gray-700 dark:text-white/60 leading-relaxed">
+              If you have questions about these Terms and Conditions, please
+              contact us
+            </p>
+
+            {isTenantReady && tenant && <TenantContactCard tenant={tenant} />}
           </div>
         </WidthConstraint>
       </section>

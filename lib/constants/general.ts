@@ -144,6 +144,17 @@ export const LEGAL_LINKS = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// ICO (UK data protection regulator)
+// ---------------------------------------------------------------------------
+
+export const ICO_WEBSITE_URL = "https://ico.org.uk/";
+
+export const ICO_COMPLAINTS_PHONE_DISPLAY = "0303 123 1113";
+
+/** `tel:` href derived from {@link ICO_COMPLAINTS_PHONE_DISPLAY} */
+export const ICO_COMPLAINTS_PHONE_HREF = `tel:${ICO_COMPLAINTS_PHONE_DISPLAY.replace(/\s/g, "")}`;
+
 export const SERVICE_CATEGORIES = [
   { id: "all", label: "All Services" },
   { id: "nhs", label: "NHS First Services" },
