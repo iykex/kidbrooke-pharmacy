@@ -3,10 +3,14 @@ import { Bot } from "lucide-react";
 import { ChatMessage } from "./chat-message";
 import type { Message } from "@/lib/types/chatbot";
 
-
-export function ChatMessages({ messages, isTyping }: {  messages: Message[];
+export function ChatMessages({
+  messages,
+  isTyping,
+}: {
+  messages: Message[];
   isTyping: boolean;
-  onScrollEnd: (ref: HTMLDivElement | null) => void;}) {
+  onScrollEnd: (ref: HTMLDivElement | null) => void;
+}) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,11 +29,11 @@ export function ChatMessages({ messages, isTyping }: {  messages: Message[];
           <div className="size-8 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center shrink-0">
             <Bot className="size-4 text-primary" />
           </div>
-          <div className="bg-gray-100 dark:bg-[#002f4b] rounded-2xl rounded-bl-md px-4 py-3">
+          <div className="bg-secondary rounded-2xl rounded-bl-md px-4 py-3">
             <div className="flex gap-1">
-              <span className="size-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
-              <span className="size-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
-              <span className="size-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" />
+              <span className="size-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:-0.3s]" />
+              <span className="size-2 bg-muted-foreground rounded-full animate-bounce [animation-delay:-0.15s]" />
+              <span className="size-2 bg-muted-foreground rounded-full animate-bounce" />
             </div>
           </div>
         </div>

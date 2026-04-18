@@ -9,7 +9,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
     <div
       className={cn(
         "flex gap-2",
-        message.role === "user" ? "justify-end" : "justify-start"
+        message.role === "user" ? "justify-end" : "justify-start",
       )}
     >
       {message.role === "bot" && (
@@ -24,7 +24,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
             "rounded-2xl px-4 py-3 text-sm",
             message.role === "user"
               ? "bg-primary text-white rounded-br-md"
-              : "bg-gray-100 dark:bg-[#002f4b] text-gray-800 dark:text-gray-200 rounded-bl-md"
+              : "bg-secondary text-foreground rounded-bl-md",
           )}
         >
           <p className="leading-relaxed whitespace-pre-wrap">
@@ -35,7 +35,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
               "text-[10px] mt-1 block",
               message.role === "user"
                 ? "text-white/60"
-                : "text-gray-400 dark:text-gray-500"
+                : "text-muted-foreground",
             )}
           >
             {message.timestamp instanceof Date &&
@@ -69,8 +69,8 @@ export function ChatMessage({ message }: ChatMessageProps) {
       </div>
 
       {message.role === "user" && (
-        <div className="size-8 rounded-full bg-gray-200 dark:bg-[#004d73] flex items-center justify-center shrink-0">
-          <User className="size-4 text-gray-600 dark:text-gray-300" />
+        <div className="size-8 rounded-full bg-secondary flex items-center justify-center shrink-0">
+          <User className="size-4 text-foreground" />
         </div>
       )}
     </div>

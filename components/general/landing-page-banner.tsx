@@ -99,7 +99,13 @@ export default function Banner() {
                   <BannerHeroActionsSkeleton />
                 )}
               </div>
-              <Image src={curvedArrow} alt="" width={100} height={100} className="h-auto w-auto" />
+              <Image
+                src={curvedArrow}
+                alt=""
+                width={100}
+                height={100}
+                className="h-auto w-auto"
+              />
             </div>
 
             {/* Right Side - Download App Section (Desktop Only) - Takes 2 columns */}
@@ -118,7 +124,7 @@ export default function Banner() {
 
                   <div className="space-y-5">
                     <div className="space-y-2">
-                      <p className="text-primary font-medium text-xs uppercase tracking-wider">
+                      <p className="text-white font-medium text-xs uppercase tracking-wider">
                         Mobile App
                       </p>
                       <h3 className="text-xl font-bold text-white">
