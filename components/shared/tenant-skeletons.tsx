@@ -1,22 +1,88 @@
 "use client";
 
 import Skeleton from "react-loading-skeleton";
+import { useTheme } from "next-themes";
 import WidthConstraint from "@/components/shared/width-constraint";
+import { cn } from "@/lib/utils/utils";
 
 export function InfoBarRowSkeleton({
   ariaHidden,
+  hasDarkHero,
+  isScrolled,
 }: {
   ariaHidden?: boolean;
+  /** When true and not scrolled, match frosted bar over hero */
+  hasDarkHero?: boolean;
+  isScrolled?: boolean;
 } = {}) {
+  const { resolvedTheme } = useTheme();
+  const glassOnHero = Boolean(hasDarkHero && !isScrolled);
+  const isDark = resolvedTheme === "dark";
+
+  const { baseColor, highlightColor } = (() => {
+    if (glassOnHero) {
+      return {
+        baseColor: "rgba(255,255,255,0.1)",
+        highlightColor: "rgba(255,255,255,0.24)",
+      };
+    }
+    if (isDark) {
+      return {
+        baseColor: "rgba(255,255,255,0.08)",
+        highlightColor: "rgba(255,255,255,0.18)",
+      };
+    }
+    return {
+      baseColor: "rgba(15,23,42,0.08)",
+      highlightColor: "rgba(15,23,42,0.14)",
+    };
+  })();
+
+  /** Match info-bar `renderItem`: icon size-3 (12px) → sm:size-4 (16px); label hidden below sm so bars start compact */
+  const textBarClass = [
+    "w-[4.75rem] sm:w-32 md:w-40 lg:w-52",
+    "w-[5.25rem] sm:w-36 md:w-44",
+    "w-[6rem] sm:w-28 md:w-32",
+  ] as const;
+
   return (
     <div
       aria-hidden={ariaHidden || undefined}
       className="flex shrink-0 flex-nowrap items-center gap-x-6 md:gap-x-10"
     >
       {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="flex shrink-0 items-center gap-1 sm:gap-2">
-          <Skeleton circle width={14} height={14} className="shrink-0" />
-          <Skeleton width={i === 0 ? 160 : i === 1 ? 140 : 100} height={12} />
+        <div
+          key={i}
+          className={cn(
+            "flex min-w-0 shrink-0 items-center gap-1 sm:gap-2 rounded-md border px-1 py-0.5 sm:px-1.5 backdrop-blur-xl",
+            glassOnHero
+              ? "border-white/20 bg-white/5"
+              : "border-border/40 bg-background/40 dark:border-white/10 dark:bg-white/5"
+          )}
+        >
+          <Skeleton
+            circle
+            width={12}
+            height={12}
+            className="shrink-0 leading-none sm:!h-4 sm:!w-4"
+            baseColor={baseColor}
+            highlightColor={highlightColor}
+          />
+          <div
+            className={cn(
+              "min-w-0 shrink",
+              textBarClass[i] ?? textBarClass[0]
+            )}
+          >
+            <Skeleton
+              height={12}
+              borderRadius={6}
+              width="100%"
+              className="!leading-none"
+              baseColor={baseColor}
+              highlightColor={highlightColor}
+            />
+          </div>
         </div>
       ))}
     </div>

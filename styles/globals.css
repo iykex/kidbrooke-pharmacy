@@ -885,12 +885,14 @@
   }
 }
 
-.animate-infoBarScroll {
+/* Not named `animate-*` — Tailwind v4 reserves that prefix for @theme animations */
+.info-bar-marquee {
   animation: infoBarScroll 50s linear infinite;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-infoBarScroll {
+  .info-bar-marquee {
     animation: none;
     transform: none;
   }

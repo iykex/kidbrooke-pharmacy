@@ -23,9 +23,13 @@ export default function InfoBar() {
           isScrolled && "bg-background text-foreground"
         )}
       >
-        <div className="flex w-max shrink-0 animate-infoBarScroll items-center gap-x-6 md:gap-x-10 whitespace-nowrap">
-          <InfoBarRowSkeleton />
-          <InfoBarRowSkeleton ariaHidden />
+        <div className="info-bar-marquee flex w-max shrink-0 items-center gap-x-6 md:gap-x-10 whitespace-nowrap">
+          <InfoBarRowSkeleton hasDarkHero={hasDarkHero} isScrolled={isScrolled} />
+          <InfoBarRowSkeleton
+            ariaHidden
+            hasDarkHero={hasDarkHero}
+            isScrolled={isScrolled}
+          />
         </div>
       </div>
     );
@@ -86,7 +90,7 @@ export default function InfoBar() {
         isScrolled && "bg-background text-foreground"
       )}
     >
-      <div className="flex w-max shrink-0 animate-infoBarScroll items-center gap-x-6 md:gap-x-10 whitespace-nowrap">
+      <div className="info-bar-marquee flex w-max shrink-0 items-center gap-x-6 md:gap-x-10 whitespace-nowrap">
         {items.map((item) => renderItem(item, item.title))}
         {items.map((item) =>
           renderItem(item, `${item.title}-dup`, { hideFromA11y: true })
