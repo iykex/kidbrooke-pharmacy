@@ -135,7 +135,7 @@ export default async function Banner() {
                 {/* Pharmacy Image/Logo */}
                 <div className="flex items-center gap-4">
                   <Image
-                    src="/logo/belvedere-logo.png"
+                    src="/logo/kidbrooke-logo.png"
                     alt="Belvedere Pharmacy"
                     width={64}
                     height={64}

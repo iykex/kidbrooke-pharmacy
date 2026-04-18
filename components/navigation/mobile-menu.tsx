@@ -58,7 +58,7 @@ export default function MobileMenu() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Image
-                    src="/logo/belvedere-logo.png"
+                    src="/logo/kidbrooke-logo.png"
                     alt="Belvedere"
                     width={44}
                     height={44}

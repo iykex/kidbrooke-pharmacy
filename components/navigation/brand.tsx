@@ -14,7 +14,7 @@ export default function Brand() {
         className="relative group flex items-center gap-2 sm:gap-3"
       >
         <Image
-          src="/logo/belvedere-logo.png"
+          src="/logo/kidbrooke-logo.png"
           alt="Belvedere"
           width={70}
           height={70}

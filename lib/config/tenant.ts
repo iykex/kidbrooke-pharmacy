@@ -12,5 +12,5 @@ export function getTenantSlug(): TenantSlug {
   if (TENANT_SLUGS.includes(normalized as TenantSlug)) {
     return normalized as TenantSlug;
   }
-  return "belvedere";
+  return "kidbrooke";
 }
