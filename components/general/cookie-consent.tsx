@@ -44,14 +44,14 @@ export default function CookieConsentDialogue({
           track(TRACKING_EVENTS.cookieToggleButton, "coookie button toggled");
         }}
         className={cn(
-          "fixed bottom-6 left-6 z-40 p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110",
-          "bg-white dark:bg-[#002f4b] border border-gray-200 dark:border-[#1a4d6e]",
-          "hover:shadow-xl group",
+          "cookie-settings-bubble fixed bottom-4 left-6 z-40 size-9 lg:size-10 rounded-full shadow-lg transition-all duration-300 hover:scale-110",
+          "bg-card border border-border",
+          "hover:shadow-xl",
           bubbleStateClassName
         )}
         aria-label="Cookie settings"
       >
-        <Cookie className="size-5 text-primary group-hover:rotate-12 transition-transform" />
+        <Cookie className="cookie-settings-icon size-5 text-primary" />
       </Button>
     );
   }

@@ -37,17 +37,17 @@ export default function TeamSection() {
             return (
               <div
                 key={member.id ?? member.name}
-                className="group relative overflow-hidden rounded-2xl bg-card shadow-sm hover:shadow-xl transition-all duration-300 max-w-sm"
+                className="team-card relative overflow-hidden rounded-2xl bg-card shadow-sm hover:shadow-xl transition-all duration-300 max-w-sm"
               >
                 <div className="relative aspect-square overflow-hidden bg-linear-to-br from-primary/10 to-chart-2/10">
                   <Image
                     src={src}
                     alt={member.name}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="team-member-image object-cover"
                     sizes="(max-width: 640px) 100vw, 400px"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-[#002f4b]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="team-member-overlay absolute inset-0 bg-linear-to-t from-[#002f4b]/80 via-transparent to-transparent" />
                 </div>
 
                 <div className="p-6">

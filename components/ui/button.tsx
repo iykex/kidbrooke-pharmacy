@@ -5,21 +5,24 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground shadow-sm hover:bg-[#e68a00] transition-colors duration-200",
+        default: "bg-primary text-primary-foreground shadow-sm",
         destructive:
-          "bg-destructive text-white shadow-md hover:bg-destructive/80 transition-colors duration-200 ease-in-out dark:bg-destructive/60",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/70 transition-colors duration-200 ease-in-out",
+          "bg-destructive text-white shadow-md dark:bg-destructive/60",
+        secondary: "bg-secondary text-secondary-foreground shadow-sm",
         outline:
-          "border border-primary bg-background shadow-xs hover:bg-accent hover:border-ring transition-colors duration-200 ease-in-out dark:bg-input/30 dark:border-input/50 dark:hover:bg-input/50",
-        ghost:
-          "hover:bg-accent/70 hover:text-accent-foreground transition-colors duration-150 ease-in-out dark:hover:bg-accent/30",
-        link: "text-primary underline-offset-4 hover:underline transition-colors duration-150 ease-in-out",
+          "border border-primary bg-background shadow-xs dark:bg-input/30 dark:border-input/50",
+        ghost: "",
+        link: "text-primary underline-offset-4",
+        /** Hero / landing banner — hovers in globals.css (avoid `default` orange hover) */
+        heroPrimary:
+          "shadow-lg px-8 py-6 text-base font-semibold h-auto min-h-12",
+        /** Base + hover: styles/globals.css — avoids Tailwind bg-* beating :hover in cascade */
+        heroSecondary:
+          "backdrop-blur-sm px-8 py-6 text-base font-semibold h-auto min-h-12",
       },
       size: {
         default: "h-9 p-2 has-[>svg]:px-3",
@@ -52,7 +55,9 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      data-variant={variant ?? "default"}
+      data-size={size ?? "default"}
+      className={cn(buttonVariants({ variant, size }), className)}
       {...props}
     />
   );

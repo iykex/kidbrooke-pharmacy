@@ -15,22 +15,22 @@ export default function Brand() {
       >
         <Image
           src="/logo/kidbrooke-logo.png"
-          alt="Belvedere"
-          width={70}
-          height={70}
-          className="relative z-10 "
+          alt="Kidbrooke"
+          width={50}
+          height={50}
+          className="relative z-10 size-10"
         />
         <div className="flex flex-col">
           <p
             className={cn(
-              "font-bold text-md sm:text-2xl tracking-widest leading-tight transition-colors duration-300",
+              "font-bold text-sm sm:text-lg leading-tight transition-colors duration-300",
               hasDarkHero
                 ? "text-white dark:text-foreground"
                 : "text-foreground",
               isScrolled && "text-foreground"
             )}
           >
-            Belvedere
+            Kidbrooke
           </p>
           <p
             className={cn(

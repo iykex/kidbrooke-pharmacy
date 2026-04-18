@@ -25,7 +25,7 @@ export function OurProcessSection({
   });
 
   return (
-    <section className="bg-white dark:bg-background">
+    <section className="bg-background">
       {/* Background Pattern */}
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)/5_1px,transparent_1px),linear-gradient(to_bottom,var(--border)/5_1px,transparent_1px)] bg-size-[24px_24px]"></div>
 
@@ -44,34 +44,39 @@ export function OurProcessSection({
           </div>
 
           {/* Steps Grid */}
-          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4">
+          <div className="grid grid-cols-1 gap-8 p-4 pt-6 pl-2 sm:grid-cols-2 sm:pl-4 lg:grid-cols-4">
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
-                <div key={index} className="relative group">
-                  <div className="flex flex-col h-full bg-white dark:bg-[#003b5c] rounded-2xl p-6 shadow-md dark:shadow-md/30 transition-all duration-300 hover:shadow-md dark:hover:shadow-md/50 hover:-translate-y-2 border border-gray-200 dark:border-[#1a4d6e] relative z-10">
-                    {/* Number badge */}
-                    <div className="absolute -top-3 -left-3 bg-primary text-white text-sm font-bold rounded-full size-8 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                      {step.number}
-                    </div>
+                <div
+                  key={index}
+                  className="landing-process-card relative pt-3 pl-3 group"
+                >
+                  <div className="landing-process-number absolute left-0 top-0 z-20 flex size-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-white shadow-md">
+                    {step.number}
+                  </div>
 
-                    {/* Icon */}
+                  <div className="relative flex min-h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-md dark:shadow-md/30">
                     <div
-                      className={`mb-5 ${step.bgColor} w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm`}
-                    >
-                      <Icon className={`w-6 h-6 ${step.color}`} />
+                      aria-hidden
+                      className="landing-process-fill pointer-events-none absolute inset-0 bg-primary/10 dark:bg-primary/20"
+                    />
+                    <div className="relative z-10 flex min-h-full flex-col p-6">
+                      <div
+                        className={`landing-process-icon mb-5 ${step.bgColor} flex h-12 w-12 items-center justify-center rounded-xl shadow-sm`}
+                      >
+                        <Icon className={`h-6 w-6 ${step.color}`} />
+                      </div>
+
+                      <h3 className="landing-process-title mb-3 text-lg font-bold text-gray-900 dark:text-white">
+                        {step.title}
+                      </h3>
+                      <p className="mb-5 grow text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                        {step.description}
+                      </p>
+
+                      <div className="landing-process-line h-1 rounded-full bg-primary/30 group-hover:bg-primary " />
                     </div>
-
-                    {/* Content */}
-                    <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white group-hover:text-primary transition-colors">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-5 grow leading-relaxed">
-                      {step.description}
-                    </p>
-
-                    {/* Decorative line */}
-                    <div className="h-1 w-10 bg-primary/30 rounded-full group-hover:w-full group-hover:bg-primary transition-all duration-300" />
                   </div>
                 </div>
               );
@@ -83,14 +88,15 @@ export function OurProcessSection({
             <Button
               asChild
               size="lg"
-              className="group bg-primary hover:bg-primary/90 text-white font-semibold px-8 rounded-xl shadow-md transition-all duration-300 hover:shadow-xl hover:scale-105"
+              className="bg-primary text-primary-foreground font-semibold px-8 rounded-xl shadow-md"
+              variant="default"
             >
               <Link
                 href={INTERNAL_LINKS.servicesPage}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 hover:bg-primary/90 group"
               >
                 Explore All Services
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="section-header-primary-cta-icon h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
             </Button>
 

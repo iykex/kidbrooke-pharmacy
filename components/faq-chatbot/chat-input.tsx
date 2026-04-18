@@ -23,7 +23,7 @@ export function ChatInput({
     <div className="p-4 border-t border-gray-200 dark:border-[#1a4d6e] bg-gray-50 dark:bg-[#00162a] shrink-0">
       <div className="flex gap-2 items-end">
         {/* Slash button to toggle quick actions */}
-        <div className="relative group">
+        <div className="quick-actions-tooltip-wrap relative">
           <Button
             type="button"
             variant="outline"
@@ -41,7 +41,7 @@ export function ChatInput({
             <Slash className="size-4" />
           </Button>
           {/* Tooltip */}
-          <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+          <div className="quick-actions-tooltip absolute left-full top-1/2 -translate-y-1/2 ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-md whitespace-nowrap opacity-0 pointer-events-none z-50">
             Quick questions
             <div className="absolute right-full top-1/2 -translate-y-1/2 mr-0 border-4 border-transparent border-r-gray-900 dark:border-r-gray-700" />
           </div>

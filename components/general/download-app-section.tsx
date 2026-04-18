@@ -8,9 +8,7 @@ import { AppStoreDownloadButtonsSkeleton } from "@/components/shared/tenant-skel
 import { DOWNLOAD_APP_FEATURE_STYLES } from "@/lib/utils/marketing-present";
 import type { MarketingBlocksDoc } from "@/lib/types/firestore";
 import { ArrowRight, Download, Smartphone } from "lucide-react";
-import phoneAppScreenshot from "@/public/ui/phone-app-screenshot.png";
 import mobileApp from "@/public/ui/mobile-app.png";
-import { useTheme } from "next-themes";
 import { useIsMounted } from "@/hooks/use-is-mounted";
 import { track } from "@/lib/analytics/tracker";
 
@@ -20,7 +18,6 @@ export default function DownloadAppSection({
   marketing: MarketingBlocksDoc | null;
 }) {
   const { tenant, isTenantReady } = useTenantContext();
-  const { theme } = useTheme();
   const mounted = useIsMounted();
 
   const appFeatures = (marketing?.downloadAppFeatures ?? []).map((f, i) => ({
@@ -61,18 +58,24 @@ export default function DownloadAppSection({
                 return (
                   <div
                     key={item.description}
-                    className="flex items-start gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#003b5c] hover:bg-gray-100 dark:hover:bg-[#004d73] transition-all duration-300 border border-gray-200 dark:border-[#1a4d6e] group hover:-translate-y-1 z-10"
+                    className="interactive-hover-surface--compact relative flex items-start gap-4 overflow-hidden rounded-xl border border-border bg-card p-4 dark:hover:bg-[#007351]"
                   >
-                    <div className="p-2.5 bg-primary/10 dark:bg-primary/20 rounded-lg shrink-0 group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="size-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors">
-                        {item.description}
-                      </p>
+                    <div
+                      aria-hidden
+                      className="interactive-hover-fill pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-primary/10 dark:bg-primary/15"
+                    />
+                    <div className="relative z-10 flex items-start gap-4">
+                      <div className="interactive-hover-icon shrink-0 rounded-lg bg-primary/10 p-2.5 dark:bg-primary/20">
+                        <Icon className="size-5 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="interactive-hover-title-strong mb-1 font-semibold text-gray-900 dark:text-white">
+                          {item.title}
+                        </h3>
+                        <p className="interactive-hover-desc text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 );
@@ -86,7 +89,7 @@ export default function DownloadAppSection({
                     key={store.name}
                     href={store.href}
                     onClick={() => track(store.tracking, store.href)}
-                    className="group grow flex items-center gap-3 bg-gray-900  hover:bg-gray-800   dark:bg-white/10 dark:hover:bg-white/20 text-white px-6 py-4 rounded-xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1 z-10"
+                    className="interactive-hover-store-link grow flex items-center gap-3 bg-gray-900 hover:bg-gray-800 dark:bg-white/10 dark:hover:bg-white/20 text-white px-6 py-4 rounded-xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1 z-10"
                   >
                     <div className="bg-white/10 p-2 rounded-lg">
                       <Image
@@ -103,7 +106,7 @@ export default function DownloadAppSection({
                       </p>
                       <p className="font-semibold">{store.platform}</p>
                     </div>
-                    <ArrowRight className="size-4 ml-auto opacity-50 group-hover:opacity-100 transition-all group-hover:translate-x-1" />
+                    <ArrowRight className="interactive-hover-store-link-icon size-4 ml-auto opacity-50" />
                   </Link>
                 ))
               ) : (
@@ -118,8 +121,8 @@ export default function DownloadAppSection({
               {/* Phone frame */}
               {mounted && (
                 <Image
-                  src={theme === "light" ? phoneAppScreenshot : mobileApp}
-                  alt="Belvedere Pharmacy App"
+                  src={mobileApp}
+                  alt="Kidbrooke Pharmacy App"
                   className="w-full h-auto object-contain rounded-4xl aspect-9/16"
                   quality={95}
                   priority
@@ -128,11 +131,11 @@ export default function DownloadAppSection({
               )}
 
               {/* Floating badge */}
-              <div className="absolute -right-6 top-20 bg-white dark:bg-[#003b5c]/90 shadow-md rounded-xl p-4 animate-bounce-slow border border-gray-200 dark:border-[#1a4d6e]">
-                <div className="p-2 bg-primary/10 dark:bg-primary/20 rounded-lg">
+              <div className="absolute -right-6 top-20 bg-card shadow-md rounded-xl p-4 animate-bounce-slow border border-border">
+                <div className="p-2 bg-primary/10 rounded-lg">
                   <Download className="size-6 text-primary" />
                 </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white dark:bg-[#003b5c] rotate-45 border-r border-b border-gray-200 dark:border-[#1a4d6e]"></div>
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 size-4 bg-card rotate-45 border-r border-b border-border"></div>
               </div>
             </div>
           </div>

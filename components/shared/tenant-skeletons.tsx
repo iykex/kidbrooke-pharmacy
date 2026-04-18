@@ -3,11 +3,18 @@
 import Skeleton from "react-loading-skeleton";
 import WidthConstraint from "@/components/shared/width-constraint";
 
-export function InfoBarRowSkeleton() {
+export function InfoBarRowSkeleton({
+  ariaHidden,
+}: {
+  ariaHidden?: boolean;
+} = {}) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:gap-x-4 md:gap-x-8">
+    <div
+      aria-hidden={ariaHidden || undefined}
+      className="flex shrink-0 flex-nowrap items-center gap-x-6 md:gap-x-10"
+    >
       {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="flex items-center gap-1 sm:gap-2">
+        <div key={i} className="flex shrink-0 items-center gap-1 sm:gap-2">
           <Skeleton circle width={14} height={14} className="shrink-0" />
           <Skeleton width={i === 0 ? 160 : i === 1 ? 140 : 100} height={12} />
         </div>

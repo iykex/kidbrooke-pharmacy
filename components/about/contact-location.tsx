@@ -49,8 +49,8 @@ export default async function ContactLocationSection() {
             {contactItems.map((info, index) => {
               const IconComponent = info.icon;
               return (
-                <div key={index} className="flex items-start gap-4 group">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <div key={index} className="contact-location-row flex items-start gap-4">
+                  <div className="contact-location-icon-wrap flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-primary/10">
                     <IconComponent className="h-6 w-6 text-primary" />
                   </div>
                   <div>

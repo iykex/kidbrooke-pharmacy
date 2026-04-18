@@ -20,7 +20,7 @@ export default function KeyBenefits({
   return (
     <section className="bg-white dark:bg-background">
       {/* Background Pattern */}
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)/5_1px,transparent_1px),linear-gradient(to_bottom,var(--border)/5_1px,transparent_1px)] bg-size[24px_24px]"></div>
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)/5_1px,transparent_1px),linear-gradient(to_bottom,var(--border)/5_1px,transparent_1px)] bg-size-[24px_24px]"></div>
 
       <WidthConstraint className="space-y-5">
         {/* Header */}
@@ -48,64 +48,72 @@ export default function KeyBenefits({
           <Button
             asChild
             size="lg"
-            className="group bg-primary hover:bg-primary/90 text-white font-semibold px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 z-10"
+            className="section-header-primary-cta bg-primary text-primary-foreground font-semibold px-8 rounded-xl shadow-lg z-10"
           >
             <Link
               href={INTERNAL_LINKS.servicesPage}
-              className="flex items-center gap-2"
+              className="interactive-hover-arrow-link flex items-center gap-2"
             >
               Explore Services
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="section-header-primary-cta-icon interactive-hover-arrow-link-icon size-4" />
             </Link>
           </Button>
         </div>
 
         {/* Benefits Grid */}
-        <div className="grid gap-8 sm:grid-cols-3 py-4 relative overflow-hidden">
+        <div className="relative grid gap-8 py-4 sm:grid-cols-3">
           {items.map((item, index) => {
             return (
               <div
                 key={item.title}
-                className="flex flex-col justify-between group bg-white dark:bg-[#003b5c] rounded-2xl p-6 shadow-md dark:shadow-md/30 hover:shadow-md dark:hover:shadow-md/50 transition-all duration-300 hover:-translate-y-2 border border-gray-200 dark:border-[#1a4d6e]"
+                className="interactive-hover-surface relative flex min-h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-md"
               >
-                {/* Number Badge */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="shrink-0 flex items-center justify-center size-12 bg-primary text-white rounded-xl font-bold text-lg group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                    {index + 1}
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
-                    {item.title}
-                  </h3>
-                </div>
-
-                {/* Benefits List */}
-                <ul className="space-y-3 mb-6">
-                  {item.bullets.map((bullet) => (
-                    <li
-                      key={bullet}
-                      className="flex gap-3 items-start text-gray-600 dark:text-gray-300"
-                    >
-                      <div className="shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mt-0.5">
-                        <Check className="w-3 h-3 text-green-600 dark:text-green-400 stroke-3" />
+                <div
+                  aria-hidden
+                  className="interactive-hover-fill pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-primary/10 dark:bg-primary/20"
+                />
+                <div className="relative z-10 flex min-h-full flex-col justify-between p-6">
+                  {/* Number Badge */}
+                  <div>
+                    <div className="mb-6 flex items-center gap-4">
+                      <div className="interactive-hover-badge flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary text-lg font-bold text-white shadow-sm">
+                        {index + 1}
                       </div>
-                      <p className="leading-relaxed text-sm">{bullet}</p>
-                    </li>
-                  ))}
-                </ul>
+                      <h3 className="interactive-hover-title text-lg font-bold text-gray-900 dark:text-white">
+                        {item.title}
+                      </h3>
+                    </div>
 
-                {orderPrescriptionsUrl ? (
-                  <Link
-                    href={orderPrescriptionsUrl}
-                    className="group/link inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors mt-auto"
-                  >
-                    Get Started
-                    <ArrowRight className="size-4 transition-transform group-hover/link:translate-x-1" />
-                  </Link>
-                ) : (
-                  <div className="mt-auto inline-flex items-center gap-2">
-                    <Skeleton width={88} height={16} />
+                    {/* Benefits List */}
+                    <ul className="mb-6 space-y-3">
+                      {item.bullets.map((bullet) => (
+                        <li
+                          key={bullet}
+                          className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+                        >
+                          <div className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+                            <Check className="h-3 w-3 stroke-3 text-green-600 dark:text-green-400" />
+                          </div>
+                          <p className="text-sm leading-relaxed">{bullet}</p>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                )}
+
+                  {orderPrescriptionsUrl ? (
+                    <Link
+                      href={orderPrescriptionsUrl}
+                      className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
+                    >
+                      Get Started
+                      <ArrowRight className="interactive-hover-surface-link-icon size-4" />
+                    </Link>
+                  ) : (
+                    <div className="mt-auto inline-flex items-center gap-2">
+                      <Skeleton width={88} height={16} />
+                    </div>
+                  )}
+                </div>
               </div>
             );
           })}

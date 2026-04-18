@@ -21,7 +21,7 @@ export default function LandingPage() {
       <header className="fixed top-0 w-full z-50">
         <Menu />
       </header>
-      <div className="overflow-hidden space-y-20 sm:space-y-30 pb-30  w-full">
+      <div className="min-w-0 space-y-20 sm:space-y-30 pb-30 w-full overflow-x-hidden">
         <Banner />
         <PharmacyServicesMarquee marketing={marketing} />
         <NHSPharmacyFirstSection cards={pfpCards} />

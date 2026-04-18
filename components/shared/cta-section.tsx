@@ -21,11 +21,11 @@ export default function CTASection() {
   if (!isTenantReady || !tenant) {
     return (
       <section className="overflow-hidden">
-        <WidthConstraint className="relative p-6 md:p-20 bg-[#002f4b] rounded-2xl">
+        <WidthConstraint className="relative p-6 md:p-20 bg-card rounded-2xl">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-size-[40px_40px]" />
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <CtaTenantBlockSkeleton />
-            <div className="bg-white dark:bg-[#03456a] rounded-2xl p-4 sm:p-8 shadow-2xl z-10">
+            <div className="bg-card rounded-2xl p-4 sm:p-8 shadow-2xl z-10">
               <CtaContactCardSkeleton />
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function CTASection() {
 
   return (
     <section className="overflow-hidden">
-      <WidthConstraint className="relative p-6 md:p-20 bg-[#002f4b] rounded-2xl">
+      <WidthConstraint className="relative p-6 md:p-20 bg-primary dark:bg-primary/20 rounded-2xl">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-size-[40px_40px]" />
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
@@ -133,7 +133,7 @@ export default function CTASection() {
               <Button
                 asChild
                 size="lg"
-                className="group bg-white text-primary hover:bg-white/90 font-semibold px-8 rounded-xl shadow-lg w-fit z-10"
+                className="bg-white text-primary hover:bg-white/90 font-semibold px-8 rounded-xl shadow-lg w-fit z-10"
               >
                 <Link
                   href={tenant.bookAppointmentUrl}
@@ -143,17 +143,17 @@ export default function CTASection() {
                       tenant.bookAppointmentUrl
                     )
                   }
-                  className="flex items-center gap-2"
+                  className="interactive-hover-arrow-link flex items-center gap-2"
                 >
                   Book Appointment
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="interactive-hover-arrow-link-icon size-4" />
                 </Link>
               </Button>
               <Button
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-0 text-foreground hover:bg-foreground hover:text-white hover:scale-105 hover:shadow-xs hover:shadow-background font-semibold px-8 rounded-xl transition-all ease-in-out duration-500 w-fit z-10"
+                className="border-0 text-foreground hover:bg-muted hover:tracking-wide font-semibold px-8 rounded-xl transition-all ease-in-out duration-500 w-fit z-10"
               >
                 <Link href="/contact-us">Contact Us</Link>
               </Button>
@@ -161,7 +161,7 @@ export default function CTASection() {
           </div>
 
           {/* Right Column - Contact Card */}
-          <div className="bg-white dark:bg-[#03456a] rounded-2xl p-4 sm:p-8 shadow-2xl z-10">
+          <div className="bg-white dark:bg-secondary/50 rounded-2xl p-4 sm:p-8 shadow-2xl z-10">
             <div className="mb-6">
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                 Get In Touch

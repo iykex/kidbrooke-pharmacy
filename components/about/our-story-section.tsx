@@ -44,9 +44,9 @@ export default function OurStorySection() {
 
           {/* Right Side - Image */}
           <div className="relative">
-            <div className="relative group">
+            <div className="our-story-frame relative">
               {/* Background decoration */}
-              <div className="absolute -inset-4 bg-linear-to-br from-primary/20 to-chart-2/20 rounded-4xl rotate-6 group-hover:rotate-3 transition-transform duration-500" />
+              <div className="our-story-decoration absolute -inset-4 bg-linear-to-br from-primary/20 to-chart-2/20 rounded-4xl" />
 
               {/* Main image container */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">

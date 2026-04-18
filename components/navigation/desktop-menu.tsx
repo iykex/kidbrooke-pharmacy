@@ -21,7 +21,7 @@ export function DesktopMenu() {
             key={item.href}
             href={item.href}
             className={cn(
-              "group relative px-5 py-2.5 text-sm font-medium transition-all duration-300",
+              "nav-link-item relative px-5 py-2.5 text-sm font-medium transition-all duration-300",
               !isActive && "nav-link",
               hasDarkHero
                 ? "text-background dark:text-foreground hover:text-background/80 dark:hover:text-foreground/80"
@@ -47,7 +47,7 @@ export function DesktopMenu() {
             {!isActive && (
               <span
                 className={cn(
-                  "absolute top-1 right-1 size-1.5 rounded-full bg-primary opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"
+                  "nav-link-hover-dot absolute top-1 right-1 size-1.5 rounded-full bg-primary"
                 )}
               />
             )}
@@ -82,7 +82,7 @@ export function DesktopMenuButtons() {
         }}
         href={tenant.orderPrescriptionsUrl}
         className={cn(
-          "group relative px-4 py-2 text-sm font-semibold transition-all duration-300 overflow-hidden rounded-lg hover:text-primary",
+          "nav-order-prescriptions relative px-4 py-2 text-sm font-semibold transition-all duration-300 overflow-hidden rounded-lg hover:text-primary",
           hasDarkHero
             ? "text-background dark:text-foreground"
             : "text-foreground",
@@ -93,15 +93,14 @@ export function DesktopMenuButtons() {
         <p className="relative text-base">Order Prescriptions</p>
         <span
           className={cn(
-            "absolute bottom-1 left-0 right-0 bg-primary h-px mx-auto transition-all duration-500 ease-in-out origin-center",
-            "w-0 group-hover:w-1/2"
+            "nav-order-prescriptions-underline absolute bottom-1 left-0 right-0 bg-primary h-px mx-auto origin-center"
           )}
         />
       </Link>
 
       <Button
         asChild
-        className="group relative bg-primary hover:bg-primary text-white font-semibold px-6 rounded-lg overflow-hidden transition-all duration-300"
+        className="relative bg-primary hover:bg-primary text-white font-semibold px-6 rounded-lg overflow-hidden transition-all duration-300"
       >
         <Link
           onClick={() => {
@@ -111,12 +110,12 @@ export function DesktopMenuButtons() {
             );
           }}
           href={tenant.bookAppointmentUrl}
-          className="flex items-center gap-2"
+          className="nav-book-cta flex items-center gap-2"
         >
           {/* Shine effect */}
-          <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+          <span className="nav-book-cta-shine absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent" />
           <span className="relative z-10">Book Now</span>
-          <ArrowRight className="relative z-10 size-4 transition-transform duration-300 group-hover:translate-x-1" />
+          <ArrowRight className="nav-book-cta-arrow relative z-10 size-4" />
         </Link>
       </Button>
       <ModeToggle />

@@ -252,7 +252,6 @@ export const ABOUT_PAGE_BANNER_BUTTONS = [
 
 export const DARK_HERO_PAGES = [
   INTERNAL_LINKS.homePage,
-  INTERNAL_LINKS.aboutPage,
   INTERNAL_LINKS.contactPage,
 ];
 

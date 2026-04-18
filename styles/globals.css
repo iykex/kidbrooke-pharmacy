@@ -1,9 +1,17 @@
 ﻿@import "tailwindcss";
-@import "tw-animate-css";
+/* Disabled: importing tw-animate-css was conflicting with core transition utilities */
+/* @import "tw-animate-css"; */
+
+/* Ensure Tailwind scans all app templates (v4 content detection can miss paths) */
+@source "../app/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../components/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../hooks/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../lib/**/*.{js,ts,jsx,tsx,mdx}";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-plus-jakarta-sans: var(--font-plus-jakarta-sans);
@@ -189,25 +197,576 @@
   }
 }
 
+/* Interactive hover surfaces — parent:hover descendants (not Tailwind group-hover), so utilities
+   like w-* / opacity don’t fight hover in the cascade. */
+@layer components {
+  .interactive-hover-fill,
+  .landing-process-fill {
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 500ms ease-out;
+  }
+
+
+  .landing-process-line {
+    width: 2.5rem;
+    display: block;
+    transition:
+      width 500ms ease-out,
+      background-color 500ms ease-out;
+  }
+
+  .landing-process-card:hover .landing-process-line {
+    width: 100%;
+  }
+
+  .interactive-hover-badge,
+  .landing-process-number,
+  .interactive-hover-icon,
+  .landing-process-icon {
+    transition: transform 300ms ease-out;
+  }
+
+  .interactive-hover-surface:hover .interactive-hover-badge,
+  .landing-process-card:hover .landing-process-number,
+  .interactive-hover-surface:hover .interactive-hover-icon,
+  .landing-process-card:hover .landing-process-icon {
+    transform: scale(1.1);
+  }
+
+  .interactive-hover-title,
+  .landing-process-title {
+    transition: color 300ms ease-out;
+  }
+
+  .interactive-hover-surface:hover .interactive-hover-title,
+  .landing-process-card:hover .landing-process-title {
+    color: var(--primary);
+  }
+
+  .interactive-hover-surface:hover .interactive-hover-surface-link-icon {
+    transform: translateX(0.25rem);
+  }
+
+  .interactive-hover-surface-link-icon {
+    transition: transform 300ms ease-out;
+  }
+
+  /* Smaller lift (download app feature rows) */
+  .interactive-hover-surface--compact {
+    transition:
+      transform 300ms ease-out,
+      box-shadow 300ms ease-out,
+      background-color 300ms ease-out;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .interactive-hover-surface--compact:hover {
+      transform: translateY(-0.25rem);
+      box-shadow:
+        0 4px 6px -1px rgb(0 0 0 / 0.1),
+        0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+  }
+
+  .interactive-hover-surface--compact:hover .interactive-hover-fill {
+    transform: scaleY(1);
+  }
+
+  .interactive-hover-title-strong {
+    transition: color 300ms ease-out;
+  }
+
+  .interactive-hover-surface--compact:hover .interactive-hover-title-strong {
+    color: var(--primary);
+  }
+
+  .interactive-hover-desc {
+    transition: color 300ms ease-out;
+  }
+
+  .interactive-hover-surface--compact:hover .interactive-hover-desc {
+    color: color-mix(in srgb, var(--foreground) 90%, transparent);
+  }
+
+  .dark .interactive-hover-surface--compact:hover .interactive-hover-desc {
+    color: color-mix(in srgb, var(--foreground) 90%, transparent);
+  }
+
+  .interactive-hover-store-link:hover .interactive-hover-store-link-icon {
+    transform: translateX(0.25rem);
+    opacity: 1;
+  }
+
+  .interactive-hover-store-link-icon {
+    transition:
+      transform 300ms ease-out,
+      opacity 300ms ease-out;
+  }
+
+  .interactive-hover-arrow-link:hover .interactive-hover-arrow-link-icon {
+    transform: translateX(0.25rem);
+  }
+
+  .interactive-hover-arrow-link-icon {
+    transition:
+      transform 300ms ease-out,
+      color 300ms ease-out;
+  }
+
+  .interactive-hover-banner-store-link:hover .interactive-hover-banner-store-link-icon {
+    transform: translateX(0.25rem);
+    color: rgb(255 255 255);
+  }
+
+  .interactive-hover-banner-store-link-icon {
+    transition:
+      transform 300ms ease-out,
+      color 300ms ease-out;
+  }
+
+  /* Newsletter feature rows */
+  .newsletter-feature-row:hover .newsletter-feature-icon-wrap {
+    transform: scale(1.1);
+  }
+
+  .newsletter-feature-icon-wrap {
+    transition: transform 300ms ease-out;
+  }
+
+  .newsletter-feature-row:hover .newsletter-feature-title {
+    color: color-mix(in srgb, var(--primary) 90%, transparent);
+  }
+
+  .newsletter-feature-title {
+    transition: color 300ms ease-out;
+  }
+
+  /* Pharmacy First — benefit cards */
+  .pfp-benefit-icon-wrap {
+    transition: background-color 300ms ease-out;
+  }
+
+  .pfp-benefit-card:hover .pfp-benefit-icon-wrap {
+    background-color: var(--ring);
+  }
+
+  .pfp-benefit-icon {
+    transition: color 300ms ease-out;
+  }
+
+  .pfp-benefit-card:hover .pfp-benefit-icon {
+    color: #fff;
+  }
+
+  /* Pharmacy First — condition cards */
+  .pfp-condition-image {
+    transition: transform 500ms ease-out;
+  }
+
+  .pfp-condition-card:hover .pfp-condition-image {
+    transform: scale(1.05);
+  }
+
+  /* Marquee trust cards */
+  .interactive-hover-marquee-card {
+    transition:
+      transform 300ms ease-out,
+      box-shadow 300ms ease-out,
+      border-color 300ms ease-out;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .interactive-hover-marquee-card:hover {
+      transform: translateY(-0.5rem);
+      box-shadow:
+        0 4px 6px -1px rgb(0 0 0 / 0.1),
+        0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    .dark .interactive-hover-marquee-card:hover {
+      box-shadow:
+        0 4px 6px -1px rgb(0 0 0 / 0.25),
+        0 2px 4px -2px rgb(0 0 0 / 0.2);
+    }
+  }
+
+  .interactive-hover-marquee-card:hover {
+    border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+  }
+
+  .interactive-hover-marquee-card:hover .interactive-hover-marquee-icon-wrap {
+    transform: scale(1.1);
+    box-shadow:
+      0 10px 15px -3px rgb(0 0 0 / 0.1),
+      0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+
+  .interactive-hover-marquee-icon-wrap {
+    transition:
+      transform 300ms ease-out,
+      box-shadow 300ms ease-out;
+  }
+
+  .interactive-hover-marquee-card:hover .interactive-hover-marquee-title {
+    color: var(--primary);
+  }
+
+  .interactive-hover-marquee-title {
+    transition: color 300ms ease-out;
+  }
+
+  .interactive-hover-marquee-card:hover .interactive-hover-marquee-subtitle {
+    color: color-mix(in srgb, var(--foreground) 85%, transparent);
+  }
+
+  .dark .interactive-hover-marquee-card:hover .interactive-hover-marquee-subtitle {
+    color: color-mix(in srgb, var(--foreground) 85%, transparent);
+  }
+
+  .interactive-hover-marquee-subtitle {
+    transition: color 300ms ease-out;
+  }
+
+  /* Why choose us — gradient blob + text */
+  .why-choose-blob {
+    transform: scale(1);
+    transition: transform 500ms linear;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .why-choose-card:hover .why-choose-blob {
+      transform: scale(10);
+    }
+  }
+
+  .why-choose-icon-wrap {
+    transition: transform 300ms ease-out;
+  }
+
+  .why-choose-card:hover .why-choose-icon-wrap {
+    transform: scale(1.1);
+  }
+
+
+
+  .interactive-hover-cta,
+  .section-header-primary-cta {
+    transition:
+      transform 300ms ease-out,
+      box-shadow 300ms ease-out,
+      background-color 200ms ease-out;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .interactive-hover-cta:hover,
+    .section-header-primary-cta:hover {
+      transform: scale(1.05);
+      box-shadow:
+        0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .interactive-hover-cta:hover .interactive-hover-cta-icon,
+    .section-header-primary-cta:hover .section-header-primary-cta-icon {
+      transform: translateX(0.25rem);
+    }
+  }
+
+  .interactive-hover-cta-icon,
+  .section-header-primary-cta-icon {
+    transition: transform 300ms ease-out;
+  }
+
+  /* Desktop nav — avoid group-hover for underline width / shine / dot */
+  .nav-link-hover-dot {
+    opacity: 0;
+    transform: scale(0);
+    transition:
+      transform 300ms ease-out,
+      opacity 300ms ease-out;
+  }
+
+  .nav-link-item:hover .nav-link-hover-dot {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .nav-order-prescriptions-underline {
+    width: 0;
+    transition: width 500ms ease-in-out;
+  }
+
+  .nav-order-prescriptions:hover .nav-order-prescriptions-underline {
+    width: 50%;
+  }
+
+  .nav-book-cta-shine {
+    transform: translateX(-100%);
+    transition: transform 700ms ease-in-out;
+  }
+
+  .nav-book-cta:hover .nav-book-cta-shine {
+    transform: translateX(100%);
+  }
+
+  .nav-book-cta:hover .nav-book-cta-arrow {
+    transform: translateX(0.25rem);
+  }
+
+  .nav-book-cta-arrow {
+    transition: transform 300ms ease-out;
+  }
+
+  /* Mobile menu chevron */
+  .mobile-menu-link:hover .mobile-menu-chevron {
+    transform: translateX(0.25rem);
+  }
+
+  .mobile-menu-chevron {
+    transition:
+      transform 300ms ease-out,
+      color 300ms ease-out;
+  }
+
+  .mobile-menu-link:not(.mobile-menu-link--active):hover .mobile-menu-chevron {
+    color: var(--primary);
+  }
+
+  /* Cookie bubble icon */
+  .cookie-settings-bubble:hover .cookie-settings-icon {
+    transform: rotate(12deg);
+  }
+
+  .cookie-settings-icon {
+    transition: transform 300ms ease-out;
+  }
+
+  /* About — our story image frame */
+  .our-story-decoration {
+    transform: rotate(6deg);
+    transition: transform 500ms ease-out;
+  }
+
+  .our-story-frame:hover .our-story-decoration {
+    transform: rotate(3deg);
+  }
+
+  /* About — team cards */
+  .team-card:hover .team-member-image {
+    transform: scale(1.05);
+  }
+
+  .team-member-image {
+    transition: transform 500ms ease-out;
+  }
+
+  .team-card:hover .team-member-overlay {
+    opacity: 1;
+  }
+
+  .team-member-overlay {
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+  }
+
+  /* About — values cards bottom accent */
+  .values-card:hover .values-accent-bar {
+    opacity: 1;
+  }
+
+  .values-accent-bar {
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+  }
+
+  /* Contact location rows */
+  .contact-location-row:hover .contact-location-icon-wrap {
+    background-color: color-mix(in srgb, var(--primary) 20%, transparent);
+  }
+
+  .contact-location-icon-wrap {
+    transition: background-color 300ms ease-out;
+  }
+
+  /* Contact page — opening hours gradient swap */
+  .contacts-hours-icon {
+    background: linear-gradient(to bottom right, #fff9e6, #fff3cc);
+    transition: background 300ms ease-out;
+  }
+
+  .contacts-hours-row:hover .contacts-hours-icon {
+    background: linear-gradient(to bottom right, #fff3cc, #fff9e6);
+  }
+
+  /* Contact column — channel icon gradients (hover swaps direction) */
+  .contacts-channel-icon {
+    transition: background 300ms ease-out;
+  }
+
+  .contacts-channel-icon--phone {
+    background: linear-gradient(to bottom right, #dbeafe, #eff6ff);
+  }
+
+  .contacts-channel-row:hover .contacts-channel-icon--phone {
+    background: linear-gradient(to bottom right, #eff6ff, #dbeafe);
+  }
+
+  .contacts-channel-icon--email {
+    background: linear-gradient(to bottom right, #f3e8ff, #faf5ff);
+  }
+
+  .contacts-channel-row:hover .contacts-channel-icon--email {
+    background: linear-gradient(to bottom right, #faf5ff, #f3e8ff);
+  }
+
+  .contacts-channel-icon--address {
+    background: linear-gradient(to bottom right, #d1fae5, #ecfdf5);
+  }
+
+  .contacts-channel-row:hover .contacts-channel-icon--address {
+    background: linear-gradient(to bottom right, #ecfdf5, #d1fae5);
+  }
+
+  /* 404 nav cards */
+  .not-found-nav-card:hover .not-found-nav-card-icon-wrap {
+    background-color: color-mix(in srgb, var(--primary) 20%, transparent);
+  }
+
+  .not-found-nav-card-icon-wrap {
+    transition: background-color 300ms ease-out;
+  }
+
+  .not-found-nav-card:hover .not-found-nav-card-title {
+    color: var(--primary);
+  }
+
+  .not-found-nav-card-title {
+    transition: color 300ms ease-out;
+  }
+
+  /* FAQ chat — slash tooltip */
+  .quick-actions-tooltip-wrap:hover .quick-actions-tooltip {
+    opacity: 1;
+  }
+
+  .quick-actions-tooltip {
+    transition: opacity 200ms ease-out;
+  }
+
+  /* shadcn Button — transitions & hover (CSS layer, matches previous Tailwind utilities) */
+  [data-slot="button"] {
+    transition-property: background-color, color, border-color, box-shadow, text-decoration-color, transform;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-slot="button"][data-variant="ghost"],
+  [data-slot="button"][data-variant="link"] {
+    transition-duration: 150ms;
+  }
+
+  /* Default = primary solid buttons — brand green (not #e68a00; that overrode Tailwind and looked “dead”) */
+  [data-slot="button"][data-variant="default"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: color-mix(in srgb, var(--primary) 88%, #000);
+    color: var(--primary-foreground);
+  }
+
+  [data-slot="button"][data-variant="destructive"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: color-mix(in srgb, var(--destructive) 80%, transparent);
+  }
+
+  [data-slot="button"][data-variant="secondary"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: color-mix(in srgb, var(--secondary) 70%, var(--background));
+  }
+
+  [data-slot="button"][data-variant="outline"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--accent);
+    border-color: var(--ring);
+  }
+
+  .dark [data-slot="button"][data-variant="outline"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: color-mix(in srgb, var(--input) 50%, transparent);
+  }
+
+  [data-slot="button"][data-variant="ghost"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: color-mix(in srgb, var(--accent) 70%, transparent);
+    color: var(--accent-foreground);
+  }
+
+  .dark [data-slot="button"][data-variant="ghost"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  [data-slot="button"][data-variant="link"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    text-decoration: underline;
+  }
+
+  /* Landing hero CTAs (banner) — distinct from `default` primary hover.
+     Base colors live here (not Tailwind bg-*) so utilities layer cannot override :hover. */
+  [data-slot="button"][data-variant="heroPrimary"] {
+    background-color: #d78c12;
+    color: #131212;
+  }
+
+  [data-slot="button"][data-variant="heroPrimary"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: rgb(249 168 37 / 0.9);
+    box-shadow:
+      0 10px 15px -3px rgb(249 168 37 / 0.25),
+      0 4px 6px -4px rgb(249 168 37 / 0.15);
+  }
+
+  [data-slot="button"][data-variant="heroSecondary"] {
+    background-color: rgb(255 255 255 / 0.05);
+    color: #fff;
+    border-color: rgb(255 255 255 / 0.2);
+    border-style: solid;
+    border-width: 1px;
+  }
+
+  [data-slot="button"][data-variant="heroSecondary"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: #fff;
+    color: #002f4b;
+    border-color: rgb(0 47 75 / 0.12);
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out, border-color 300ms ease-in-out, box-shadow 300ms ease-in-out;
+
+  }
+}
+
 .nav-link::after {
   content: "";
-  @apply mx-auto absolute left-0 right-0 -bottom-1 w-0 h-0.5 bg-primary transition-all duration-500 ease-in-out origin-center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: width 500ms ease-in-out;
 }
 
 .nav-link:hover::after {
-  @apply w-1/2;
+  width: 50%;
 }
 
 ::-webkit-scrollbar {
-  @apply bg-background w-1 h-1;
+  background-color: var(--background);
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary/60 rounded-4xl border-0;
+  background-color: color-mix(in srgb, var(--primary) 60%, transparent);
+  border-radius: 9999px;
+  border: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-accent cursor-grab;
+  background-color: var(--accent);
+  cursor: grab;
 }
 
 .clip-hexagon {
@@ -315,7 +874,29 @@
   animation: scroll 18s linear infinite;
 }
 
-.group-hover\:paused:hover {
+/* Duplicated content row: -50% == one copy width; L→R drift like a slow terminal ticker */
+@keyframes infoBarScroll {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-infoBarScroll {
+  animation: infoBarScroll 50s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-infoBarScroll {
+    animation: none;
+    transform: none;
+  }
+}
+
+.marquee-section-root:hover .marquee-scroll-track {
   animation-play-state: paused;
 }
 

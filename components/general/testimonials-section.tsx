@@ -4,6 +4,7 @@ import { useTestimonial } from "@/hooks/use-testimonial";
 import { useTestimonials } from "@/hooks/use-testimonials";
 import WidthConstraint from "../shared/width-constraint";
 import Image from "next/image";
+import patterns from "@/public/elements/pattern.svg";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { track } from "@/lib/analytics/tracker";
@@ -19,7 +20,7 @@ export default function Testimonials() {
 
   if (loading || items.length === 0) {
     return (
-      <section className="py-20 bg-[#002f4b] relative overflow-hidden min-h-[320px]">
+      <section className="py-20 bg-gray-900 dark:bg-[#071a11] relative overflow-hidden min-h-[320px]">
         <WidthConstraint className="relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -39,9 +40,15 @@ export default function Testimonials() {
   const imageSrc = `/${currentTestimonial.assetKey.replace(/^\//, "")}`;
 
   return (
-    <section className="py-20 bg-[#002f4b] relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(249,168,37,0.08),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,191,255,0.06),transparent_50%)]" />
+    <section className="py-20 bg-gray-900 dark:bg-[#071a11] relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="dark:hidden absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(249,168,37,0.08),transparent_50%)]" />
+      <div className="dark:hidden absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,191,255,0.06),transparent_50%)]" />
+      <Image
+        src={patterns}
+        alt="patterns"
+        className="absolute inset-0 object-cover w-full opacity-50"
+      />
 
       <WidthConstraint className="relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -53,7 +60,7 @@ export default function Testimonials() {
               <h2 className="text-3xl sm:text-4xl font-bold tracking-wide sm:tracking-tight text-white mt-4 mb-4">
                 Trusted by <span className="text-primary">Thousands</span>
               </h2>
-              <p className="text-white/70 text-lg leading-relaxed max-w-md">
+              <div className="text-white/70 text-lg leading-relaxed max-w-md">
                 {isTenantReady && tenant ? (
                   <>
                     Hear what our patients have to say about their experience with{" "}
@@ -62,7 +69,7 @@ export default function Testimonials() {
                 ) : (
                   <TestimonialsTenantLineSkeleton />
                 )}
-              </p>
+              </div>
             </div>
 
             <div className="grid grid-cols-3 gap-6">
@@ -82,20 +89,20 @@ export default function Testimonials() {
 
             <Button
               asChild
-              className="group bg-primary hover:bg-primary/90 text-white font-semibold px-8 rounded-xl"
+              className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 rounded-xl"
             >
               <Link
                 href={INTERNAL_LINKS.contactPage}
-                className="flex items-center gap-2"
+                className="interactive-hover-arrow-link flex items-center gap-2"
               >
                 Leave a Review
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="interactive-hover-arrow-link-icon size-4" />
               </Link>
             </Button>
           </div>
 
           <div className="relative">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-8 space-y-6">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-8 space-y-6 min-h-96 animate-in">
               <Quote className="size-10 text-primary" />
 
               <p className="text-white/90 text-lg leading-relaxed">

@@ -50,10 +50,6 @@ export type ContactColumnRow = {
   title: string;
   content: string;
   detail: string;
-  bgFrom: string;
-  bgTo: string;
-  bgHoverFrom: string;
-  bgHoverTo: string;
   iconColor: string;
 };
 

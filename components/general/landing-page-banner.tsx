@@ -40,7 +40,7 @@ export default function Banner() {
       : null;
 
   return (
-    <section className="h-screen overflow-hidden relative">
+    <section className="h-screen overflow-hidden relative pt-30">
       <BackgroundCarousel />
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-linear-to-r from-[#0a1f19]/90 via-[#0a1f19]/75 to-[#0a1f19]/20 dark:from-[#0a1f19]/95 dark:via-[#0a1f19]/80 dark:to-[#0a1f19]/30" />
@@ -49,7 +49,7 @@ export default function Banner() {
         <WidthConstraint>
           <div className="grid lg:grid-cols-5 gap-8 items-center">
             {/* Left Content - Takes 3 columns */}
-            <div className="lg:col-span-3 space-y-8">
+            <div className="lg:col-span-3 space-y-8 relative">
               <Badge
                 variant="secondary"
                 className="py-1.5 px-4 text-sm font-bold bg-blue-500 text-white border border-[#00BFFF]/20 backdrop-blur-sm"
@@ -75,10 +75,10 @@ export default function Banner() {
                     <Button
                       key={btn.text}
                       asChild
-                      className={
+                      variant={
                         btn.variant === "primary"
-                          ? "group bg-[#F9A825] text-white hover:bg-[#F9A825]/90 transition-all duration-300 shadow-lg hover:shadow-[#F9A825]/25 px-8 py-6 text-base font-semibold"
-                          : "group border-white/20 bg-white/5 text-white hover:bg-white hover:text-[#002f4b] backdrop-blur-sm px-8 py-6 text-base font-semibold transition-all duration-300"
+                          ? "heroPrimary"
+                          : "heroSecondary"
                       }
                     >
                       <Link
@@ -86,11 +86,11 @@ export default function Banner() {
                           track(btn.tracking, btn.href);
                         }}
                         href={btn.href}
-                        className="flex items-center gap-2"
+                        className="interactive-hover-arrow-link flex items-center gap-2"
                       >
-                        {btn.text}
+                        {btn.text.toUpperCase()}
                         {btn.icon && (
-                          <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+                          <ArrowRight className="interactive-hover-arrow-link-icon size-4" />
                         )}
                       </Link>
                     </Button>
@@ -99,7 +99,7 @@ export default function Banner() {
                   <BannerHeroActionsSkeleton />
                 )}
               </div>
-              <Image src={curvedArrow} alt="" width={100} height={100} />
+              <Image src={curvedArrow} alt="" width={100} height={100} className="h-auto w-auto" />
             </div>
 
             {/* Right Side - Download App Section (Desktop Only) - Takes 2 columns */}
@@ -118,7 +118,7 @@ export default function Banner() {
 
                   <div className="space-y-5">
                     <div className="space-y-2">
-                      <p className="text-green-400 font-medium text-xs uppercase tracking-wider">
+                      <p className="text-primary font-medium text-xs uppercase tracking-wider">
                         Mobile App
                       </p>
                       <h3 className="text-xl font-bold text-white">
@@ -139,7 +139,7 @@ export default function Banner() {
                             onClick={() => {
                               track(store.tracking, store.href);
                             }}
-                            className="group flex items-center gap-3 bg-white/10 hover:bg-white/20 rounded-xl p-2.5 transition-all duration-300"
+                            className="interactive-hover-banner-store-link flex items-center gap-3 bg-white/10 hover:bg-white/20 rounded-xl p-2.5 transition-[background-color,transform] duration-300"
                           >
                             <Image
                               src={store.image}
@@ -157,7 +157,7 @@ export default function Banner() {
                                 {store.platform}
                               </p>
                             </div>
-                            <ArrowRight className="size-3 text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white" />
+                            <ArrowRight className="interactive-hover-banner-store-link-icon size-3 text-white/40" />
                           </Link>
                         ))
                       ) : (

@@ -17,18 +17,16 @@ export default function InfoBar() {
   if (!isTenantReady || !tenant) {
     return (
       <div
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }
-        }}
         className={cn(
-          "py-2 px-3 transition-all duration-300 ease-in-out backdrop-blur-3xl cursor-pointer",
+          "py-2 px-3 transition-all duration-300 ease-in-out backdrop-blur-3xl overflow-hidden",
           hasDarkHero && "text-white",
           isScrolled && "bg-background text-foreground"
         )}
       >
-        <InfoBarRowSkeleton />
+        <div className="flex w-max shrink-0 animate-infoBarScroll items-center gap-x-6 md:gap-x-10 whitespace-nowrap">
+          <InfoBarRowSkeleton />
+          <InfoBarRowSkeleton ariaHidden />
+        </div>
       </div>
     );
   }
@@ -39,53 +37,60 @@ export default function InfoBar() {
     { title: "Call Us", description: tenant.phone, icon: PhoneOutgoing },
   ];
 
+  const textColorClass = cn(
+    hasDarkHero && "text-white",
+    isScrolled && "text-foreground"
+  );
+
+  const renderItem = (
+    item: (typeof items)[number],
+    key: string,
+    opts?: { hideFromA11y?: boolean }
+  ) => {
+    const Icon = item.icon;
+    return (
+      <div
+        key={key}
+        aria-hidden={opts?.hideFromA11y ? true : undefined}
+        className={cn(
+          "flex shrink-0 items-center gap-1 sm:gap-2 transition-colors duration-300",
+          textColorClass
+        )}
+      >
+        <Icon className="size-3 sm:size-4 text-primary shrink-0" />
+        <span
+          className={cn(
+            "hidden sm:inline font-medium text-xs",
+            textColorClass
+          )}
+        >
+          {item.title}:
+        </span>
+        <span
+          className={cn(
+            "text-[10px] sm:text-xs font-semibold",
+            textColorClass
+          )}
+        >
+          {item.description}
+        </span>
+      </div>
+    );
+  };
+
   return (
     <div
-      onClick={(e) => {
-        if (e.target === e.currentTarget) {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-      }}
       className={cn(
-        "py-2 px-3 transition-all duration-300 ease-in-out backdrop-blur-3xl cursor-pointer",
+        "py-2 px-3 transition-all duration-300 ease-in-out backdrop-blur-3xl overflow-hidden",
         hasDarkHero && "text-white",
         isScrolled && "bg-background text-foreground"
       )}
     >
-      <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:gap-x-4 md:gap-x-8">
-        {items.map((item) => {
-          const Icon = item.icon;
-          return (
-            <div
-              key={item.title}
-              className={cn(
-                "flex items-center gap-1 sm:gap-2 transition-colors duration-300",
-                hasDarkHero && "text-white",
-                isScrolled && "bg-background text-foreground"
-              )}
-            >
-              <Icon className="size-3 sm:size-4 text-primary shrink-0" />
-              <span
-                className={cn(
-                  "hidden sm:inline font-medium text-xs",
-                  hasDarkHero && "text-white",
-                  isScrolled && "bg-background text-foreground"
-                )}
-              >
-                {item.title}:
-              </span>
-              <span
-                className={cn(
-                  "text-[10px] sm:text-xs font-semibold",
-                  hasDarkHero && "text-white",
-                  isScrolled && "bg-background text-foreground"
-                )}
-              >
-                {item.description}
-              </span>
-            </div>
-          );
-        })}
+      <div className="flex w-max shrink-0 animate-infoBarScroll items-center gap-x-6 md:gap-x-10 whitespace-nowrap">
+        {items.map((item) => renderItem(item, item.title))}
+        {items.map((item) =>
+          renderItem(item, `${item.title}-dup`, { hideFromA11y: true })
+        )}
       </div>
     </div>
   );

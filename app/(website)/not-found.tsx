@@ -26,14 +26,14 @@ function NavCard({
   return (
     <Link
       href={href}
-      className="group bg-card border-2 border-input hover:border-primary rounded-xl p-6 transition-all hover:shadow-lg z-10"
+      className="not-found-nav-card bg-card border-2 border-input hover:border-primary rounded-xl p-6 transition-all hover:shadow-lg z-10"
     >
       <div className="flex items-start gap-4">
-        <div className="p-3 bg-primary/10 group-hover:bg-primary/20 rounded-lg transition-colors">
+        <div className="not-found-nav-card-icon-wrap p-3 bg-primary/10 rounded-lg">
           <Icon className="h-5 w-5 text-primary" />
         </div>
         <div>
-          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+          <h3 className="not-found-nav-card-title font-semibold text-gray-900 dark:text-white">
             {title}
           </h3>
           <p className="text-sm text-gray-600 dark:text-white/60">

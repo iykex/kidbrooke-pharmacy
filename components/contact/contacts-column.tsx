@@ -41,10 +41,10 @@ export default function ContactsColumn() {
           return (
             <div
               key={item.id}
-              className="group flex items-start sm:p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+              className="contacts-channel-row flex items-start sm:p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200"
             >
               <div
-                className={`hidden mr-4 sm:flex size-12 items-center justify-center rounded-full bg-linear-to-br ${item.bgFrom} ${item.bgTo} ${item.bgHoverFrom} ${item.bgHoverTo} transition-colors`}
+                className={`contacts-channel-icon contacts-channel-icon--${item.id} hidden mr-4 sm:flex size-12 items-center justify-center rounded-full`}
               >
                 <IconComponent className={`size-6 ${item.iconColor}`} />
               </div>
@@ -64,8 +64,8 @@ export default function ContactsColumn() {
         })}
 
         {/* Opening Hours */}
-        <div className="group flex items-start sm:p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
-          <div className="hidden mr-4 sm:flex size-12 items-center justify-center rounded-full bg-linear-to-br from-[#FFF9E6] to-[#FFF3CC] group-hover:from-[#FFF3CC] group-hover:to-[#FFF9E6] transition-colors">
+        <div className="contacts-hours-row flex items-start sm:p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
+          <div className="contacts-hours-icon hidden mr-4 sm:flex size-12 items-center justify-center rounded-full">
             <Clock className="h-6 w-6 text-[#F9A825]" />
           </div>
           <div className="flex-1">

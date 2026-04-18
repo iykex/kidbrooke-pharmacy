@@ -35,7 +35,7 @@ export default async function OurValuesSection() {
             return (
               <div
                 key={index}
-                className="group relative bg-card border border-input rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 hover:rotate-1"
+                className="values-card relative bg-card border border-input rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 hover:rotate-1"
               >
                 <div
                   className={`mb-6 inline-flex items-center justify-center rounded-xl bg-linear-to-br ${presentation.color} p-4`}
@@ -50,7 +50,7 @@ export default async function OurValuesSection() {
                   {value.description}
                 </p>
 
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-primary to-chart-2 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="values-accent-bar absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-primary to-chart-2 rounded-b-2xl" />
               </div>
             );
           })}
