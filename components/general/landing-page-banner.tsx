@@ -5,7 +5,8 @@ import { ArrowRight, BadgeCheckIcon, Download } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import bannerImage from "@/public/ui/home-banner.png";
+import { BackgroundCarousel } from "./hero-carousel";
+import curvedArrow from "@/public/elements/curved-arrow.svg";
 import { track } from "@/lib/analytics/tracker";
 import { buildAppStoreLinks } from "@/lib/utils/app-store-links";
 import { TRACKING_EVENTS } from "@/lib/constants/general";
@@ -39,20 +40,10 @@ export default function Banner() {
       : null;
 
   return (
-    <section className="h-screen overflow-hidden relative pt-20">
-      {/* Background Image with CDN optimization */}
-      <Image
-        src={bannerImage}
-        alt="Belvedere Pharmacy"
-        fill
-        className="object-cover object-center"
-        priority
-        quality={85}
-        placeholder="blur"
-      />
-
+    <section className="h-screen overflow-hidden relative">
+      <BackgroundCarousel />
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-linear-to-r from-[#001a33]/95 via-[#001a33]/80 to-[#001a33]/40 dark:from-[#001122]/95 dark:via-[#001122]/80 dark:to-[#001122]/30" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#0a1f19]/90 via-[#0a1f19]/75 to-[#0a1f19]/20 dark:from-[#0a1f19]/95 dark:via-[#0a1f19]/80 dark:to-[#0a1f19]/30" />
       {/* Content */}
       <div className="relative w-full h-full flex items-center">
         <WidthConstraint>
@@ -61,7 +52,7 @@ export default function Banner() {
             <div className="lg:col-span-3 space-y-8">
               <Badge
                 variant="secondary"
-                className="py-1.5 px-4 text-sm font-bold bg-[#00BFFF]/10 text-white border border-[#00BFFF]/20 backdrop-blur-sm"
+                className="py-1.5 px-4 text-sm font-bold bg-blue-500 text-white border border-[#00BFFF]/20 backdrop-blur-sm"
               >
                 <BadgeCheckIcon className="size-4 mr-2" />
                 NHS Services Available
@@ -86,7 +77,7 @@ export default function Banner() {
                       asChild
                       className={
                         btn.variant === "primary"
-                          ? "group bg-[#F9A825] text-[#00253b] hover:bg-[#F9A825]/90 transition-all duration-300 shadow-lg hover:shadow-[#F9A825]/25 px-8 py-6 text-base font-semibold"
+                          ? "group bg-[#F9A825] text-white hover:bg-[#F9A825]/90 transition-all duration-300 shadow-lg hover:shadow-[#F9A825]/25 px-8 py-6 text-base font-semibold"
                           : "group border-white/20 bg-white/5 text-white hover:bg-white hover:text-[#002f4b] backdrop-blur-sm px-8 py-6 text-base font-semibold transition-all duration-300"
                       }
                     >
@@ -97,7 +88,7 @@ export default function Banner() {
                         href={btn.href}
                         className="flex items-center gap-2"
                       >
-                        {btn.text.toUpperCase()}
+                        {btn.text}
                         {btn.icon && (
                           <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
                         )}
@@ -108,10 +99,11 @@ export default function Banner() {
                   <BannerHeroActionsSkeleton />
                 )}
               </div>
+              <Image src={curvedArrow} alt="" width={100} height={100} />
             </div>
 
             {/* Right Side - Download App Section (Desktop Only) - Takes 2 columns */}
-            <div className="hidden lg:flex lg:col-span-2 justify-center items-center">
+            <div className="hidden lg:flex lg:col-span-2 justify-center items-center relative">
               <div className="relative">
                 {/* Pulsing ring animation */}
                 <div className="absolute -inset-3 animate-ping-slow rounded-3xl bg-primary/20" />
@@ -126,7 +118,7 @@ export default function Banner() {
 
                   <div className="space-y-5">
                     <div className="space-y-2">
-                      <p className="text-primary font-semibold text-xs uppercase tracking-wider">
+                      <p className="text-green-400 font-medium text-xs uppercase tracking-wider">
                         Mobile App
                       </p>
                       <h3 className="text-xl font-bold text-white">
