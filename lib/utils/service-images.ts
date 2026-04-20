@@ -4,6 +4,25 @@ import covidVaccineImage from "@/public/services/covid-vaccine.jpg";
 import pressureCheckImage from "@/public/services/pressure-check.jpg";
 import stopSmokingImage from "@/public/services/stop-smoking.jpg";
 import emergencyContraceptionImage from "@/public/services/emergency-contraception.jpg";
+import cholesterolTestsImage from "@/public/services/cholesterol-tests.jpg";
+import diabetesScreeningImage from "@/public/services/diabetes-screening.png";
+import medicationReviewImage from "@/public/services/medication-review.jpg";
+import minorAilmentImage from "@/public/services/minor-ailment.jpg";
+import prescriptionDispensingImage from "@/public/services/prescription-dispensing.jpg";
+import travelClinicImage from "@/public/services/travel-clinic.jpg";
+import weightManagementImage from "@/public/services/weight-management.jpeg";
+import contraceptionImage from "@/public/services/contraception.png";
+import inhalerDisposalImage from "@/public/services/inhaler.png";
+import medicalSuppliesAppliancesImage from "@/public/services/medical-appliances.jpg";
+import medicalApplianceReviewImage from "@/public/services/medical-appliance-review.jpg";
+import needleSyringeExchangeImage from "@/public/services/syringe-exchange.jpg";
+import newMedicineServiceImage from "@/public/services/new-medicine.jpg";
+import onlineRepeatPrescriptionManagementImage from "@/public/services/repeat-prescription.png";
+import prescriptionDeliveryServiceImage from "@/public/services/prescription-delivery.png";
+import stomaBagSupportServiceImage from "@/public/services/stoma-bag.jpg";
+import covid19LateralFlowTestsImage from "@/public/services/covid-19-lateral-flow-tests.jpg";
+import hepatitisBImage from "@/public/services/hepatitis-b-vaccine.jpg";
+import meningitisBImage from "@/public/services/meningitis-b-vaccine.png";
 
 const DEFAULT = fluVaccineImage;
 
@@ -18,20 +37,21 @@ export const SERVICE_IMAGE_BY_ID: Record<string, StaticImageData> = {
   stop_smoking_private: stopSmokingImage,
   emergency_contraception_nhs: emergencyContraceptionImage,
   emergency_contraception_private: emergencyContraceptionImage,
-  nhs_pharmacy_contraception_service: emergencyContraceptionImage,
-  inhaler_disposal: fluVaccineImage,
-  medical_supplies_appliances: fluVaccineImage,
-  medical_supplies_review_service: fluVaccineImage,
-  needle_syringe_exchange: fluVaccineImage,
-  new_medicine_service: fluVaccineImage,
-  online_repeat_prescription_management: fluVaccineImage,
-  prescription_delivery_service: fluVaccineImage,
-  stoma_bag_support_service: fluVaccineImage,
-  covid_19_lateral_flow_tests: covidVaccineImage,
-  hepatitis_b: fluVaccineImage,
-  meningitis_b: fluVaccineImage,
-  travel_health: fluVaccineImage,
-  weight_management_private: pressureCheckImage,
+  nhs_pharmacy_contraception_service: contraceptionImage,
+  inhaler_disposal: inhalerDisposalImage,
+  medical_supplies_appliances: medicalSuppliesAppliancesImage,
+  medical_supplies_review_service: medicalApplianceReviewImage,
+  needle_syringe_exchange: needleSyringeExchangeImage,
+  new_medicine_service: newMedicineServiceImage,
+  online_repeat_prescription_management:
+    onlineRepeatPrescriptionManagementImage,
+  prescription_delivery_service: prescriptionDeliveryServiceImage,
+  stoma_bag_support_service: stomaBagSupportServiceImage,
+  covid_19_lateral_flow_tests: covid19LateralFlowTestsImage,
+  hepatitis_b: hepatitisBImage,
+  meningitis_b: meningitisBImage,
+  travel_health: travelClinicImage,
+  weight_management_private: weightManagementImage,
 };
 
 export function getServiceImage(serviceId: string): StaticImageData {

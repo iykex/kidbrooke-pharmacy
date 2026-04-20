@@ -40,7 +40,7 @@ export default function ServiceCard({
 
         {/* Funding label badge */}
         {fundingLabel && (
-          <Badge className="absolute top-0 right-0 rounded-none rounded-bl-lg bg-primary/90 text-white text-xs font-semibold px-2 py-1 z-20">
+          <Badge className="absolute top-0 right-0 rounded-none rounded-bl-lg bg-primary/90 text-white text-xs font-semibold px-2 py-1.5 pr-4 z-20">
             {fundingLabel}
           </Badge>
         )}
