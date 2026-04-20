@@ -1,4 +1,4 @@
-export const DEFAULT_OG_IMAGE_PATH = "/belvedere-og-image.png";
+export const DEFAULT_OG_IMAGE_PATH = "/kidbrooke-og-image.png";
 
 export const STATIC_BASE_SEO_KEYWORDS = [
   "Pharmacy",
