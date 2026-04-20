@@ -1,4 +1,3 @@
-import { Timestamp } from "firebase-admin/firestore";
 import type {
   ChatbotEntryDoc,
   FaqDoc,
@@ -15,7 +14,9 @@ import type { TenantSlug } from "@/lib/types/tenant";
 import type { ActionButton } from "@/lib/types/chatbot";
 
 export const TENANT_SLUGS: TenantSlug[] = ["belvedere", "kidbrooke", "lowfield"];
-export const FALLBACK_UPDATED_AT = Timestamp.now();
+export const FALLBACK_UPDATED_AT = {
+  toDate: () => new Date(0),
+};
 
 export const DEFAULT_ACTION_BUTTON: ActionButton = {
   label: "",

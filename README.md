@@ -1,37 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Belvepharm Website
 
-## Getting Started
+Next.js public website for Belvepharm tenants (`belvedere`, `kidbrooke`, `lowfield`) backed by Firestore.
 
-First, run the development server:
+## Setup
+
+1. Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create `.env.local` in the project root with the required variables below.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Start dev server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm dev
+```
 
-## Learn More
+4. Production build (also generates `sitemap.xml` and `robots.txt` via `postbuild`):
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Required Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Core app + Firestore (required)
 
-## Deploy on Vercel
+These are required for tenant content reads and normal app operation.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+NEXT_PUBLIC_TENANT=belvedere
+# Backward-compat fallback if NEXT_PUBLIC_TENANT is not set:
+# NEXT_PUBLIC_TENANT_SLUG=belvedere
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-.
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
+```
+
+### Canonical domain / SEO (strongly recommended for production)
+
+Used by metadata + JSON-LD and sitemap/robots generation.
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://belvederepharmacy.net
+# Optional fallback if NEXT_PUBLIC_SITE_URL is absent:
+# NEXT_PUBLIC_APP_URL=https://belvederepharmacy.net
+```
+
+If neither is set, build defaults to `https://belvederepharmacy.net`, which may be wrong for non-belvedere deployments.
+
+### Analytics ingestion API (required for `/api/analytics` only)
+
+If missing, the analytics route returns server configuration errors.
+
+```bash
+TINYBIRD_API_BASE_URL=
+DATASOURCE_NAME=
+TINYBIRD_APPEND_TOKEN_BELVEDERE=
+```
+
+### Optional image/CDN envs
+
+Only needed if you use those adapters.
+
+```bash
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+NEXT_PUBLIC_IMGIX_DOMAIN=
+```
+
+## Branch Deployment Notes
+
+- `belvedere-dev`: `NEXT_PUBLIC_TENANT=belvedere`
+- `kidbrooke-dev`: `NEXT_PUBLIC_TENANT=kidbrooke`
+- `lowfield-dev`: `NEXT_PUBLIC_TENANT=lowfield`
+
+For each branch/deploy target, set `NEXT_PUBLIC_SITE_URL` to that branch's canonical tenant domain before running `pnpm build`.
