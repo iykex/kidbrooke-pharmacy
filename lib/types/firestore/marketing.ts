@@ -1,60 +1,26 @@
-import type { WithFirestoreMeta, TenantScoped } from "./common";
+import type { z } from "zod";
+import type {
+  featureLineItemSchema,
+  keyBenefitBlockSchema,
+  marketingBlocksDocSchema,
+  ourValueItemSchema,
+  pfpBenefitItemSchema,
+  processStepItemSchema,
+  quickActionItemSchema,
+  statItemSchema,
+  textBadgeItemSchema,
+  trustBadgeItemSchema,
+  whyChooseItemSchema,
+} from "@/lib/schema/firestore";
 
-export type TrustBadgeItem = { title: string; subtitle: string };
-
-export type StatItem = { value: string; label: string };
-
-export type TextBadgeItem = { text: string };
-
-export type KeyBenefitBlock = {
-  title: string;
-  bullets: string[];
-};
-
-export type WhyChooseItem = {
-  title: string;
-  description: string;
-};
-
-export type ProcessStepItem = {
-  number: string;
-  title: string;
-  description: string;
-};
-
-export type FeatureLineItem = {
-  title: string;
-  description: string;
-};
-
-export type PfpBenefitItem = {
-  title: string;
-  description: string;
-};
-
-export type OurValueItem = {
-  title: string;
-  description: string;
-};
-
-export type QuickActionItem = {
-  label: string;
-  query: string;
-  iconName: string;
-};
-
-export type MarketingBlocksDoc = WithFirestoreMeta &
-  TenantScoped & {
-    trustBadges: TrustBadgeItem[];
-    aboutHeroStats: StatItem[];
-    aboutHeroBadges: TextBadgeItem[];
-    keyBenefits: KeyBenefitBlock[];
-    whyChooseUs: WhyChooseItem[];
-    ourProcessSteps: ProcessStepItem[];
-    ctaFeatureLines: string[];
-    newsletterFeatures: FeatureLineItem[];
-    downloadAppFeatures: FeatureLineItem[];
-    pfpBenefits: PfpBenefitItem[];
-    ourValues: OurValueItem[];
-    quickActions: QuickActionItem[];
-  };
+export type TrustBadgeItem = z.infer<typeof trustBadgeItemSchema>;
+export type StatItem = z.infer<typeof statItemSchema>;
+export type TextBadgeItem = z.infer<typeof textBadgeItemSchema>;
+export type KeyBenefitBlock = z.infer<typeof keyBenefitBlockSchema>;
+export type WhyChooseItem = z.infer<typeof whyChooseItemSchema>;
+export type ProcessStepItem = z.infer<typeof processStepItemSchema>;
+export type FeatureLineItem = z.infer<typeof featureLineItemSchema>;
+export type PfpBenefitItem = z.infer<typeof pfpBenefitItemSchema>;
+export type OurValueItem = z.infer<typeof ourValueItemSchema>;
+export type QuickActionItem = z.infer<typeof quickActionItemSchema>;
+export type MarketingBlocksDoc = z.infer<typeof marketingBlocksDocSchema>;

@@ -1,4 +1,4 @@
-import type { TenantDocClient } from "@/lib/services/firestore/serialize-for-client";
+import type { TenantDocClient } from "@/lib/types/firestore-client";
 import type { AppStoreLinkItem } from "@/lib/types/marketing-ui";
 import appStore from "@/public/ui/app-store.png";
 import playStore from "@/public/ui/play-store.png";

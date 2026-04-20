@@ -1,30 +1,16 @@
-import type { WithFirestoreMeta, TenantScoped } from "./common";
+import type { z } from "zod";
+import type {
+  legalDocumentDocSchema,
+  legalDocumentIdSchema,
+  legalSectionBulletPointsSchema,
+  legalSectionParagraphsSchema,
+  legalSectionSchema,
+} from "@/lib/schema/firestore";
 
-/** Mirrors section shapes used by privacy / cookie / terms pages */
-export type LegalSectionParagraphs = {
-  number: string;
-  title: string;
-  type: "paragraphs";
-  content: string[];
-};
-
-export type LegalSectionBulletPoints = {
-  number: string;
-  title: string;
-  type: "bulletPoints";
-  beforeText?: string;
-  afterText?: string;
-  bulletPoints: unknown[];
-};
-
-export type LegalSection =
-  | LegalSectionParagraphs
-  | LegalSectionBulletPoints
-  | Record<string, unknown>;
-
-export type LegalDocumentDoc = WithFirestoreMeta &
-  TenantScoped & {
-    sections: LegalSection[];
-    version: string;
-    effectiveDate: string;
-  };
+export type LegalSectionParagraphs = z.infer<typeof legalSectionParagraphsSchema>;
+export type LegalSectionBulletPoints = z.infer<
+  typeof legalSectionBulletPointsSchema
+>;
+export type LegalSection = z.infer<typeof legalSectionSchema>;
+export type LegalDocumentId = z.infer<typeof legalDocumentIdSchema>;
+export type LegalDocumentDoc = z.infer<typeof legalDocumentDocSchema>;

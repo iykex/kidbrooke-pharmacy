@@ -1,11 +1,15 @@
 "use client";
 
-import { getTenantSlug, type TenantSlug } from "@/lib/config/tenant";
+import { getTenantSlug } from "@/lib/config/tenant";
 import { getTenant } from "@/lib/services/firestore/queries";
 import {
   tenantDocForClient,
-  type TenantDocClient,
 } from "@/lib/services/firestore/serialize-for-client";
+import type { TenantDocClient } from "@/lib/types/firestore-client";
+import type {
+  TenantContextValue,
+  TenantLoadStatus,
+} from "@/lib/types/tenant-context";
 import {
   createContext,
   startTransition,
@@ -14,16 +18,6 @@ import {
   useState,
   type ReactNode,
 } from "react";
-
-export type TenantLoadStatus = "loading" | "ready" | "error";
-
-export type TenantContextValue = {
-  tenant: TenantDocClient | null;
-  status: TenantLoadStatus;
-  /** True when Firestore returned a published tenant document */
-  isTenantReady: boolean;
-  slug: TenantSlug;
-};
 
 const TenantContext = createContext<TenantContextValue | null>(null);
 

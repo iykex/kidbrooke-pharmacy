@@ -1,4 +1,4 @@
-import type { TenantDocClient } from "@/lib/services/firestore/serialize-for-client";
+import type { TenantDocClient } from "@/lib/types/firestore-client";
 import { tenantToProfileCopy } from "@/lib/utils/format-tenant";
 
 export function TenantContactCard({ tenant }: { tenant: TenantDocClient }) {

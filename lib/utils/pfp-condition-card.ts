@@ -1,4 +1,4 @@
-import type { TenantSlug } from "@/lib/config/tenant";
+import type { TenantSlug } from "@/lib/types/tenant";
 import { getPfpConditionImage } from "@/lib/utils/condition-images";
 import {
   PFP_CONDITION_PALETTE,

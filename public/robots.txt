@@ -1,0 +1,8 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api
+
+
+# Sitemaps
+Sitemap: https://belvederepharmacy.net/sitemap.xml

@@ -1,7 +1,5 @@
 import type { Timestamp } from "firebase/firestore";
-import type { TenantSlug } from "@/lib/config/tenant";
-
-export type LegalDocumentId = "privacy" | "cookie" | "terms";
+import type { TenantSlug } from "@/lib/types/tenant";
 
 export type WithFirestoreMeta = {
   updatedAt?: Timestamp;

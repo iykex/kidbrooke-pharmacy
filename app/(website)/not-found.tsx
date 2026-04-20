@@ -10,19 +10,30 @@ import { NotFoundContactCardSkeleton } from "@/components/shared/tenant-skeleton
 import { formatAddressInline } from "@/lib/utils/format-tenant";
 import { lucideIconByName } from "@/lib/utils/lucide-icon-map";
 
+const NAV_CARD_ICON_BY_NAME: Record<string, ReturnType<typeof lucideIconByName>> =
+  Object.fromEntries(
+    NOT_FOUND_NAV_ITEMS.map((item) => [item.iconName, lucideIconByName(item.iconName)]),
+  );
+
+const CONTACT_ICON_BY_NAME = {
+  Phone: lucideIconByName("Phone"),
+  Mail: lucideIconByName("Mail"),
+  MapPin: lucideIconByName("MapPin"),
+} as const;
+
 // Navigation card component
 function NavCard({
   href,
-  iconName,
+  icon,
   title,
   description,
 }: {
   href: string;
-  iconName: string;
+  icon: ReturnType<typeof lucideIconByName>;
   title: string;
   description: string;
 }) {
-  const Icon = lucideIconByName(iconName);
+  const Icon = icon;
   return (
     <Link
       href={href}
@@ -47,17 +58,17 @@ function NavCard({
 
 // Contact item component
 function ContactItem({
-  iconName,
+  icon,
   label,
   value,
   href,
 }: {
-  iconName: string;
+  icon: ReturnType<typeof lucideIconByName>;
   label: string;
   value: string;
   href?: string;
 }) {
-  const Icon = lucideIconByName(iconName);
+  const Icon = icon;
   const content = (
     <>
       <p className="text-sm text-gray-600 dark:text-white/60">{label}</p>
@@ -117,7 +128,13 @@ export default function NotFound() {
           {/* Quick Navigation */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {NOT_FOUND_NAV_ITEMS.map((item) => (
-              <NavCard key={item.href} {...item} />
+              <NavCard
+                key={item.href}
+                href={item.href}
+                icon={NAV_CARD_ICON_BY_NAME[item.iconName]}
+                title={item.title}
+                description={item.description}
+              />
             ))}
           </div>
 
@@ -130,19 +147,19 @@ export default function NotFound() {
               {isTenantReady && tenant && phoneHref && emailHref ? (
                 <>
                   <ContactItem
-                    iconName="Phone"
+                    icon={CONTACT_ICON_BY_NAME.Phone}
                     label="Call us"
                     value={tenant.phone}
                     href={phoneHref}
                   />
                   <ContactItem
-                    iconName="Mail"
+                    icon={CONTACT_ICON_BY_NAME.Mail}
                     label="Email us"
                     value={tenant.email}
                     href={emailHref}
                   />
                   <ContactItem
-                    iconName="MapPin"
+                    icon={CONTACT_ICON_BY_NAME.MapPin}
                     label="Visit us"
                     value={formatAddressInline(tenant)}
                   />

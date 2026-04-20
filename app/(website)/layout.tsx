@@ -12,14 +12,23 @@ import "@/styles/hide-dev-overlay.css";
 import { Toaster } from "@/components/ui/sonner";
 import { TenantProvider } from "@/components/providers/tenant-provider";
 import { AppSkeletonTheme } from "@/components/providers/app-skeleton-theme";
+import JsonLd from "@/components/shared/json-ld";
+import { buildRootLayoutJsonLd } from "@/lib/config/json-ld";
+import { getSiteUrl, getTenantSeoProfile } from "@/lib/config/tenant-seo";
 
-export const metadata: Metadata = getMetadata();
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadata();
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const tenant = await getTenantSeoProfile();
+  const siteUrl = getSiteUrl();
+  const rootJsonLd = buildRootLayoutJsonLd(tenant, siteUrl);
+
   return (
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <body
@@ -32,19 +41,20 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AppSkeletonTheme>
-          <TenantProvider>
-            <PageTracker>
-              <main className="dashed-grid-bg min-h-screen">{children}</main>
-              <footer className="w-full bg-foreground dark:bg-background">
-                <Footer />
-              </footer>
+            <TenantProvider>
+              <JsonLd data={rootJsonLd} />
+              <PageTracker>
+                <main className="dashed-grid-bg min-h-screen">{children}</main>
+                <footer className="w-full bg-foreground dark:bg-background">
+                  <Footer />
+                </footer>
 
-              <FAQChatbot />
+                <FAQChatbot />
 
-              <CookieConsent />
-            </PageTracker>
-            <Toaster />
-          </TenantProvider>
+                <CookieConsent />
+              </PageTracker>
+              <Toaster />
+            </TenantProvider>
           </AppSkeletonTheme>
         </ThemeProvider>
       </body>

@@ -1,7 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import type { StaticImageData } from "next/image";
-import type { TenantDocClient } from "@/lib/services/firestore/serialize-for-client";
-import type { TenantProfileCopy } from "@/lib/utils/format-tenant";
+import type { TenantDocClient } from "@/lib/types/firestore-client";
+import type { TenantProfileCopy } from "@/lib/types/tenant-profile";
 import type { TrustBadgeItem } from "./firestore/marketing";
 
 export type TrustBadgeView = TrustBadgeItem & {

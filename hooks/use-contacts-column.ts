@@ -1,14 +1,8 @@
 "use client";
 
 import { useTenantContext } from "@/components/providers/tenant-provider";
-import type { ContactsColumnData } from "@/lib/types/marketing-ui";
+import type { UseContactsColumnResult } from "@/lib/types/contacts-column";
 import { contactsColumnDataFromTenant } from "@/lib/utils/contacts-column";
-
-export type ContactsColumnReady = { isReady: true } & ContactsColumnData;
-
-export type UseContactsColumnResult =
-  | { isReady: false }
-  | ContactsColumnReady;
 
 export function useContactsColumn(): UseContactsColumnResult {
   const { tenant, isTenantReady } = useTenantContext();
@@ -19,5 +13,3 @@ export function useContactsColumn(): UseContactsColumnResult {
 
   return { isReady: true, ...contactsColumnDataFromTenant(tenant) };
 }
-
-export type { ContactColumnRow } from "@/lib/types/marketing-ui";

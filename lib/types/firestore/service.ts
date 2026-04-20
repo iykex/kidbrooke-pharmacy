@@ -1,17 +1,5 @@
-import type { TenantSlug } from "@/lib/config/tenant";
-import type { WithFirestoreMeta, TenantScoped } from "./common";
+import type { z } from "zod";
+import type { serviceDocSchema, serviceKindSchema } from "@/lib/schema/firestore";
 
-export type ServiceKind = "nhs" | "private";
-
-export type ServiceDoc = WithFirestoreMeta &
-  TenantScoped & {
-    id: string;
-    serviceKind: ServiceKind;
-    group: string;
-    title: string;
-    description: string;
-    features: string[];
-    fundingLabel: string;
-    tenantBookingUrls: Partial<Record<TenantSlug, string>>;
-    published?: boolean;
-  };
+export type ServiceKind = z.infer<typeof serviceKindSchema>;
+export type ServiceDoc = z.infer<typeof serviceDocSchema>;

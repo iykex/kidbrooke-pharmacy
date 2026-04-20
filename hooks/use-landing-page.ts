@@ -8,10 +8,10 @@ import {
 } from "@/lib/services/firestore/queries";
 import {
   marketingBlocksDocForClient,
-  type MarketingBlocksDocClient,
 } from "@/lib/services/firestore/serialize-for-client";
 import { buildNhsPharmacyFirstHomeCards } from "@/lib/utils/service-ui";
 import type { NhsPfpHomeCard } from "@/lib/types/marketing-ui";
+import type { MarketingBlocksDocClient } from "@/lib/types/firestore-client";
 
 export function useLandingPage() {
   const slug = getTenantSlug();

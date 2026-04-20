@@ -1,5 +1,5 @@
 import { TRACKING_EVENTS } from "@/lib/constants/general";
-import type { TenantDocClient } from "@/lib/services/firestore/serialize-for-client";
+import type { TenantDocClient } from "@/lib/types/firestore-client";
 import type { FooterContactIconLink } from "@/lib/types/marketing-ui";
 import { whatsAppHrefForTenant } from "@/lib/utils/format-tenant";
 import { Mail, MessageCircle, Phone } from "lucide-react";

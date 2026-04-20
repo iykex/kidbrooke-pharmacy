@@ -1,9 +1,4 @@
-import type { WithFirestoreMeta, TenantScoped } from "./common";
+import type { z } from "zod";
+import type { faqDocSchema } from "@/lib/schema/firestore";
 
-export type FaqDoc = WithFirestoreMeta &
-  TenantScoped & {
-    id: string;
-    question: string;
-    answer: string;
-    published: boolean;
-  };
+export type FaqDoc = z.infer<typeof faqDocSchema>;

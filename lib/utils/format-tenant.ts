@@ -1,4 +1,8 @@
 import type { TenantDoc } from "@/lib/types/firestore";
+import type { TenantDocClient } from "@/lib/types/firestore-client";
+import type { TenantProfileCopy } from "@/lib/types/tenant-profile";
+
+type TenantLike = TenantDoc | TenantDocClient;
 
 const DAY_LABEL: Record<string, string> = {
   monday: "Mon",
@@ -19,7 +23,7 @@ function formatSlot(open: string, close: string, closed: boolean): string {
 }
 
 /** Short summary for info bar, e.g. Mon–Fri: 09:00–18:30 · Sat: 09:00–14:00 · Sun: Closed */
-export function formatOpeningHoursSummary(tenant: TenantDoc): string {
+export function formatOpeningHoursSummary(tenant: TenantLike): string {
   const sorted = [...tenant.openingHours].sort(
     (a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day)
   );
@@ -46,7 +50,7 @@ export function formatOpeningHoursSummary(tenant: TenantDoc): string {
     .join(" · ");
 }
 
-export function formatAddressLines(tenant: TenantDoc): string[] {
+export function formatAddressLines(tenant: TenantLike): string[] {
   const { address } = tenant;
   return [
     address.line1,
@@ -56,7 +60,7 @@ export function formatAddressLines(tenant: TenantDoc): string[] {
   ].filter(Boolean);
 }
 
-export function formatAddressInline(tenant: TenantDoc): string {
+export function formatAddressInline(tenant: TenantLike): string {
   const { address } = tenant;
   return `${address.line1}, ${address.city}, ${address.region} ${address.postcode}`;
 }
@@ -85,7 +89,7 @@ export function whatsAppMeNumberFromUkPhone(phone: string): string {
  */
 const WHATSAPP_PHONE_PLACEHOLDER = "{phonenumber}";
 
-export function whatsAppHrefForTenant(tenant: TenantDoc): string {
+export function whatsAppHrefForTenant(tenant: TenantLike): string {
   const template = tenant.whatsappUrl?.trim();
   if (template?.includes(WHATSAPP_PHONE_PLACEHOLDER)) {
     const suffix = whatsAppMeNumberFromUkPhone(tenant.phone);
@@ -98,7 +102,7 @@ export function whatsAppHrefForTenant(tenant: TenantDoc): string {
 }
 
 /** Replaces legacy BUSINESS_PROFILE-style fields for gradual migration */
-export function tenantToProfileCopy(tenant: TenantDoc) {
+export function tenantToProfileCopy(tenant: TenantLike): TenantProfileCopy {
   const openingHours = formatOpeningHoursSummary(tenant);
   return {
     name: tenant.displayName,
@@ -111,5 +115,3 @@ export function tenantToProfileCopy(tenant: TenantDoc) {
     email: tenant.email,
   };
 }
-
-export type TenantProfileCopy = ReturnType<typeof tenantToProfileCopy>;

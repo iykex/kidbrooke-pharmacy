@@ -2,7 +2,6 @@
 
 import { SkeletonTheme } from "react-loading-skeleton";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 const LIGHT = { base: "#e2e8f0", highlight: "#f8fafc" };
@@ -10,20 +9,6 @@ const DARK = { base: "#1e293b", highlight: "#334155" };
 
 export function AppSkeletonTheme({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <SkeletonTheme baseColor={LIGHT.base} highlightColor={LIGHT.highlight} enableAnimation>
-        {children}
-      </SkeletonTheme>
-    );
-  }
-
   const isDark = resolvedTheme === "dark";
   const { base, highlight } = isDark ? DARK : LIGHT;
 

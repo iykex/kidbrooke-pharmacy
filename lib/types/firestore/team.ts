@@ -1,12 +1,4 @@
-import type { WithFirestoreMeta, TenantScoped } from "./common";
+import type { z } from "zod";
+import type { teamMemberDocSchema } from "@/lib/schema/firestore";
 
-export type TeamMemberDoc = WithFirestoreMeta &
-  TenantScoped & {
-    id?: string;
-    name: string;
-    role: string;
-    bio: string;
-    yearsExperience: string;
-    assetKey: string;
-    profileUrl: string;
-  };
+export type TeamMemberDoc = z.infer<typeof teamMemberDocSchema>;

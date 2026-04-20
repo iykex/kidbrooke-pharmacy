@@ -23,10 +23,13 @@ export function useChatbot() {
   const [showQuickActions, setShowQuickActions] = useState(true);
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseItem[]>([]);
   /** Latest KB for async handlers — state captured before `await` is often still []. */
-  const knowledgeBaseRef = useRef<KnowledgeBaseItem[]>([]);
-  knowledgeBaseRef.current = knowledgeBase;
+  const knowledgeBaseRef = useRef<KnowledgeBaseItem[]>(knowledgeBase);
 
   const tenantInitKeyRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    knowledgeBaseRef.current = knowledgeBase;
+  }, [knowledgeBase]);
 
   useEffect(() => {
     let cancelled = false;
@@ -59,54 +62,56 @@ export function useChatbot() {
     const chatHistory = getChatHistory();
     const isIdle = isIdleForTooLong();
 
-    if (cachedName) {
-      setVisitorNameState(cachedName);
+    queueMicrotask(() => {
+      if (cachedName) {
+        setVisitorNameState(cachedName);
 
-      if (chatHistory && chatHistory.length > 1 && isIdle) {
-        setShowContinuePrompt(true);
-        setMessages([
-          {
-            id: "continue-prompt",
-            role: "bot",
-            content: `Welcome back, ${cachedName}! 👋 You have a previous conversation. Would you like to continue where you left off or start fresh?`,
-            timestamp: new Date(),
-          },
-        ]);
-      } else if (chatHistory && chatHistory.length > 1 && !isIdle) {
-        setMessages(chatHistory);
+        if (chatHistory && chatHistory.length > 1 && isIdle) {
+          setShowContinuePrompt(true);
+          setMessages([
+            {
+              id: "continue-prompt",
+              role: "bot",
+              content: `Welcome back, ${cachedName}! 👋 You have a previous conversation. Would you like to continue where you left off or start fresh?`,
+              timestamp: new Date(),
+            },
+          ]);
+        } else if (chatHistory && chatHistory.length > 1 && !isIdle) {
+          setMessages(chatHistory);
+        } else {
+          setMessages([
+            {
+              id: "welcome",
+              role: "bot",
+              content: `Welcome back, ${cachedName}! 👋 I'm Bella, your ${tenant.displayName} assistant. How can I help you today?`,
+              timestamp: new Date(),
+              actions: [
+                {
+                  label: "Book Appointment",
+                  href: tenant.bookAppointmentUrl,
+                  icon: "calendar",
+                },
+                {
+                  label: "Order Prescription",
+                  href: tenant.orderPrescriptionsUrl,
+                  icon: "prescription",
+                },
+              ],
+            },
+          ]);
+        }
       } else {
+        setIsAskingName(true);
         setMessages([
           {
-            id: "welcome",
+            id: "ask-name",
             role: "bot",
-            content: `Welcome back, ${cachedName}! 👋 I'm Bella, your ${tenant.displayName} assistant. How can I help you today?`,
+            content: `Hello! 👋 I'm Bella, your ${tenant.displayName} assistant. Before we start, may I know your name?`,
             timestamp: new Date(),
-            actions: [
-              {
-                label: "Book Appointment",
-                href: tenant.bookAppointmentUrl,
-                icon: "calendar",
-              },
-              {
-                label: "Order Prescription",
-                href: tenant.orderPrescriptionsUrl,
-                icon: "prescription",
-              },
-            ],
           },
         ]);
       }
-    } else {
-      setIsAskingName(true);
-      setMessages([
-        {
-          id: "ask-name",
-          role: "bot",
-          content: `Hello! 👋 I'm Bella, your ${tenant.displayName} assistant. Before we start, may I know your name?`,
-          timestamp: new Date(),
-        },
-      ]);
-    }
+    });
   }, [isTenantReady, tenant, slug]);
 
   useEffect(() => {

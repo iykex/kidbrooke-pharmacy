@@ -1,11 +1,4 @@
-import type { ActionButton } from "@/lib/types/chatbot";
-import type { WithFirestoreMeta, TenantScoped } from "./common";
+import type { z } from "zod";
+import type { chatbotEntryDocSchema } from "@/lib/schema/firestore";
 
-export type ChatbotEntryDoc = WithFirestoreMeta &
-  TenantScoped & {
-    id: string;
-    keywords: string[];
-    answer: string;
-    actions?: ActionButton[];
-    priority: number;
-  };
+export type ChatbotEntryDoc = z.infer<typeof chatbotEntryDocSchema>;

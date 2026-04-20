@@ -13,7 +13,7 @@ import {
   Wind,
 } from "lucide-react";
 import { TRACKING_EVENTS } from "@/lib/constants/general";
-import type { TenantSlug } from "@/lib/config/tenant";
+import type { TenantSlug } from "@/lib/types/tenant";
 import type { PharmacyFirstConditionDoc, ServiceDoc } from "@/lib/types/firestore";
 import type { Service } from "@/lib/types/general";
 import type { NhsPfpHomeCard } from "@/lib/types/marketing-ui";

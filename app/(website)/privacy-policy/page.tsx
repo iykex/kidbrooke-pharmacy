@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Menu from "@/components/navigation/navigation-menu";
 import { useTenantContext } from "@/components/providers/tenant-provider";
 import WidthConstraint from "@/components/shared/width-constraint";
 import CTASection from "@/components/shared/cta-section";
+import { BreadcrumbJsonLd } from "@/components/shared/seo/breadcrumb-jsonld";
 import { TenantContactCard } from "@/components/shared/tenant-contact-card";
+import { LegalSectionContent } from "@/components/shared/legal/legal-section-content";
 import { useLegalDocument } from "@/hooks/use-legal-document";
 import {
   ICO_COMPLAINTS_PHONE_DISPLAY,
@@ -16,11 +17,16 @@ import {
 export default function PrivacyPolicyPage() {
   const legal = useLegalDocument("privacy");
   const { tenant, isTenantReady } = useTenantContext();
-  const sections: any[] = legal?.sections ?? [];
-  const contentSections = sections.filter((s: any) => s.type !== "contact");
+  const contentSections = legal?.sections ?? [];
 
   return (
     <div className="overflow-hidden space-y-18 pb-30">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Privacy Policy", path: "/privacy-policy" },
+        ]}
+      />
       <header className="fixed top-0 w-full z-50">
         <Menu />
       </header>
@@ -46,7 +52,7 @@ export default function PrivacyPolicyPage() {
       <section className="bg-white dark:bg-transparent">
         <WidthConstraint className="py-8 lg:py-12">
           <div className="max-w-4xl mx-auto space-y-12 px-6 sm:px-10 lg:px-16">
-            {contentSections.map((section: any, idx: number) => (
+            {contentSections.map((section, idx) => (
               <article key={idx} className="space-y-4">
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                   <span className="text-primary font-bold text-4xl">
@@ -55,109 +61,7 @@ export default function PrivacyPolicyPage() {
                   {section.title}
                 </h2>
 
-                {/* Paragraphs Type */}
-                {section.type === "paragraphs" &&
-                  section.content?.map((paragraph: string, pIdx: number) => (
-                    <p
-                      key={pIdx}
-                      className="text-gray-700 dark:text-white/60 leading-relaxed"
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
-
-                {/* Bullet Points Type */}
-                {section.type === "bulletPoints" && (
-                  <>
-                    {section.beforeText && (
-                      <p className="text-gray-700 dark:text-white/60 leading-relaxed">
-                        {section.beforeText}
-                      </p>
-                    )}
-                    <ul className="space-y-2 ml-6">
-                      {(section.bulletPoints as any[])?.map((point, bIdx) => (
-                        <li
-                          key={bIdx}
-                          className="text-gray-700 dark:text-white/60 flex items-start gap-3"
-                        >
-                          <span className="text-primary font-bold mt-1">•</span>
-                          <span>
-                            {typeof point === "string"
-                              ? point
-                              : point.title || point.right || point.category}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                    {section.afterText && (
-                      <p className="text-gray-700 dark:text-white/60 leading-relaxed mt-4">
-                        {section.afterText}
-                      </p>
-                    )}
-                  </>
-                )}
-
-                {/* Bullet Points with Titles Type */}
-                {section.type === "bulletPointsWithTitles" && (
-                  <>
-                    {section.beforeText && (
-                      <p className="text-gray-700 dark:text-white/60 leading-relaxed mt-4">
-                        {section.beforeText}
-                      </p>
-                    )}
-                    <ul className="space-y-3 ml-6">
-                      {(section.bulletPoints as any[])?.map((point, bIdx) => (
-                        <li key={bIdx} className="flex items-start gap-3">
-                          <span className="text-primary font-bold mt-1">•</span>
-                          <div>
-                            <span className="font-semibold text-gray-900 dark:text-white">
-                              {point.title || point.right}
-                            </span>
-                            <p className="text-gray-700 dark:text-white/60">
-                              {point.desc || point.purpose}
-                            </p>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                    {section.afterText && (
-                      <p className="text-gray-700 dark:text-white/60 leading-relaxed mt-4">
-                        {section.afterText}
-                      </p>
-                    )}
-                  </>
-                )}
-
-                {/* Bullet Points with Category Type */}
-                {section.type === "bulletPointsWithCategory" && (
-                  <>
-                    {section.beforeText && (
-                      <p className="text-gray-700 dark:text-white leading-relaxed mb-3">
-                        {section.beforeText}
-                      </p>
-                    )}
-                    <ul className="space-y-3 ml-6">
-                      {(section.bulletPoints as any[])?.map((point, bIdx) => (
-                        <li key={bIdx} className="flex items-start gap-3">
-                          <span className="text-primary font-bold mt-1">•</span>
-                          <div>
-                            <span className="font-semibold text-gray-900 dark:text-white">
-                              {point.category}:
-                            </span>
-                            <p className="text-gray-700 dark:text-white/60">
-                              {point.period}
-                            </p>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                    {section.afterText && (
-                      <p className="text-gray-700 dark:text-white/60 leading-relaxed mt-4">
-                        {section.afterText}
-                      </p>
-                    )}
-                  </>
-                )}
+                <LegalSectionContent section={section} variant="privacy" />
               </article>
             ))}
           </div>

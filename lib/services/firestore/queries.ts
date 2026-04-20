@@ -17,8 +17,20 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import type { ZodType } from "zod";
 import { db } from "@/lib/firebase/firebase-client";
-import type { TenantSlug } from "@/lib/config/tenant";
+import type { TenantSlug } from "@/lib/types/tenant";
+import {
+  chatbotEntryDocSchema,
+  faqDocSchema,
+  legalDocumentDocSchema,
+  marketingBlocksDocSchema,
+  pharmacyFirstConditionDocSchema,
+  serviceDocSchema,
+  teamMemberDocSchema,
+  tenantDocSchema,
+  testimonialDocSchema,
+} from "@/lib/schema/firestore/collections";
 import type {
   ChatbotEntryDoc,
   FaqDoc,
@@ -32,15 +44,35 @@ import type {
   TestimonialDoc,
 } from "@/lib/types/firestore";
 
-function mapDoc<T>(id: string, data: object | undefined): T | null {
-  if (!data) return null;
-  return { ...(data as object), id } as T;
+function parseFirestoreDoc<T extends object>(
+  collectionName: string,
+  docId: string,
+  data: unknown,
+  schema: ZodType<T>,
+  options?: { attachId?: boolean },
+): T {
+  const candidate =
+    options?.attachId && typeof data === "object" && data !== null
+      ? { ...(data as Record<string, unknown>), id: docId }
+      : data;
+  const parsed = schema.safeParse(candidate);
+  if (!parsed.success) {
+    const details = parsed.error.issues
+      .map((issue) => `${issue.path.join(".") || "<root>"}: ${issue.message}`)
+      .join("; ");
+    throw new Error(
+      `Invalid Firestore document at ${collectionName}/${docId}. ${details}`,
+    );
+  }
+  return parsed.data;
 }
 
 export async function getTenant(slug: TenantSlug): Promise<TenantDoc | null> {
   const snap = await getDoc(doc(db, "tenants", slug));
   if (!snap.exists()) return null;
-  return snap.data() as TenantDoc;
+  return parseFirestoreDoc("tenants", snap.id, snap.data(), tenantDocSchema, {
+    attachId: true,
+  });
 }
 
 export async function getServicesForTenant(
@@ -54,8 +86,11 @@ export async function getServicesForTenant(
   const snap = await getDocs(q);
   const rows: ServiceDoc[] = [];
   snap.forEach((d) => {
-    const row = mapDoc<ServiceDoc>(d.id, d.data() as object);
-    if (row) rows.push(row);
+    rows.push(
+      parseFirestoreDoc("services", d.id, d.data(), serviceDocSchema, {
+        attachId: true,
+      }),
+    );
   });
   return rows.sort((a, b) => a.title.localeCompare(b.title));
 }
@@ -71,8 +106,15 @@ export async function getPharmacyFirstConditionsForTenant(
   const snap = await getDocs(q);
   const rows: PharmacyFirstConditionDoc[] = [];
   snap.forEach((d) => {
-    const row = mapDoc<PharmacyFirstConditionDoc>(d.id, d.data() as object);
-    if (row) rows.push(row);
+    rows.push(
+      parseFirestoreDoc(
+        "pharmacy_first_conditions",
+        d.id,
+        d.data(),
+        pharmacyFirstConditionDocSchema,
+        { attachId: true },
+      ),
+    );
   });
   return rows.sort((a, b) => a.title.localeCompare(b.title));
 }
@@ -88,8 +130,11 @@ export async function getTestimonialsForTenant(
   const snap = await getDocs(q);
   const rows: TestimonialDoc[] = [];
   snap.forEach((d) => {
-    const row = mapDoc<TestimonialDoc>(d.id, d.data() as object);
-    if (row) rows.push(row);
+    rows.push(
+      parseFirestoreDoc("testimonials", d.id, d.data(), testimonialDocSchema, {
+        attachId: true,
+      }),
+    );
   });
   return rows.sort((a, b) =>
     (a.id ?? "").localeCompare(b.id ?? ""),
@@ -107,8 +152,11 @@ export async function getTeamMembersForTenant(
   const snap = await getDocs(q);
   const rows: TeamMemberDoc[] = [];
   snap.forEach((d) => {
-    const row = mapDoc<TeamMemberDoc>(d.id, d.data() as object);
-    if (row) rows.push(row);
+    rows.push(
+      parseFirestoreDoc("team_members", d.id, d.data(), teamMemberDocSchema, {
+        attachId: true,
+      }),
+    );
   });
   return rows.sort((a, b) => a.name.localeCompare(b.name));
 }
@@ -122,9 +170,7 @@ export async function getFaqsForTenant(slug: TenantSlug): Promise<FaqDoc[]> {
   const snap = await getDocs(q);
   const rows: FaqDoc[] = [];
   snap.forEach((d) => {
-    const data = d.data() as object & { id?: string };
-    const row = mapDoc<FaqDoc>(d.id, data);
-    if (row) rows.push(row);
+    rows.push(parseFirestoreDoc("faqs", d.id, d.data(), faqDocSchema, { attachId: true }));
   });
   return rows.sort((a, b) => a.question.localeCompare(b.question));
 }
@@ -140,9 +186,11 @@ export async function getChatbotEntriesForTenant(
   const snap = await getDocs(q);
   const rows: ChatbotEntryDoc[] = [];
   snap.forEach((d) => {
-    const data = d.data() as object & { id?: string };
-    const row = mapDoc<ChatbotEntryDoc>(d.id, data);
-    if (row) rows.push(row);
+    rows.push(
+      parseFirestoreDoc("chatbot_entries", d.id, d.data(), chatbotEntryDocSchema, {
+        attachId: true,
+      }),
+    );
   });
   return rows.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
 }
@@ -152,7 +200,12 @@ export async function getMarketingBlocks(
 ): Promise<MarketingBlocksDoc | null> {
   const snap = await getDoc(doc(db, "marketing_blocks", slug));
   if (!snap.exists()) return null;
-  return snap.data() as MarketingBlocksDoc;
+  return parseFirestoreDoc(
+    "marketing_blocks",
+    snap.id,
+    snap.data(),
+    marketingBlocksDocSchema,
+  );
 }
 
 export async function getLegalDocument(
@@ -160,5 +213,10 @@ export async function getLegalDocument(
 ): Promise<LegalDocumentDoc | null> {
   const snap = await getDoc(doc(db, "legal_documents", id));
   if (!snap.exists()) return null;
-  return snap.data() as LegalDocumentDoc;
+  return parseFirestoreDoc(
+    "legal_documents",
+    snap.id,
+    snap.data(),
+    legalDocumentDocSchema,
+  );
 }
