@@ -28,8 +28,10 @@ jobs:
       - run:
           name: Setup Git author for Vercel
           command: |
-            git config user.name "iykex"
-            git config user.email "aib.quame@gmail.com"
+            git config user.name "Meckay Ltd"
+            git config user.email "meckayltd.uk@gmail.com"
+            # Amend the current commit so Vercel validates the approved author.
+            git commit --amend --author="Meckay Ltd <meckayltd.uk@gmail.com>" --no-edit
 
       - run:
           name: Notify Telegram — Deployment Started
