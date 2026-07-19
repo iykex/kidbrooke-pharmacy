@@ -6,6 +6,7 @@ import { ChatInputProps } from "@/lib/types/chatbot";
 import useChatInput from "@/hooks/use-chatbot-input";
 import { track } from "@/lib/analytics/tracker";
 import { TRACKING_EVENTS } from "@/lib/constants/general";
+import { useTenantContext } from "@/components/providers/tenant-provider";
 
 export function ChatInput({
   input,
@@ -18,6 +19,7 @@ export function ChatInput({
   isTyping,
 }: ChatInputProps) {
   const { textareaRef, handleKeyDown } = useChatInput(disabled, input, onSend);
+  const { tenant } = useTenantContext();
 
   return (
     <div className="p-4 border-t border-border bg-card shrink-0">
@@ -77,7 +79,7 @@ export function ChatInput({
         <kbd className="px-1 py-0.5 bg-secondary rounded text-[9px]">
           Shift+Enter
         </kbd>{" "}
-        for new line • Powered by Belvedere Pharmacy
+        for new line • Powered by {tenant?.displayName ?? "your pharmacy"}
       </p>
     </div>
   );

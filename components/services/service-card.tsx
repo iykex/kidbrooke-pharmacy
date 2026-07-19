@@ -8,6 +8,10 @@ import { Service } from "@/lib/types/general";
 import { CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  externalLinkProps,
+  isUsableHref,
+} from "@/lib/utils/external-link";
 
 export default function ServiceCard({
   title,
@@ -17,7 +21,10 @@ export default function ServiceCard({
   link,
   tracking,
   fundingLabel,
+  providerLabel,
 }: Service) {
+  const canNavigate = isUsableHref(link);
+
   return (
     <Card className="max-w-lg mx-auto p-0 bg-background rounded-none relative rounded-tr-4xl rounded-bl-4xl border-0 shadow-none outline-0 overflow-hidden gap-0">
       {/* Background Image with CDN optimization */}
@@ -48,6 +55,9 @@ export default function ServiceCard({
 
       {/* Content - Always visible */}
       <CardContent className="pt-6 space-y-6">
+        <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+          {providerLabel}
+        </p>
         <p className="text-muted-foreground leading-relaxed">{description}</p>
 
         <div className="space-y-3">
@@ -62,19 +72,32 @@ export default function ServiceCard({
         </div>
 
         <div className="w-full flex justify-center">
-          <Button
-            asChild
-            className="w-full max-w-xs bg-primary hover:bg-primary/90 text-white font-semibold shadow-md hover:shadow-lg transition-all"
-          >
-            <Link
-              href={link}
-              onClick={() => {
-                track(tracking, link);
-              }}
+          {canNavigate ? (
+            <Button
+              asChild
+              className="w-full max-w-xs bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md hover:shadow-lg transition-all"
             >
-              Explore Service
-            </Link>
-          </Button>
+              <Link
+                href={link}
+                {...externalLinkProps(link)}
+                onClick={() => {
+                  track(tracking, link);
+                }}
+              >
+                {providerLabel.startsWith("Private")
+                  ? "Book Private Service"
+                  : "View NHS Service"}
+              </Link>
+            </Button>
+          ) : (
+            <Button
+              disabled
+              className="w-full max-w-xs font-semibold"
+              aria-label={`${title} booking is not yet available`}
+            >
+              Booking Link Pending
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>

@@ -9,8 +9,10 @@ import { cn } from "@/lib/utils/utils";
 import { getTenantSlug } from "@/lib/config/tenant";
 import { getMarketingBlocks } from "@/lib/services/firestore/queries";
 import type { MarketingBlocksDoc } from "@/lib/types/firestore";
+import { useTenantContext } from "@/components/providers/tenant-provider";
 
 export function WhyChooseUs() {
+  const { tenant } = useTenantContext();
   const [marketing, setMarketing] = useState<MarketingBlocksDoc | null>(null);
 
   useEffect(() => {
@@ -19,11 +21,19 @@ export function WhyChooseUs() {
       .catch(() => {});
   }, []);
 
-  const features = (marketing?.whyChooseUs ?? []).map((w, i) => ({
-    title: w.title,
-    description: w.description,
-    icon: WHY_CHOOSE_US_ICON_STYLES[i % WHY_CHOOSE_US_ICON_STYLES.length]!,
-  }));
+  const features = (marketing?.whyChooseUs ?? []).map((w, i) => {
+    const hasUnsupportedAvailabilityClaim =
+      w.title.trim().startsWith("24") ||
+      /on[ -]?call|emergency support/i.test(`${w.title} ${w.description}`);
+
+    return {
+      title: hasUnsupportedAvailabilityClaim ? "Accessible Support" : w.title,
+      description: hasUnsupportedAvailabilityClaim
+        ? "Professional pharmacy support during our published opening hours"
+        : w.description,
+      icon: WHY_CHOOSE_US_ICON_STYLES[i % WHY_CHOOSE_US_ICON_STYLES.length]!,
+    };
+  });
 
   return (
     <section className="relative py-16 bg-card">
@@ -31,7 +41,7 @@ export function WhyChooseUs() {
         <SectionHeader heading="Why choose us" />
         <div className="text-center max-w-3xl mx-auto space-y-2">
           <h2 className="text-section-header font-bold">
-            Why Choose Kidbrooke
+            Why Choose {tenant?.displayName ?? "Our Pharmacy"}
           </h2>
           <p className="text-base text-muted-foreground">
             We combine expertise, convenience, and personalized care to deliver

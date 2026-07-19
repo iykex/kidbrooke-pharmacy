@@ -1,20 +1,23 @@
 import z4 from "zod/v4";
 import { contactFormSchema } from "../schema";
 import { FieldPath } from "react-hook-form";
-import { StaticImageData } from "next/image";
+import type { StaticImageData } from "next/image";
+import type { ComponentType } from "react";
 
 export interface Service {
+  id: string;
   title: string;
   description: string;
-  category: string;
+  category: "nhs" | "private";
   features: string[];
   image: StaticImageData;
   link: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: ComponentType<{ className?: string }>;
   color: string;
   borderColor: string;
   tracking: string;
   fundingLabel: string;
+  providerLabel: string;
 }
 
 export type ButtonVariants =

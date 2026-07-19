@@ -11,6 +11,7 @@ import { ArrowRight, Download, Smartphone } from "lucide-react";
 import mobileApp from "@/public/ui/mobile-app.png";
 import { useIsMounted } from "@/hooks/use-is-mounted";
 import { track } from "@/lib/analytics/tracker";
+import { externalLinkProps } from "@/lib/utils/external-link";
 
 export default function DownloadAppSection({
   marketing,
@@ -88,6 +89,7 @@ export default function DownloadAppSection({
                   <Link
                     key={store.name}
                     href={store.href}
+                    {...externalLinkProps(store.href)}
                     onClick={() => track(store.tracking, store.href)}
                     className="interactive-hover-store-link grow flex items-center gap-3 bg-gray-900 hover:bg-gray-800 dark:bg-white/10 dark:hover:bg-white/20 text-white px-6 py-4 rounded-xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1 z-10"
                   >
@@ -122,7 +124,7 @@ export default function DownloadAppSection({
               {mounted && (
                 <Image
                   src={mobileApp}
-                  alt="Kidbrooke Pharmacy App"
+                  alt={`${tenant?.displayName ?? "Pharmacy"} mobile app`}
                   className="w-full h-auto object-contain rounded-4xl aspect-9/16"
                   quality={95}
                   priority

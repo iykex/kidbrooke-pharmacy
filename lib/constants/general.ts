@@ -157,9 +157,9 @@ export const ICO_COMPLAINTS_PHONE_HREF = `tel:${ICO_COMPLAINTS_PHONE_DISPLAY.rep
 
 export const SERVICE_CATEGORIES = [
   { id: "all", label: "All Services" },
-  { id: "nhs", label: "NHS First Services" },
+  { id: "nhs", label: "NHS Services" },
   { id: "private", label: "Private Services" },
-];
+] as const;
 
 export const EMERGENCY_SERVICES_CONTACTS_PAGE = [
   {
@@ -178,7 +178,7 @@ export const EMERGENCY_SERVICES_CONTACTS_PAGE = [
   {
     number: "111",
     label: "Non-Emergency",
-    description: "24/7 medical advice",
+    description: "Urgent medical advice",
     detail: "When your GP is closed or for urgent medical advice",
     bgFrom: "from-blue-50",
     bgTo: "to-blue-100/50",

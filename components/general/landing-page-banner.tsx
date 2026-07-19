@@ -15,6 +15,7 @@ import {
   AppStoreCompactListSkeleton,
   BannerHeroActionsSkeleton,
 } from "@/components/shared/tenant-skeletons";
+import { externalLinkProps } from "@/lib/utils/external-link";
 
 export default function Banner() {
   const { tenant, isTenantReady } = useTenantContext();
@@ -52,7 +53,7 @@ export default function Banner() {
             <div className="lg:col-span-3 space-y-8 relative">
               <Badge
                 variant="secondary"
-                className="py-1.5 px-4 text-sm font-bold bg-blue-500 text-white border border-[#00BFFF]/20 backdrop-blur-sm"
+                className="border border-white/40 bg-[#002f4b]/75 px-5 py-2 text-base font-bold text-white shadow-sm backdrop-blur-sm sm:text-lg"
               >
                 <BadgeCheckIcon className="size-4 mr-2" />
                 NHS Services Available
@@ -86,6 +87,7 @@ export default function Banner() {
                           track(btn.tracking, btn.href);
                         }}
                         href={btn.href}
+                        {...externalLinkProps(btn.href)}
                         className="interactive-hover-arrow-link flex items-center gap-2"
                       >
                         {btn.text.toUpperCase()}
@@ -142,6 +144,7 @@ export default function Banner() {
                           <Link
                             key={store.name}
                             href={store.href}
+                            {...externalLinkProps(store.href)}
                             onClick={() => {
                               track(store.tracking, store.href);
                             }}

@@ -22,13 +22,19 @@ import { track } from "@/lib/analytics/tracker";
 import { useTenantContext } from "@/components/providers/tenant-provider";
 import { formatOpeningHoursSummary } from "@/lib/utils/format-tenant";
 import { MobileSheetTenantPanelSkeleton } from "@/components/shared/tenant-skeletons";
+import { externalLinkProps } from "@/lib/utils/external-link";
+import { TENANT_DISPLAY_NAMES } from "@/lib/config/tenant";
 
 export default function MobileMenu() {
-  const { tenant, isTenantReady } = useTenantContext();
+  const { tenant, isTenantReady, slug } = useTenantContext();
   const { hasDarkHero, isScrolled, pathname } = useNavigationMenu();
 
   const phoneHref =
-    tenant ? `tel:${tenant.phone.replace(/\s/g, "")}` : "#";
+    tenant ? `tel:${tenant.phone.replace(/\D/g, "")}` : "#";
+  const displayName = tenant?.displayName ?? TENANT_DISPLAY_NAMES[slug];
+  const nameWords = displayName.split(" ");
+  const primaryName = nameWords[0] ?? "Pharmacy";
+  const secondaryName = nameWords.slice(1).join(" ") || "Pharmacy";
 
   return (
     <div className="lg:hidden flex items-center gap-3 relative">
@@ -59,14 +65,16 @@ export default function MobileMenu() {
                 <div className="flex items-center gap-3">
                   <Image
                     src="/logo/kidbrooke-logo.png"
-                    alt="Kidbrooke"
+                    alt={`${displayName} logo`}
                     width={44}
                     height={44}
                   />
                   <SheetTitle className="text-left text-white">
-                    <span className="block font-bold leading-3">Kidbrooke</span>
+                    <span className="block font-bold leading-4">
+                      {primaryName}
+                    </span>
                     <span className="text-xs text-white/70 font-normal">
-                      Pharmacy
+                      {secondaryName}
                     </span>
                   </SheetTitle>
                 </div>
@@ -160,6 +168,7 @@ export default function MobileMenu() {
                       >
                         <Link
                           href={button.href}
+                          {...externalLinkProps(button.href)}
                           onClick={() => {
                             track(button.tracking, button.href);
                           }}

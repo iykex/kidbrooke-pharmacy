@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import useNavigationMenu from "@/hooks/use-navigation-menu";
 import { track } from "@/lib/analytics/tracker";
+import { externalLinkProps } from "@/lib/utils/external-link";
 
 export function DesktopMenu() {
   const { hasDarkHero, isScrolled, pathname } = useNavigationMenu();
@@ -81,6 +82,7 @@ export function DesktopMenuButtons() {
           );
         }}
         href={tenant.orderPrescriptionsUrl}
+        {...externalLinkProps(tenant.orderPrescriptionsUrl)}
         className={cn(
           "nav-order-prescriptions relative px-4 py-2 text-sm font-semibold transition-all duration-300 overflow-hidden rounded-lg hover:text-primary",
           hasDarkHero
@@ -110,6 +112,7 @@ export function DesktopMenuButtons() {
             );
           }}
           href={tenant.bookAppointmentUrl}
+          {...externalLinkProps(tenant.bookAppointmentUrl)}
           className="nav-book-cta flex items-center gap-2"
         >
           {/* Shine effect */}

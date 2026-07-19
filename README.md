@@ -82,3 +82,16 @@ NEXT_PUBLIC_IMGIX_DOMAIN=
 - `lowfield-dev`: `NEXT_PUBLIC_TENANT=lowfield`
 
 For each branch/deploy target, set `NEXT_PUBLIC_SITE_URL` to that branch's canonical tenant domain before running `pnpm build`.
+
+## Contact Form Messages
+
+The contact form writes to the Firestore `contact_messages` collection for the
+configured tenant. Before deployment, configure restrictive create-only public
+rules, App Check/abuse controls, and authorised dashboard read/update access.
+See [`docs/CONTACT_MESSAGES_FIRESTORE.md`](docs/CONTACT_MESSAGES_FIRESTORE.md).
+
+## UK Social Accounts
+
+Use [`docs/UK_SOCIAL_ACCOUNT_SETUP.md`](docs/UK_SOCIAL_ACCOUNT_SETUP.md) for the
+UK-based account creation and secure handover workflow agreed in the project
+review.

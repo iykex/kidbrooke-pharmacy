@@ -27,6 +27,9 @@ export default function EmergencyContact() {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
+        <p className="rounded-lg bg-muted px-4 py-3 text-sm font-medium text-foreground">
+          For emergency services, call 999 or 111.
+        </p>
         {EMERGENCY_SERVICES_CONTACTS_PAGE.map((service, index) => (
           <div
             key={index}
@@ -45,11 +48,13 @@ export default function EmergencyContact() {
                   >
                     {service.label}
                   </span>
-                  <span
-                    className={`text-2xl font-black ${service.numberColor}`}
+                  <a
+                    href={`tel:${service.number}`}
+                    className={`text-2xl font-black underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${service.numberColor}`}
+                    aria-label={`Call ${service.number} for ${service.label.toLowerCase()} help`}
                   >
                     {service.number}
-                  </span>
+                  </a>
                 </div>
                 <p className="hidden sm:block text-sm text-gray-700 mb-2">
                   {service.description}

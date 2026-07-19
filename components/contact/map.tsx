@@ -1,15 +1,16 @@
 "use client";
 
 import { useTenantContext } from "@/components/providers/tenant-provider";
+import { getAddressMapSrc } from "@/lib/utils/map";
 import WidthConstraint from "../shared/width-constraint";
 
 export default function Map() {
   const { tenant } = useTenantContext();
   const address = tenant?.address;
-  const mapSrc = address?.googleMap;
+  const mapSrc = getAddressMapSrc(address);
   const addressLabel = address
     ? `${address.line1}, ${address.city}, ${address.region} ${address.postcode}`.toUpperCase()
-    : "11 PICARDY STREET, BELVEDERE, KENT DA17 5QQ";
+    : "ADDRESS DETAILS ARE BEING UPDATED";
 
   return (
     <section>
@@ -23,18 +24,23 @@ export default function Map() {
           </p>
         </div>
 
-        <div className="rounded-2xl overflow-hidden aspect-video max-w-6xl mx-auto">
-          <iframe
-            src={mapSrc}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Kidbrooke Pharmacy Location"
-            className="w-full"
-          ></iframe>
+        <div className="rounded-2xl overflow-hidden aspect-video max-w-6xl mx-auto bg-muted">
+          {mapSrc ? (
+            <iframe
+              src={mapSrc}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={`${tenant?.displayName ?? "Pharmacy"} location map`}
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center px-6 text-center text-muted-foreground">
+              Map details are being updated. Please use the address shown above.
+            </div>
+          )}
         </div>
       </WidthConstraint>
     </section>

@@ -22,9 +22,12 @@ export default async function Banner() {
 
   const heroStats = marketing?.aboutHeroStats ?? [];
   const heroBadges = marketing?.aboutHeroBadges ?? [];
+  const displayName = tenant?.displayName ?? "Community Pharmacy";
+  const displayWords = displayName.split(" ");
+  const primaryName = displayWords[0] ?? "Community";
+  const secondaryName = displayWords.slice(1).join(" ") || "Pharmacy";
 
   const day = new Date().getDay();
-  const pharmacyFirstWord = tenant?.displayName?.split(" ")[0] ?? "Kidbrooke";
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-[url('/elements/pattern-2.svg')] bg-cover bg-center pt-15">
@@ -53,7 +56,7 @@ export default async function Banner() {
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]">
                 About{" "}
                 <span className="text-primary relative inline-block">
-                  {pharmacyFirstWord}
+                  {primaryName}
                   <svg
                     className="absolute -bottom-2 left-0 w-full"
                     viewBox="0 0 200 8"
@@ -68,7 +71,7 @@ export default async function Banner() {
                   </svg>
                 </span>
                 <br />
-                <span>Pharmacy</span>
+                <span>{secondaryName}</span>
               </h1>
 
               <p className="text-lg sm:text-xl leading-relaxed max-w-xl">
@@ -136,14 +139,14 @@ export default async function Banner() {
                   <div className="flex items-center gap-4">
                     <Image
                       src="/logo/kidbrooke-logo.png"
-                      alt="Kidbrooke Pharmacy"
+                      alt={`${displayName} logo`}
                       width={56}
                       height={56}
                       className="rounded-xl shadow-sm"
                     />
                     <div>
                       <h3 className="text-lg font-bold">
-                        {tenant?.displayName ?? "Kidbrooke Pharmacy"}
+                        {displayName}
                       </h3>
                       <div className="flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

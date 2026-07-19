@@ -5,6 +5,12 @@ import type { TenantSlug } from "@/lib/types/tenant";
  */
 export const TENANT_SLUGS = ["belvedere", "kidbrooke", "lowfield"] as const;
 
+export const TENANT_DISPLAY_NAMES: Record<TenantSlug, string> = {
+  belvedere: "Belvedere Pharmacy",
+  kidbrooke: "Kidbrooke Pharmacy",
+  lowfield: "Lowfield Pharmacy",
+};
+
 export function getTenantSlug(): TenantSlug {
   const raw =
     process.env.NEXT_PUBLIC_TENANT ?? process.env.NEXT_PUBLIC_TENANT_SLUG ?? "";

@@ -8,6 +8,7 @@ import { FooterSkeleton } from "@/components/shared/tenant-skeletons";
 import { footerContactIconLinks } from "@/lib/utils/footer-contact-links";
 import { formatAddressLines } from "@/lib/utils/format-tenant";
 import { useServicesList } from "@/hooks/use-services";
+import { externalLinkProps } from "@/lib/utils/external-link";
 
 export function Footer() {
   const { tenant, isTenantReady } = useTenantContext();
@@ -44,6 +45,7 @@ export function Footer() {
                 <Link
                   key={item.label}
                   href={item.href}
+                  {...externalLinkProps(item.href)}
                   onClick={() => track(item.tracking, item.href)}
                   className="text-gray-600 hover:text-primary transition-colors"
                 >
@@ -77,6 +79,7 @@ export function Footer() {
               <li key={service.title}>
                 <Link
                   href={service.link}
+                  {...externalLinkProps(service.link)}
                   onClick={() => track(service.tracking, service.link)}
                   className="text-ring hover:text-primary"
                 >

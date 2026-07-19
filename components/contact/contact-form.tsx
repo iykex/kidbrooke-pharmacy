@@ -16,11 +16,10 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import useContactForm from "@/hooks/use-contact-form";
-import { CONTACT_FORM_FIELD_ITEMS, TRACKING_EVENTS } from "@/lib/constants/general";
+import { CONTACT_FORM_FIELD_ITEMS } from "@/lib/constants/general";
 import { Controller } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import EmergencyContact from "./emergency-contact";
-import { track } from "@/lib/analytics/tracker";
 
 export function ContactForm() {
   const { control, formState, handleSubmit, onSubmit } = useContactForm();
@@ -47,7 +46,7 @@ export function ContactForm() {
                       control={control}
                       render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel htmlFor="contact-form-title">
+                          <FieldLabel htmlFor={`contact-form-${name}`}>
                             {label}
                           </FieldLabel>
                           <Input
@@ -95,22 +94,15 @@ export function ContactForm() {
         <CardFooter>
           <Field orientation="horizontal">
             <Button
-              onClick={() => {
-                track(
-                  TRACKING_EVENTS.contactFormSubmit,
-                  "contact form submitted"
-                );
-              }}
               type="submit"
               form="contact-form"
               disabled={
-                formState.isLoading ||
                 !formState.isValid ||
                 formState.isSubmitting
               }
               className="ml-auto"
             >
-              Send Messsage
+              {formState.isSubmitting ? "Sending..." : "Send Message"}
             </Button>
           </Field>
         </CardFooter>

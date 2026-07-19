@@ -10,11 +10,13 @@
  * - chatbot_entries: tenantIds (array-contains) + published (sort priority in app)
  */
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
   query,
+  serverTimestamp,
   where,
 } from "firebase/firestore";
 import type { ZodType } from "zod";
@@ -43,6 +45,28 @@ import type {
   TenantDoc,
   TestimonialDoc,
 } from "@/lib/types/firestore";
+
+export type ContactMessageInput = {
+  tenantId: TenantSlug;
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+};
+
+export async function createContactMessage(
+  input: ContactMessageInput,
+): Promise<string> {
+  const ref = await addDoc(collection(db, "contact_messages"), {
+    ...input,
+    status: "unread",
+    source: "website",
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+  return ref.id;
+}
 
 function parseFirestoreDoc<T extends object>(
   collectionName: string,

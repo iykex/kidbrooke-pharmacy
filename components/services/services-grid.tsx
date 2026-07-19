@@ -6,9 +6,9 @@ import WidthConstraint from "../shared/width-constraint";
 import { useServicesList } from "@/hooks/use-services";
 
 export function ServicesGrid() {
-  const { services, loading } = useServicesList();
+  const { services, loading, error } = useServicesList();
 
-  if (loading || services.length === 0) {
+  if (loading) {
     return (
       <section>
         <WidthConstraint>
@@ -20,23 +20,49 @@ export function ServicesGrid() {
     );
   }
 
+  if (error) {
+    return (
+      <section aria-live="polite">
+        <WidthConstraint>
+          <div className="rounded-xl border border-destructive/30 bg-destructive/5 px-5 py-10 text-center">
+            <h2 className="font-semibold text-foreground">
+              Services are temporarily unavailable
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Please try again shortly or contact the pharmacy for help.
+            </p>
+          </div>
+        </WidthConstraint>
+      </section>
+    );
+  }
+
+  if (services.length === 0) {
+    return (
+      <section aria-live="polite">
+        <WidthConstraint>
+          <p className="py-16 text-center text-muted-foreground">
+            No services have been published for this pharmacy yet.
+          </p>
+        </WidthConstraint>
+      </section>
+    );
+  }
+
   return (
     <section>
       <WidthConstraint>
-        <Tabs defaultValue="all">
-          <div className="w-full overflow-x-auto sm:mx-0 sm:px-0">
-            <TabsList>
+        <Tabs defaultValue="all" className="gap-6">
+          <div className="w-full overflow-x-auto pb-1 sm:overflow-visible">
+            <TabsList
+              aria-label="Filter pharmacy services"
+              className="h-auto min-w-max bg-muted/70 p-1 sm:min-w-0"
+            >
               {SERVICE_CATEGORIES.map((category) => (
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="z-10 shrink-0 text-base font-medium transition-all duration-400 ease-in-out bg-white shadow-sm h-full py-4 hover:scale-95 text-foreground/50 hover:text-foreground
-              data-[state=active]:bg-primary data-[state=active]:dark:bg-primary 
-              data-[state=active]:text-background  
-              data-[state=active]:hover:scale-100
-              data-[state=active]:font-bold
-              data-[state=active]:shadow-none
-            "
+                  className="z-10 h-11 shrink-0 rounded-md px-4 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring data-[state=active]:bg-primary data-[state=active]:font-bold data-[state=active]:text-primary-foreground sm:text-base"
                 >
                   {category.label}
                 </TabsTrigger>
@@ -60,11 +86,12 @@ export function ServicesGrid() {
                 }
                 return (
                   <div className="grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-                    {filtered.map((service, index) => {
+                    {filtered.map((service) => {
                   const IconComponent = service.icon;
                   return (
                     <ServiceCard
-                      key={index}
+                      key={service.id}
+                      id={service.id}
                       description={service.description}
                       image={service.image}
                       link={service.link}
@@ -76,6 +103,7 @@ export function ServicesGrid() {
                       icon={IconComponent}
                       tracking={service.tracking}
                       fundingLabel={service.fundingLabel}
+                      providerLabel={service.providerLabel}
                     />
                   );
                 })}

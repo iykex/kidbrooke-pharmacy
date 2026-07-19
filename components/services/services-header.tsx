@@ -10,9 +10,11 @@ import { track } from "@/lib/analytics/tracker";
 import { useTenantContext } from "@/components/providers/tenant-provider";
 import { PrimaryCtaSkeleton } from "@/components/shared/tenant-skeletons";
 import curvedArrow from "@/public/elements/curved-arrow.svg";
+import { externalLinkProps } from "@/lib/utils/external-link";
 
 export function ServicesHeading() {
   const { tenant, isTenantReady } = useTenantContext();
+  const pharmacyName = tenant?.displayName ?? "Your local pharmacy";
   return (
     <section className="pt-40 pb-20 bg-background">
       <WidthConstraint className="relative z-10">
@@ -34,7 +36,7 @@ export function ServicesHeading() {
 
             {/* Description */}
             <p className="text-gray-600 dark:text-white/60 text-lg leading-relaxed">
-              At {tenant?.displayName ?? "Kidbrooke Pharmacy"}, our pharmacists offer a comprehensive range
+              At {pharmacyName}, our pharmacists offer a comprehensive range
               of NHS-commissioned and private healthcare services. Get expert
               help from the comfort of your home with our video consultation
               service.
@@ -68,6 +70,7 @@ export function ServicesHeading() {
                 >
                   <Link
                     href={tenant.bookAppointmentUrl}
+                    {...externalLinkProps(tenant.bookAppointmentUrl)}
                     onClick={() => {
                       track(
                         TRACKING_EVENTS.bookAppointmentButton,

@@ -181,19 +181,28 @@ export function buildNhsPharmacyFirstHomeCards(
 // ServiceDoc → Service view model
 // ---------------------------------------------------------------------------
 
-export function serviceDocToView(doc: ServiceDoc, slug: TenantSlug): Service {
-  const link =
+export function serviceDocToView(
+  doc: ServiceDoc,
+  slug: TenantSlug,
+  privateBookingUrl?: string,
+): Service {
+  const configuredLink =
     doc.tenantBookingUrls[slug] ??
     doc.tenantBookingUrls.belvedere ??
     Object.values(doc.tenantBookingUrls)[0] ??
     "#";
   const category = serviceGroupToCategory(doc.serviceKind);
+  const link =
+    category === "private" && privateBookingUrl?.trim()
+      ? privateBookingUrl
+      : configuredLink;
   const icon = iconForServiceGroup(doc.group);
   const palette = GROUP_COLORS[doc.group] ?? {
     color: "from-primary/20 to-primary/5",
     borderColor: "border-primary/30",
   };
   return {
+    id: doc.id,
     title: doc.title,
     description: doc.description,
     category,
@@ -205,6 +214,10 @@ export function serviceDocToView(doc: ServiceDoc, slug: TenantSlug): Service {
     borderColor: palette.borderColor,
     tracking: trackingForServiceId(doc.id),
     fundingLabel: doc.fundingLabel,
+    providerLabel:
+      category === "private"
+        ? "Private service via PharmaDoctor"
+        : "NHS service",
   };
 }
 

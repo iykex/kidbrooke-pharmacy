@@ -4,9 +4,16 @@ import { INTERNAL_LINKS } from "@/lib/constants/general";
 import { cn } from "@/lib/utils/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useTenantContext } from "@/components/providers/tenant-provider";
+import { TENANT_DISPLAY_NAMES } from "@/lib/config/tenant";
 
 export default function Brand() {
   const { hasDarkHero, isScrolled } = useNavigationMenu();
+  const { tenant, slug } = useTenantContext();
+  const displayName = tenant?.displayName ?? TENANT_DISPLAY_NAMES[slug];
+  const words = displayName.split(" ");
+  const primaryName = words[0] ?? "Pharmacy";
+  const secondaryName = words.slice(1).join(" ") || "Pharmacy";
   return (
     <div className="flex gap-x-2 items-center">
       <Link
@@ -15,7 +22,7 @@ export default function Brand() {
       >
         <Image
           src="/logo/kidbrooke-logo.png"
-          alt="Kidbrooke"
+          alt={`${displayName} logo`}
           width={60}
           height={60}
           className="relative z-10"
@@ -23,14 +30,14 @@ export default function Brand() {
         <div className="flex flex-col">
           <p
             className={cn(
-              "font-bold text-md sm:text-xl leading-tight tracking-widest transition-colors duration-300",
+              "text-xl font-bold leading-tight tracking-wide transition-colors duration-300 sm:text-2xl",
               hasDarkHero
                 ? "text-white dark:text-foreground"
                 : "text-foreground",
               isScrolled && "text-foreground",
             )}
           >
-            Kidbrooke
+            {primaryName}
           </p>
           <p
             className={cn(
@@ -41,7 +48,7 @@ export default function Brand() {
               isScrolled && "text-foreground/80",
             )}
           >
-            Pharmacy
+            {secondaryName}
           </p>
         </div>
       </Link>

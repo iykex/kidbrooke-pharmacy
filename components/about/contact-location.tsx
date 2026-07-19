@@ -1,4 +1,4 @@
-import { CircleParking, Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import WidthConstraint from "../shared/width-constraint";
 import { Badge } from "../ui/badge";
 import SectionHeader from "../general/section-divider-head";
@@ -7,9 +7,11 @@ import { getTenantSlug } from "@/lib/config/tenant";
 import {
   formatAddressLines,
 } from "@/lib/utils/format-tenant";
+import { getAddressMapSrc } from "@/lib/utils/map";
 
 export default async function ContactLocationSection() {
   const tenant = await getTenant(getTenantSlug());
+  const mapSrc = getAddressMapSrc(tenant?.address);
 
   const contactItems = tenant
     ? [
@@ -108,21 +110,27 @@ export default async function ContactLocationSection() {
           {/* Right Side - Map */}
           <div className="space-y-4">
             <div className="rounded-2xl overflow-hidden shadow-lg">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3123.054856983346!2d0.02590667701023844!3d51.4673620136271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a9b6a9328445%3A0x8b58179702b5f241!2sKidbrooke%20Pharmacy%20-%20Travel%20Clinic%20%26%20Weight%20Loss%20Clinic!5e1!3m2!1sen!2sgh!4v1765997872967!5m2!1sen!2sgh"
-                width="800"
-                height="600"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Kidbrooke Pharmacy Location"
-                className="w-full"
-              />
+              {mapSrc ? (
+                <iframe
+                  src={mapSrc}
+                  width="100%"
+                  height="400"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`${tenant?.displayName ?? "Pharmacy"} location`}
+                  className="w-full"
+                />
+              ) : (
+                <div className="flex h-96 items-center justify-center bg-muted px-6 text-center text-muted-foreground">
+                  Map details are being updated. Please use the address shown on
+                  this page.
+                </div>
+              )}
             </div>
-            <Badge className="w-full justify-center items-center gap-2 rounded-xl bg-muted-foreground dark:bg-card text-white py-3 text-base font-semibold">
-              Free Parking Available
-              <CircleParking className="size-5! stroke-2" />
+            <Badge className="w-full justify-center items-center gap-2 rounded-xl bg-[#002f4b] text-white py-3 text-base font-semibold hover:bg-[#002f4b]/90">
+              Plan your visit using the map above
+              <MapPin className="size-5! text-primary stroke-2" />
             </Badge>
           </div>
         </div>
