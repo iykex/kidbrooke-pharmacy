@@ -952,8 +952,6 @@
 
 .dashed-grid-bg {
   position: relative;
-.dashed-grid-bg {
-  position: relative;
   background-color: var(--background);
 }
 
