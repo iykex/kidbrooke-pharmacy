@@ -913,7 +913,6 @@
 ::view-transition-image-pair(root) {
   isolation: isolate;
 }
-}
 
 .dashed-grid-bg {
   position: relative;
