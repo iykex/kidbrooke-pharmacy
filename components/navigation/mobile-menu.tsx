@@ -45,13 +45,14 @@ export default function MobileMenu() {
             variant="ghost"
             size="icon"
             className={cn(
-              "transition-all duration-300 h-10 w-10 rounded-lg",
+              "transition-all duration-300 h-10 w-10 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
               hasDarkHero && !isScrolled
                 ? "text-white hover:bg-white/10"
                 : "text-foreground hover:bg-foreground/10"
             )}
           >
             <MenuIcon className="size-6" />
+            <span className="sr-only">Open navigation menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent
@@ -195,6 +196,7 @@ export default function MobileMenu() {
                 <SheetClose asChild key={item.href}>
                   <Link
                     href={item.href}
+                    aria-current={isActive ? "page" : undefined}
                     className={cn(
                       "mobile-menu-link flex items-center justify-between px-4 py-3.5 rounded-xl font-medium transition-all duration-300",
                       isActive && "mobile-menu-link--active",

@@ -90,7 +90,7 @@ export default function ModeToggle() {
     <Button
       variant="outline"
       size="icon"
-      className="lg:backdrop-blur-3xl group hover:text-primary hover:scale-105 border-0 w-9 h-9 shadow-none bg-transparent! rounded-full p-1.5 cursor-pointer"
+      className="lg:backdrop-blur-3xl group hover:text-primary hover:scale-105 border-0 w-9 h-9 shadow-none bg-transparent! rounded-full p-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       onClick={(e) => {
         const nextTheme = isDark ? "light" : "dark";
         changeTheme(nextTheme, e);

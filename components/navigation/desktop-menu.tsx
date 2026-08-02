@@ -21,8 +21,9 @@ export function DesktopMenu() {
           <Link
             key={item.href}
             href={item.href}
+            aria-current={isActive ? "page" : undefined}
             className={cn(
-              "nav-link-item relative px-5 py-2.5 text-sm font-medium transition-all duration-300",
+              "nav-link-item relative px-5 py-2.5 text-sm font-medium transition-all duration-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
               !isActive && "nav-link",
               hasDarkHero
                 ? "text-background dark:text-foreground hover:text-background/80 dark:hover:text-foreground/80"
