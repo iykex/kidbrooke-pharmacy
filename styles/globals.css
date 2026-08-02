@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 /* Disabled: importing tw-animate-css was conflicting with core transition utilities */
 /* @import "tw-animate-css"; */
 
@@ -915,147 +915,43 @@
   /* Chrome, Safari and Opera */
 }
 
-/* Smooth Sinusoidal Wave Animation */
-@media (prefers-reduced-motion: no-preference) {
-  ::view-transition-old(root) {
-    animation: none;
-    z-index: -1;
+/* View Transition Theme Switcher Effect */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
+/* Duplicated content row: -50% == one copy width; L→R drift like a slow terminal ticker */
+@keyframes infoBarScroll {
+  from {
+    transform: translateX(-50%);
   }
 
-  ::view-transition-new(root) {
-    animation: smooth-wave-fill 1s ease-in-out forwards;
-    mix-blend-mode: normal;
-  }
-
-  @keyframes smooth-wave-fill {
-    0% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,-50 Q 1680,-10 1440,-50 Q 1200,-90 960,-50 Q 720,-10 480,-50 Q 240,-90 0,-50 Z"
-      );
-    }
-
-    5% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,25 Q 1680,65 1440,25 Q 1200,-15 960,25 Q 720,65 480,25 Q 240,-15 0,25 Z"
-      );
-    }
-
-    10% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,100 Q 1680,140 1440,100 Q 1200,60 960,100 Q 720,140 480,100 Q 240,60 0,100 Z"
-      );
-    }
-
-    15% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,175 Q 1680,135 1440,175 Q 1200,215 960,175 Q 720,135 480,175 Q 240,215 0,175 Z"
-      );
-    }
-
-    20% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,250 Q 1680,290 1440,250 Q 1200,210 960,250 Q 720,290 480,250 Q 240,210 0,250 Z"
-      );
-    }
-
-    25% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,325 Q 1680,285 1440,325 Q 1200,365 960,325 Q 720,285 480,325 Q 240,365 0,325 Z"
-      );
-    }
-
-    30% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,400 Q 1680,440 1440,400 Q 1200,360 960,400 Q 720,440 480,400 Q 240,360 0,400 Z"
-      );
-    }
-
-    35% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,475 Q 1680,435 1440,475 Q 1200,515 960,475 Q 720,435 480,475 Q 240,515 0,475 Z"
-      );
-    }
-
-    40% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,550 Q 1680,590 1440,550 Q 1200,510 960,550 Q 720,590 480,550 Q 240,510 0,550 Z"
-      );
-    }
-
-    45% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,625 Q 1680,585 1440,625 Q 1200,665 960,625 Q 720,585 480,625 Q 240,665 0,625 Z"
-      );
-    }
-
-    50% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,700 Q 1680,740 1440,700 Q 1200,660 960,700 Q 720,740 480,700 Q 240,660 0,700 Z"
-      );
-    }
-
-    55% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,775 Q 1680,735 1440,775 Q 1200,815 960,775 Q 720,735 480,775 Q 240,815 0,775 Z"
-      );
-    }
-
-    60% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,850 Q 1680,890 1440,850 Q 1200,810 960,850 Q 720,890 480,850 Q 240,810 0,850 Z"
-      );
-    }
-
-    65% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,925 Q 1680,885 1440,925 Q 1200,965 960,925 Q 720,885 480,925 Q 240,965 0,925 Z"
-      );
-    }
-
-    70% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,1000 Q 1680,1040 1440,1000 Q 1200,960 960,1000 Q 720,1040 480,1000 Q 240,960 0,1000 Z"
-      );
-    }
-
-    75% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,1075 Q 1680,1035 1440,1075 Q 1200,1115 960,1075 Q 720,1035 480,1075 Q 240,1115 0,1075 Z"
-      );
-    }
-
-    80% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,1150 Q 1680,1190 1440,1150 Q 1200,1110 960,1150 Q 720,1190 480,1150 Q 240,1110 0,1150 Z"
-      );
-    }
-
-    85% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,1225 Q 1680,1185 1440,1225 Q 1200,1265 960,1225 Q 720,1185 480,1225 Q 240,1265 0,1225 Z"
-      );
-    }
-
-    90% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,1300 Q 1680,1340 1440,1300 Q 1200,1260 960,1300 Q 720,1340 480,1300 Q 240,1260 0,1300 Z"
-      );
-    }
-
-    95% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,1375 Q 1680,1335 1440,1375 Q 1200,1415 960,1375 Q 720,1335 480,1375 Q 240,1415 0,1375 Z"
-      );
-    }
-
-    100% {
-      clip-path: path(
-        "M 0,0 L 1920,0 L 1920,1450 Q 1680,1490 1440,1450 Q 1200,1410 960,1450 Q 720,1490 480,1450 Q 240,1410 0,1450 Z"
-      );
-    }
+  to {
+    transform: translateX(0);
   }
 }
 
+/* Not named `animate-*` — Tailwind v4 reserves that prefix for @theme animations */
+.info-bar-marquee {
+  animation: infoBarScroll 50s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info-bar-marquee {
+    animation: none;
+    transform: none;
+  }
+}
+
+.dashed-grid-bg {
+  position: relative;
 .dashed-grid-bg {
   position: relative;
   background-color: var(--background);
@@ -1080,5 +976,11 @@
   );
   height: 100%;
   width: 100%;
+  opacity: 0.5;
+}
+
+/* Dark mode background pattern adjustment */
+.dark .dashed-grid-bg::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%2315a9e3' stroke-width='1.5' opacity='0.2'%3E%3Crect x='10' y='10' width='20' height='8' rx='4' transform='rotate(-30 20 14)' /%3E%3Cpath d='M17 19 L23 9' /%3E%3Ccircle cx='55' cy='15' r='6' /%3E%3Cpath d='M49 15 L61 15' /%3E%3Crect x='15' y='45' width='16' height='6' transform='rotate(45 23 48)' /%3E%3Cline x1='11' y1='57' x2='15' y2='53' /%3E%3Cline x1='31' y1='37' x2='35' y2='33' /%3E%3Cpath d='M60 45 h-5 v-5 h-5 v5 h-5 v5 h5 v5 h5 v-5 h5 z' /%3E%3Cpath d='M35 65 l5 -5 l5 15 l5 -10 l5 5' /%3E%3C/g%3E%3C/svg%3E");
   opacity: 0.5;
 }
