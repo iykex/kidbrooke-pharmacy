@@ -67,6 +67,7 @@
 }
 
 :root {
+  color-scheme: light;
   --radius: 0.75rem;
   --background: #ffffff;
   --foreground: #0d3b2e;
@@ -118,6 +119,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: #03130b;
   --foreground: #e8f5e9;
   --card: #1b3a2f;
@@ -860,20 +862,6 @@
   }
 }
 
-@keyframes scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-scroll {
-  animation: scroll 18s linear infinite;
-}
-
 /* Duplicated content row: -50% == one copy width; L→R drift like a slow terminal ticker */
 @keyframes infoBarScroll {
   from {
@@ -925,29 +913,6 @@
 ::view-transition-image-pair(root) {
   isolation: isolate;
 }
-
-/* Duplicated content row: -50% == one copy width; L→R drift like a slow terminal ticker */
-@keyframes infoBarScroll {
-  from {
-    transform: translateX(-50%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
-/* Not named `animate-*` — Tailwind v4 reserves that prefix for @theme animations */
-.info-bar-marquee {
-  animation: infoBarScroll 50s linear infinite;
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .info-bar-marquee {
-    animation: none;
-    transform: none;
-  }
 }
 
 .dashed-grid-bg {

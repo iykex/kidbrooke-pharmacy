@@ -68,6 +68,7 @@ export default function MobileMenu() {
                     alt={`${displayName} logo`}
                     width={44}
                     height={44}
+                    priority
                   />
                   <SheetTitle className="text-left text-white">
                     <span className="block font-bold leading-4">

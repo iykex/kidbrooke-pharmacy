@@ -25,7 +25,11 @@ export default function ModeToggle() {
     const currentTheme = resolvedTheme ?? theme;
     if (currentTheme === newTheme) return;
 
-    if (!document.startViewTransition) {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion || !document.startViewTransition) {
       setTheme(newTheme);
       return;
     }
