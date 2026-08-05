@@ -63,13 +63,13 @@ jobs:
           command: |
             sudo npm install -g vercel
             
-            REPO_NAME=$(basename $(git rev-parse --show-toplevel))
+            REPO_NAME="${CIRCLE_PROJECT_REPONAME:-$(basename $(git rev-parse --show-toplevel))}"
             PROJECT_NAME="${REPO_NAME//-/}"
             
             echo "Deploying to Vercel project: $PROJECT_NAME"
             
-            # Deploy using Vercel CLI with custom project name
-            vercel deploy --prod --token $VERCEL_TOKEN --yes --name "$PROJECT_NAME"
+            vercel link --project "$PROJECT_NAME" --yes --token "$VERCEL_TOKEN"
+            vercel deploy --prod --token "$VERCEL_TOKEN" --yes
 
       - run:
           name: Notify Telegram — Deployment Success
