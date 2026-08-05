@@ -63,10 +63,8 @@ jobs:
           command: |
             sudo npm install -g vercel
             
-            # Generate project name from branch: belvedere-dev -> belvederepharmacy
-            # Logic: remove -dev suffix, append pharmacy
-            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-            PROJECT_NAME="${BRANCH_NAME%-dev}pharmacy"
+            REPO_NAME=$(basename $(git rev-parse --show-toplevel))
+            PROJECT_NAME="${REPO_NAME//-/}"
             
             echo "Deploying to Vercel project: $PROJECT_NAME"
             
@@ -101,4 +99,4 @@ workflows:
           filters:
             branches:
               only:
-                - kidbrooke-dev
+                - main
