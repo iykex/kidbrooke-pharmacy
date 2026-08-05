@@ -16,12 +16,18 @@ export async function getTenantSeoProfile(): Promise<TenantDoc> {
   return getTenantSeoProfileBySlug(slug);
 }
 
+import { DEFAULT_TENANT_DOC } from "@/lib/schema/firestore/defaults";
+
 export async function getTenantSeoProfileBySlug(
   slug: TenantSlug,
 ): Promise<TenantDoc> {
-  const tenant = await getTenant(slug);
-  if (!tenant || !tenant.published) {
-    throw new Error(`Missing published tenant document for slug "${slug}"`);
+  try {
+    const tenant = await getTenant(slug);
+    if (tenant && tenant.published) {
+      return tenant;
+    }
+  } catch (error) {
+    console.warn(`Falling back to default SEO profile for ${slug}:`, error);
   }
-  return tenant;
+  return DEFAULT_TENANT_DOC;
 }
