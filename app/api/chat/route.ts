@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { getChatbotEntriesForTenant } from "@/lib/services/firestore/queries";
+import { db } from "@/lib/firebase/firebase-client";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const EMERGENCY_POISON_KEYWORDS = [
   "poison",
@@ -197,33 +199,33 @@ const SYMPTOM_KEYWORDS = [
   "hemorrhoids",
   "issue",
   "problem",
-  "dolor",
-  "cabeza",
-  "fiebre",
-  "enfermo",
-  "malade",
-  "tête",
-  "fièvre",
-  "schmerzen",
-  "kopfschmerzen",
-  "fieber",
-  "ból",
-  "gorączka",
-  "chory",
-  "وجع",
-  "صداع",
-  "حمى",
-  "مريض",
-  "दर्द",
-  "सिरदर्द",
-  "बुखार",
-  "ਬੁਖਾਰ",
-  "ਦੁੱਖ",
 ];
+
+async function logChatSession(
+  slug: string,
+  visitorName: string | undefined,
+  userMessage: string,
+  botReply: string,
+  flaggedForPharmacist: boolean,
+) {
+  try {
+    await addDoc(collection(db, "chatbot_sessions"), {
+      tenantSlug: slug,
+      visitorName: visitorName || "Website Visitor",
+      lastUserMessage: userMessage,
+      lastBotReply: botReply,
+      flaggedForPharmacist: !!flaggedForPharmacist,
+      updatedAt: serverTimestamp(),
+      createdAt: serverTimestamp(),
+    });
+  } catch (err) {
+    console.error("Failed to log chatbot session to Firestore:", err);
+  }
+}
 
 export async function POST(request: Request) {
   try {
-    const { message, messagesHistory, tenantSlug } = await request.json();
+    const { message, messagesHistory, tenantSlug, visitorName } = await request.json();
 
     if (!message || typeof message !== "string") {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
@@ -234,9 +236,12 @@ export async function POST(request: Request) {
 
     // 1. POISON & URGENT EMERGENCY CHECK (HIGHEST PRIORITY)
     if (EMERGENCY_POISON_KEYWORDS.some((kw) => lowerMsg.includes(kw))) {
+      const emergencyAnswer =
+        "🚨 URGENT MEDICAL EMERGENCY NOTICE: If you or someone else has ingested poison, swallowed chemicals, taken an overdose, or is experiencing a life-threatening medical emergency (such as severe breathing difficulty or chest pain), PLEASE CALL 999 IMMEDIATELY for an emergency ambulance or go directly to the nearest hospital A&E department. You can also dial NHS 111 for urgent advice.";
+
+      logChatSession(slug, visitorName, message, emergencyAnswer, true).catch(() => {});
       return NextResponse.json({
-        answer:
-          "🚨 URGENT MEDICAL EMERGENCY NOTICE: If you or someone else has ingested poison, swallowed chemicals, taken an overdose, or is experiencing a life-threatening medical emergency (such as severe breathing difficulty or chest pain), PLEASE CALL 999 IMMEDIATELY for an emergency ambulance or go directly to the nearest hospital A&E department. You can also dial NHS 111 for urgent advice.",
+        answer: emergencyAnswer,
         actions: [
           { label: "Call 999 Emergency", href: "tel:999", icon: "phone" },
           { label: "Call NHS 111", href: "tel:111", icon: "phone" },
@@ -247,9 +252,12 @@ export async function POST(request: Request) {
 
     // 2. Mandatory Prescription Safety Guardrail
     if (PRESCRIPTION_KEYWORDS.some((kw) => lowerMsg.includes(kw))) {
+      const safetyAnswer =
+        "I am Bella, your AI pharmacy assistant. I'm sorry to hear you're dealing with this. Please note that as an AI, I am strictly not permitted to prescribe medication, recommend dosages, or offer medical diagnoses. For any prescription requests or clinical advice, please consult our qualified pharmacist or a doctor.";
+
+      logChatSession(slug, visitorName, message, safetyAnswer, true).catch(() => {});
       return NextResponse.json({
-        answer:
-          "I am Bella, your AI pharmacy assistant. I'm sorry to hear you're dealing with this. Please note that as an AI, I am strictly not permitted to prescribe medication, recommend dosages, or offer medical diagnoses. For any prescription requests or clinical advice, please consult our qualified pharmacist or a doctor.",
+        answer: safetyAnswer,
         actions: [
           { label: "Book Appointment", href: "/services", icon: "calendar" },
           { label: "View Services", href: "/services", icon: "external" },
@@ -305,6 +313,7 @@ STRICT PERSONA & EMERGENCY RULES:
           const data = await aiRes.json();
           const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text;
           if (botReply) {
+            logChatSession(slug, visitorName, message, botReply, false).catch(() => {});
             return NextResponse.json({
               answer: botReply,
               actions: [
@@ -322,6 +331,7 @@ STRICT PERSONA & EMERGENCY RULES:
     // 5. Knowledge Base & Fallback Match
     for (const entry of kbEntries) {
       if (entry.keywords?.some((kw: string) => lowerMsg.includes(kw.toLowerCase()))) {
+        logChatSession(slug, visitorName, message, entry.answer, false).catch(() => {});
         return NextResponse.json({
           answer: entry.answer,
           actions: entry.actions || [{ label: "View Services", href: "/services", icon: "external" }],
@@ -329,31 +339,21 @@ STRICT PERSONA & EMERGENCY RULES:
       }
     }
 
+    let answer = "";
     if (SENSITIVE_HEALTH_KEYWORDS.some((kw) => lowerMsg.includes(kw))) {
-      return NextResponse.json({
-        answer:
-          "Please rest assured that your privacy is completely protected with us. For emergency contraception (morning-after pill), confidential advice on pregnancy options, or sexual health care, our pharmacy offers private consultation rooms. You can also access confidential UK services via BPAS (03457 30 40 30) or NHS 111. Please speak with our pharmacist directly for caring, non-judgmental support.",
-        actions: [
-          { label: "Book Consultation", href: "/services", icon: "calendar" },
-          { label: "View Services", href: "/services", icon: "external" },
-        ],
-      });
+      answer =
+        "Please rest assured that your privacy is completely protected with us. For emergency contraception (morning-after pill), confidential advice on pregnancy options, or sexual health care, our pharmacy offers private consultation rooms. You can also access confidential UK services via BPAS (03457 30 40 30) or NHS 111. Please speak with our pharmacist directly for caring, non-judgmental support.";
+    } else if (SYMPTOM_KEYWORDS.some((kw) => lowerMsg.includes(kw))) {
+      answer =
+        "I'm so sorry to hear you're dealing with that. Being unwell or uncomfortable is never pleasant. While as an AI assistant I cannot diagnose conditions or prescribe medication, our pharmacy team is here to support you. Please feel free to speak directly with our pharmacist for advice on over-the-counter remedies or book a consultation.";
+    } else {
+      answer =
+        "I understand you're looking for assistance! As your pharmacy assistant, I can help you with our opening hours, services, prescriptions, vaccinations, or connect you directly with our pharmacist. How can I best help you right now?";
     }
 
-    if (SYMPTOM_KEYWORDS.some((kw) => lowerMsg.includes(kw))) {
-      return NextResponse.json({
-        answer:
-          "I'm so sorry to hear you're dealing with that. Being unwell or uncomfortable is never pleasant. While as an AI assistant I cannot diagnose conditions or prescribe medication, our pharmacy team is here to support you. Please feel free to speak directly with our pharmacist for advice on over-the-counter remedies or book a consultation.",
-        actions: [
-          { label: "Book Appointment", href: "/services", icon: "calendar" },
-          { label: "View Services", href: "/services", icon: "external" },
-        ],
-      });
-    }
-
+    logChatSession(slug, visitorName, message, answer, false).catch(() => {});
     return NextResponse.json({
-      answer:
-        "I understand you're looking for assistance! As your pharmacy assistant, I can help you with our opening hours, services, prescriptions, vaccinations, or connect you directly with our pharmacist. How can I best help you right now?",
+      answer,
       actions: [
         { label: "Book Appointment", href: "/services", icon: "calendar" },
         { label: "View Services", href: "/services", icon: "external" },
