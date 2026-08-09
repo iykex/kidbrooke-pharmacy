@@ -103,7 +103,36 @@ export function findBestResponse(
 ): { answer: string; actions?: ActionButton[] } {
   const lowerQuery = query.toLowerCase();
 
+  const PRESCRIPTION_KEYWORDS = [
+    "prescribe",
+    "prescription",
+    "antibiotic",
+    "dose",
+    "dosage",
+    "diagnose",
+    "diagnosis",
+    "cure",
+    "what pill",
+    "what drug",
+    "give me medicine",
+    "issue medicine",
+  ];
+
+  if (PRESCRIPTION_KEYWORDS.some((kw) => lowerQuery.includes(kw))) {
+    return {
+      answer:
+        "I am Bella, your AI pharmacy assistant. ⚠️ Please note that as an AI, I am strictly not permitted to prescribe medication, recommend prescription dosages, or offer medical diagnoses. For any prescription inquiries or medical advice, please consult our qualified pharmacist or a doctor.",
+      actions: [
+        ...(phone
+          ? [{ label: "Call Pharmacist", href: `tel:${phone.replace(/\s+/g, "")}`, icon: "phone" as const }]
+          : []),
+        { label: "Book Appointment", href: "/services", icon: "calendar" as const },
+      ],
+    };
+  }
+
   let bestMatch = { score: 0, answer: "", actions: undefined as ActionButton[] | undefined };
+
 
   for (const item of knowledgeBase) {
     const keywords = Array.isArray(item.keywords) ? item.keywords : [];

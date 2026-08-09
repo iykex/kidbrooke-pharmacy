@@ -161,8 +161,27 @@ export function useChatbot() {
           ],
         };
       } else {
-        response = findBestResponse(text, knowledgeBaseRef.current, tenant?.phone);
+        try {
+          const apiRes = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              message: text,
+              messagesHistory: messages,
+              tenantSlug: slug,
+              visitorName: visitorName,
+            }),
+          });
+          if (apiRes.ok) {
+            response = await apiRes.json();
+          } else {
+            response = findBestResponse(text, knowledgeBaseRef.current, tenant?.phone);
+          }
+        } catch {
+          response = findBestResponse(text, knowledgeBaseRef.current, tenant?.phone);
+        }
       }
+
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),

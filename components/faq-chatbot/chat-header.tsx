@@ -46,6 +46,10 @@ export function ChatHeader({ visitorName, onClose }: {  visitorName: string | nu
           <ChevronDown className="size-5" />
         </Button>
       </div>
+      <div className="mt-2 text-[10px] bg-black/20 text-white/90 px-2 py-1 rounded flex items-center gap-1 font-medium">
+        <span>⚠️ Bella is an AI assistant and cannot prescribe medication. Consult a pharmacist for medical advice.</span>
+      </div>
     </div>
   );
 }
+
