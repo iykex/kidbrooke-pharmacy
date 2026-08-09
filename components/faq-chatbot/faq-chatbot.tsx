@@ -13,7 +13,6 @@ import { TRACKING_EVENTS } from "@/lib/constants/general";
 
 export default function FAQChatbot() {
   const {
-    isTenantReady,
     isOpen,
     visitorName,
     isAskingName,
@@ -33,10 +32,6 @@ export default function FAQChatbot() {
     setIsOpen,
   } = useChatbot();
 
-  if (!isTenantReady) {
-    return null;
-  }
-
   return (
     <div>
       {/* Chat Toggle Button */}
@@ -51,8 +46,8 @@ export default function FAQChatbot() {
       {/* Chat Window */}
       <div
         className={cn(
-          "fixed bottom-14 lg:bottom-24 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[400px] max-h-[600px] rounded-2xl shadow-2xl transition-all duration-300 origin-bottom-right",
-          "bg-white dark:bg-[#001d33] border border-gray-200 dark:border-[#1a4d6e]",
+          "fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[400px] h-[min(580px,calc(100vh-5rem))] max-h-[calc(100vh-3.5rem)] rounded-2xl shadow-2xl transition-all duration-300 origin-bottom-right",
+          "bg-background border border-border",
           "flex flex-col overflow-hidden",
           isOpen
             ? "scale-100 opacity-100 translate-y-0"
