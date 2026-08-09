@@ -221,17 +221,37 @@ async function logChatSession(
 ) {
   try {
     const docId = sessionId || `session_${slug}_${Date.now()}`;
+    const userMsgObj = {
+      id: `msg_u_${Date.now()}`,
+      role: "user",
+      content: userMessage,
+      timestamp: new Date().toISOString(),
+    };
+    const botMsgObj = {
+      id: `msg_b_${Date.now() + 1}`,
+      role: "bot",
+      content: botReply,
+      timestamp: new Date().toISOString(),
+    };
+
+    const docRef = doc(db, "chatbot_sessions", docId);
+    const existingSnap = await getDoc(docRef).catch(() => null);
+    const existingData = existingSnap?.exists() ? existingSnap.data() : null;
+    const existingMsgs = existingData?.messages || [];
+
     await setDoc(
-      doc(db, "chatbot_sessions", docId),
+      docRef,
       {
         id: docId,
         tenantSlug: slug,
-        visitorName: visitorName || "Website Visitor",
+        visitorName: visitorName || existingData?.visitorName || "Website Visitor",
         lastUserMessage: userMessage,
         lastBotReply: botReply,
-        flaggedForPharmacist: !!flaggedForPharmacist,
+        flaggedForPharmacist: !!flaggedForPharmacist || !!existingData?.flaggedForPharmacist,
+        messages: [...existingMsgs, userMsgObj, botMsgObj],
+        messagesCount: (existingMsgs.length || 0) + 2,
         updatedAt: serverTimestamp(),
-        createdAt: serverTimestamp(),
+        createdAt: existingData?.createdAt || serverTimestamp(),
       },
       { merge: true },
     );
