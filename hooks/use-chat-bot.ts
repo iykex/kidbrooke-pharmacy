@@ -23,13 +23,78 @@ export function useChatbot() {
   const [isTyping, setIsTyping] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseItem[]>([]);
-  const knowledgeBaseRef = useRef<KnowledgeBaseItem[]>(knowledgeBase);
 
+  // Human Takeover States
+  const [sessionId, setSessionId] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      let id = localStorage.getItem("bella_session_id");
+      if (!id) {
+        id = `session_${Date.now()}`;
+        localStorage.setItem("bella_session_id", id);
+      }
+      return id;
+    }
+    return `session_${Date.now()}`;
+  });
+
+  const [takenOverByHuman, setTakenOverByHuman] = useState(false);
+  const [agentName, setAgentName] = useState<string | null>(null);
+  const [agentIsTyping, setAgentIsTyping] = useState(false);
+
+  const knowledgeBaseRef = useRef<KnowledgeBaseItem[]>(knowledgeBase);
   const tenantInitKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
     knowledgeBaseRef.current = knowledgeBase;
   }, [knowledgeBase]);
+
+  // Poll for live human takeover updates from server (only when chat window is open)
+  useEffect(() => {
+    if (!sessionId || !isOpen) return;
+    let isCancelled = false;
+
+    const pollSession = async () => {
+      try {
+        const res = await fetch(`/api/chat?sessionId=${sessionId}&tenantSlug=${slug}`);
+        if (res.ok && !isCancelled) {
+          const data = await res.json();
+          setTakenOverByHuman(!!data.takenOverByHuman);
+          setAgentName(data.agentName || null);
+          setAgentIsTyping(!!data.agentIsTyping);
+
+          if (data.messages && Array.isArray(data.messages)) {
+            setMessages((prev) => {
+              const existingIds = new Set(prev.map((m) => m.id));
+              const newAgentMsgs = data.messages.filter((m: any) => !existingIds.has(m.id));
+              if (newAgentMsgs.length > 0) {
+                const updated = [
+                  ...prev,
+                  ...newAgentMsgs.map((m: any) => ({
+                    id: m.id || String(Date.now()),
+                    role: m.role === "agent" ? ("bot" as const) : (m.role as any),
+                    content: m.content,
+                    timestamp: new Date(m.timestamp || Date.now()),
+                  })),
+                ];
+                saveChatHistory(updated);
+                return updated;
+              }
+              return prev;
+            });
+          }
+        }
+      } catch {
+        // Silent poll fallback
+      }
+    };
+
+    void pollSession();
+    const interval = setInterval(pollSession, 8000);
+    return () => {
+      isCancelled = true;
+      clearInterval(interval);
+    };
+  }, [sessionId, slug, isOpen]);
 
   useEffect(() => {
     let cancelled = false;
@@ -151,11 +216,17 @@ export function useChatbot() {
           messagesHistory: messages,
           tenantSlug: slug,
           visitorName,
+          sessionId,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
+        if (data.takenOverByHuman) {
+          setTakenOverByHuman(true);
+          if (data.agentName) setAgentName(data.agentName);
+        }
+
         const botMsg: Message = {
           id: (Date.now() + 1).toString(),
           role: "bot",
@@ -211,7 +282,12 @@ export function useChatbot() {
 
   const handleStartNew = () => {
     if (!isTenantReady || !tenant) return;
+    const newId = `session_${Date.now()}`;
+    setSessionId(newId);
+    if (typeof window !== "undefined") localStorage.setItem("bella_session_id", newId);
     setShowContinuePrompt(false);
+    setTakenOverByHuman(false);
+    setAgentName(null);
     setMessages([
       {
         id: "fresh-start",
@@ -238,6 +314,8 @@ export function useChatbot() {
     clearChatHistory();
     setShowContinuePrompt(false);
     setShowQuickActions(true);
+    setTakenOverByHuman(false);
+    setAgentName(null);
     setMessages([
       {
         id: "ended-chat",
@@ -261,6 +339,9 @@ export function useChatbot() {
     input,
     isTyping,
     showQuickActions,
+    takenOverByHuman,
+    agentName,
+    agentIsTyping,
     setInput,
     handleSend,
     handleQuickAction,
