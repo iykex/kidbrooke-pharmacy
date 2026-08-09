@@ -27,6 +27,7 @@ export default function FAQChatbot() {
     handleQuickAction,
     handleContinueChat,
     handleStartNew,
+    handleEndChat,
     toggleChat,
     toggleQuickActions,
     setIsOpen,
@@ -51,16 +52,17 @@ export default function FAQChatbot() {
       <div
         className={cn(
           "fixed bottom-14 lg:bottom-24 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[400px] max-h-[600px] rounded-2xl shadow-2xl transition-all duration-300 origin-bottom-right",
-          "bg-card border border-border",
+          "bg-white dark:bg-[#001d33] border border-gray-200 dark:border-[#1a4d6e]",
           "flex flex-col overflow-hidden",
           isOpen
             ? "scale-100 opacity-100 translate-y-0"
-            : "scale-95 opacity-0 translate-y-4 pointer-events-none",
+            : "scale-95 opacity-0 translate-y-4 pointer-events-none"
         )}
       >
         <ChatHeader
           visitorName={visitorName}
           onClose={() => setIsOpen(false)}
+          onEndChat={handleEndChat}
         />
 
         <ChatMessages

@@ -1,5 +1,6 @@
 import { useTenantContext } from "@/components/providers/tenant-provider";
 import {
+  clearChatHistory,
   findBestResponse,
   getChatHistory,
   getVisitorName,
@@ -22,7 +23,6 @@ export function useChatbot() {
   const [isTyping, setIsTyping] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseItem[]>([]);
-  /** Latest KB for async handlers — state captured before `await` is often still []. */
   const knowledgeBaseRef = useRef<KnowledgeBaseItem[]>(knowledgeBase);
 
   const tenantInitKeyRef = useRef<string | null>(null);
@@ -58,151 +58,142 @@ export function useChatbot() {
     if (tenantInitKeyRef.current === initKey) return;
     tenantInitKeyRef.current = initKey;
 
-    const cachedName = getVisitorName();
-    const chatHistory = getChatHistory();
-    const isIdle = isIdleForTooLong();
+    const existingName = getVisitorName();
+    const history = getChatHistory();
 
-    queueMicrotask(() => {
-      if (cachedName) {
-        setVisitorNameState(cachedName);
+    if (history && history.length > 0) {
+      if (isIdleForTooLong()) {
+        setShowContinuePrompt(true);
+        setMessages(history);
+      } else {
+        setMessages(history);
+        setShowQuickActions(false);
+      }
+      if (existingName) {
+        setVisitorNameState(existingName);
+      }
+    } else {
+      setIsAskingName(true);
+      setMessages([
+        {
+          id: "welcome-1",
+          role: "bot",
+          content: `Hello! 👋 Welcome to ${tenant.displayName}. I'm Bella, your AI pharmacy assistant. What's your name?`,
+          timestamp: new Date(),
+        },
+      ]);
+    }
+  }, [isTenantReady, tenant, slug]);
 
-        if (chatHistory && chatHistory.length > 1 && isIdle) {
-          setShowContinuePrompt(true);
-          setMessages([
-            {
-              id: "continue-prompt",
-              role: "bot",
-              content: `Welcome back, ${cachedName}! 👋 You have a previous conversation. Would you like to continue where you left off or start fresh?`,
-              timestamp: new Date(),
-            },
-          ]);
-        } else if (chatHistory && chatHistory.length > 1 && !isIdle) {
-          setMessages(chatHistory);
-        } else {
-          setMessages([
-            {
-              id: "welcome",
-              role: "bot",
-              content: `Welcome back, ${cachedName}! 👋 I'm Bella, your ${tenant.displayName} assistant. How can I help you today?`,
-              timestamp: new Date(),
-              actions: [
+  const handleSend = async (customMessage?: string) => {
+    const messageText = (customMessage || input).trim();
+    if (!messageText || isTyping) return;
+
+    if (!customMessage) setInput("");
+
+    if (isAskingName) {
+      setVisitorName(messageText);
+      setVisitorNameState(messageText);
+      setIsAskingName(false);
+
+      const updated = [
+        ...messages,
+        {
+          id: Date.now().toString(),
+          role: "user" as const,
+          content: messageText,
+          timestamp: new Date(),
+        },
+        {
+          id: (Date.now() + 1).toString(),
+          role: "bot" as const,
+          content: `Nice to meet you, ${messageText}! 😊 How can I help you today?`,
+          timestamp: new Date(),
+          actions: tenant
+            ? [
                 {
                   label: "Book Appointment",
                   href: tenant.bookAppointmentUrl,
-                  icon: "calendar",
+                  icon: "calendar" as const,
                 },
                 {
                   label: "Order Prescription",
                   href: tenant.orderPrescriptionsUrl,
-                  icon: "prescription",
+                  icon: "prescription" as const,
                 },
-              ],
-            },
-          ]);
-        }
-      } else {
-        setIsAskingName(true);
-        setMessages([
-          {
-            id: "ask-name",
-            role: "bot",
-            content: `Hello! 👋 I'm Bella, your ${tenant.displayName} assistant. Before we start, may I know your name?`,
-            timestamp: new Date(),
-          },
-        ]);
-      }
-    });
-  }, [isTenantReady, tenant, slug]);
-
-  useEffect(() => {
-    if (messages.length > 0 && !showContinuePrompt) {
-      saveChatHistory(messages);
+              ]
+            : undefined,
+        },
+      ];
+      setMessages(updated);
+      saveChatHistory(updated);
+      return;
     }
-  }, [messages, showContinuePrompt]);
 
-  const handleSend = async (messageText?: string) => {
-    if (!isTenantReady || !tenant) return;
-    const text = messageText || input.trim();
-    if (!text) return;
-
-    const userMessage: Message = {
+    const userMsg: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: text,
+      content: messageText,
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+    const newHistory = [...messages, userMsg];
+    setMessages(newHistory);
+    saveChatHistory(newHistory);
     setIsTyping(true);
-    setShowQuickActions(false);
-
-    await new Promise((resolve) =>
-      setTimeout(resolve, 800 + Math.random() * 700),
-    );
 
     try {
-      let response: { answer: string; actions?: ActionButton[] };
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: messageText,
+          messagesHistory: messages,
+          tenantSlug: slug,
+          visitorName,
+        }),
+      });
 
-      if (isAskingName) {
-        const name = text.trim();
-        setVisitorName(name);
-        setVisitorNameState(name);
-        setIsAskingName(false);
-        response = {
-          answer: `Nice to meet you, ${name}! 😊 I'm here to help you with any questions about ${tenant.displayName}. You can ask me about our services, opening hours, prescriptions, vaccinations, and more. What would you like to know?`,
-          actions: [
-            { label: "View Services", href: "/services", icon: "external" },
-            {
-              label: "Book Appointment",
-              href: tenant.bookAppointmentUrl,
-              icon: "calendar",
-            },
-          ],
-        };
-      } else {
-        try {
-          const apiRes = await fetch("/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              message: text,
-              messagesHistory: messages,
-              tenantSlug: slug,
-              visitorName: visitorName,
-            }),
-          });
-          if (apiRes.ok) {
-            response = await apiRes.json();
-          } else {
-            response = findBestResponse(text, knowledgeBaseRef.current, tenant?.phone);
-          }
-        } catch {
-          response = findBestResponse(text, knowledgeBaseRef.current, tenant?.phone);
-        }
-      }
-
-
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "bot",
-        content: response.answer,
-        timestamp: new Date(),
-        actions: response.actions,
-      };
-
-      setMessages((prev) => [...prev, botMessage]);
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
+      if (response.ok) {
+        const data = await response.json();
+        const botMsg: Message = {
           id: (Date.now() + 1).toString(),
           role: "bot",
-          content:
-            "Sorry — something went wrong while I was replying. Please try again, or use the quick questions or contact options.",
+          content: data.answer,
+          actions: data.actions,
           timestamp: new Date(),
-        },
-      ]);
+        };
+        const finalHistory = [...newHistory, botMsg];
+        setMessages(finalHistory);
+        saveChatHistory(finalHistory);
+        return;
+      }
+
+      const kb = knowledgeBaseRef.current;
+      const result = findBestResponse(messageText, kb, tenant?.phone);
+      const botMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "bot",
+        content: result.answer,
+        actions: result.actions,
+        timestamp: new Date(),
+      };
+      const finalHistory = [...newHistory, botMsg];
+      setMessages(finalHistory);
+      saveChatHistory(finalHistory);
+    } catch {
+      const kb = knowledgeBaseRef.current;
+      const result = findBestResponse(messageText, kb, tenant?.phone);
+      const botMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "bot",
+        content: result.answer,
+        actions: result.actions,
+        timestamp: new Date(),
+      };
+      const finalHistory = [...newHistory, botMsg];
+      setMessages(finalHistory);
+      saveChatHistory(finalHistory);
     } finally {
       setIsTyping(false);
     }
@@ -225,7 +216,7 @@ export function useChatbot() {
       {
         id: "fresh-start",
         role: "bot",
-        content: `Great, let's start fresh! 😊 How can I help you today, ${visitorName}?`,
+        content: `Great, let's start fresh! 😊 How can I help you today, ${visitorName || "friend"}?`,
         timestamp: new Date(),
         actions: [
           {
@@ -239,6 +230,20 @@ export function useChatbot() {
             icon: "prescription",
           },
         ],
+      },
+    ]);
+  };
+
+  const handleEndChat = () => {
+    clearChatHistory();
+    setShowContinuePrompt(false);
+    setShowQuickActions(true);
+    setMessages([
+      {
+        id: "ended-chat",
+        role: "bot",
+        content: `Chat ended. Thank you for visiting ${tenant?.displayName || "our pharmacy"}! If you need anything else, feel free to start a new chat below.`,
+        timestamp: new Date(),
       },
     ]);
   };
@@ -261,6 +266,7 @@ export function useChatbot() {
     handleQuickAction,
     handleContinueChat,
     handleStartNew,
+    handleEndChat,
     toggleChat,
     toggleQuickActions,
     setIsOpen,
