@@ -1,7 +1,17 @@
 import { NextResponse } from "next/server";
 import { getChatbotEntriesForTenant } from "@/lib/services/firestore/queries";
 import { db } from "@/lib/firebase/firebase-client";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 const EMERGENCY_POISON_KEYWORDS = [
   "poison",
@@ -207,25 +217,66 @@ async function logChatSession(
   userMessage: string,
   botReply: string,
   flaggedForPharmacist: boolean,
+  sessionId?: string,
 ) {
   try {
-    await addDoc(collection(db, "chatbot_sessions"), {
-      tenantSlug: slug,
-      visitorName: visitorName || "Website Visitor",
-      lastUserMessage: userMessage,
-      lastBotReply: botReply,
-      flaggedForPharmacist: !!flaggedForPharmacist,
-      updatedAt: serverTimestamp(),
-      createdAt: serverTimestamp(),
-    });
+    const docId = sessionId || `session_${slug}_${Date.now()}`;
+    await setDoc(
+      doc(db, "chatbot_sessions", docId),
+      {
+        id: docId,
+        tenantSlug: slug,
+        visitorName: visitorName || "Website Visitor",
+        lastUserMessage: userMessage,
+        lastBotReply: botReply,
+        flaggedForPharmacist: !!flaggedForPharmacist,
+        updatedAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+      },
+      { merge: true },
+    );
   } catch (err) {
     console.error("Failed to log chatbot session to Firestore:", err);
   }
 }
 
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const sessionId = searchParams.get("sessionId");
+    const slug = searchParams.get("tenantSlug") || "kidbrooke";
+
+    if (!sessionId) {
+      const q = query(
+        collection(db, "chatbot_sessions"),
+        where("tenantSlug", "==", slug),
+      );
+      const snap = await getDocs(q);
+      const sessions = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      return NextResponse.json({ sessions });
+    }
+
+    const snap = await getDoc(doc(db, "chatbot_sessions", sessionId));
+    if (!snap.exists()) {
+      return NextResponse.json({ takenOverByHuman: false, agentName: null, agentIsTyping: false });
+    }
+
+    const data = snap.data();
+    return NextResponse.json({
+      takenOverByHuman: !!data.takenOverByHuman,
+      agentName: data.agentName || null,
+      agentIsTyping: !!data.agentIsTyping,
+      messages: data.messages || [],
+      lastBotReply: data.lastBotReply,
+    });
+  } catch {
+    return NextResponse.json({ takenOverByHuman: false, agentName: null, agentIsTyping: false });
+  }
+}
+
 export async function POST(request: Request) {
   try {
-    const { message, messagesHistory, tenantSlug, visitorName } = await request.json();
+    const { message, messagesHistory, tenantSlug, visitorName, sessionId } = await request.json();
 
     if (!message || typeof message !== "string") {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
@@ -234,12 +285,51 @@ export async function POST(request: Request) {
     const slug = tenantSlug || "kidbrooke";
     const lowerMsg = message.toLowerCase();
 
+    // Check if session has been taken over by human
+    if (sessionId) {
+      try {
+        const snap = await getDoc(doc(db, "chatbot_sessions", sessionId));
+        if (snap.exists() && snap.data()?.takenOverByHuman) {
+          const sessionData = snap.data()!;
+          const agentName = sessionData.agentName || "Pharmacist";
+          const existingMessages = sessionData.messages || [];
+
+          const userMsg = {
+            id: String(Date.now()),
+            role: "user",
+            content: message,
+            timestamp: new Date().toISOString(),
+          };
+
+          await setDoc(
+            doc(db, "chatbot_sessions", sessionId),
+            {
+              lastUserMessage: message,
+              messages: [...existingMessages, userMsg],
+              visitorIsTyping: false,
+              updatedAt: serverTimestamp(),
+            },
+            { merge: true },
+          );
+
+          return NextResponse.json({
+            answer: `Your message has been received by ${agentName}. They will reply to you in a moment.`,
+            takenOverByHuman: true,
+            agentName,
+            actions: [],
+          });
+        }
+      } catch {
+        // Fallthrough
+      }
+    }
+
     // 1. POISON & URGENT EMERGENCY CHECK (HIGHEST PRIORITY)
     if (EMERGENCY_POISON_KEYWORDS.some((kw) => lowerMsg.includes(kw))) {
       const emergencyAnswer =
         "🚨 URGENT MEDICAL EMERGENCY NOTICE: If you or someone else has ingested poison, swallowed chemicals, taken an overdose, or is experiencing a life-threatening medical emergency (such as severe breathing difficulty or chest pain), PLEASE CALL 999 IMMEDIATELY for an emergency ambulance or go directly to the nearest hospital A&E department. You can also dial NHS 111 for urgent advice.";
 
-      logChatSession(slug, visitorName, message, emergencyAnswer, true).catch(() => {});
+      logChatSession(slug, visitorName, message, emergencyAnswer, true, sessionId).catch(() => {});
       return NextResponse.json({
         answer: emergencyAnswer,
         actions: [
@@ -255,7 +345,7 @@ export async function POST(request: Request) {
       const safetyAnswer =
         "I am Bella, your AI pharmacy assistant. I'm sorry to hear you're dealing with this. Please note that as an AI, I am strictly not permitted to prescribe medication, recommend dosages, or offer medical diagnoses. For any prescription requests or clinical advice, please consult our qualified pharmacist or a doctor.";
 
-      logChatSession(slug, visitorName, message, safetyAnswer, true).catch(() => {});
+      logChatSession(slug, visitorName, message, safetyAnswer, true, sessionId).catch(() => {});
       return NextResponse.json({
         answer: safetyAnswer,
         actions: [
@@ -313,7 +403,7 @@ STRICT PERSONA & EMERGENCY RULES:
           const data = await aiRes.json();
           const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text;
           if (botReply) {
-            logChatSession(slug, visitorName, message, botReply, false).catch(() => {});
+            logChatSession(slug, visitorName, message, botReply, false, sessionId).catch(() => {});
             return NextResponse.json({
               answer: botReply,
               actions: [
@@ -331,7 +421,7 @@ STRICT PERSONA & EMERGENCY RULES:
     // 5. Knowledge Base & Fallback Match
     for (const entry of kbEntries) {
       if (entry.keywords?.some((kw: string) => lowerMsg.includes(kw.toLowerCase()))) {
-        logChatSession(slug, visitorName, message, entry.answer, false).catch(() => {});
+        logChatSession(slug, visitorName, message, entry.answer, false, sessionId).catch(() => {});
         return NextResponse.json({
           answer: entry.answer,
           actions: entry.actions || [{ label: "View Services", href: "/services", icon: "external" }],
@@ -351,7 +441,7 @@ STRICT PERSONA & EMERGENCY RULES:
         "I understand you're looking for assistance! As your pharmacy assistant, I can help you with our opening hours, services, prescriptions, vaccinations, or connect you directly with our pharmacist. How can I best help you right now?";
     }
 
-    logChatSession(slug, visitorName, message, answer, false).catch(() => {});
+    logChatSession(slug, visitorName, message, answer, false, sessionId).catch(() => {});
     return NextResponse.json({
       answer,
       actions: [

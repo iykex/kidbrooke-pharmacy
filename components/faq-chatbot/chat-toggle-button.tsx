@@ -14,9 +14,9 @@ export function ChatToggleButton({ isOpen, onClick }: ChatToggleButtonProps) {
         track(TRACKING_EVENTS.chatToggleButton, "chatbot toggled");
       }}
       className={cn(
-        "fixed bottom-4  lg:bottom-6 right-6 z-50 flex items-center justify-center size-9 lg:size-10 rounded-full shadow-2xl transition-all duration-300 hover:scale-110",
-        "bg-linear-to-br from-primary to-primary/80 text-white",
-        "hover:shadow-primary/40 hover:shadow-xl ",
+        "fixed bottom-6 lg:bottom-8 right-6 lg:right-8 z-40 flex items-center justify-center size-11 lg:size-12 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 cursor-pointer",
+        "bg-gradient-to-br from-primary to-primary/90 text-white border-2 border-white/20 shadow-primary/30",
+        "hover:shadow-primary/50 hover:shadow-2xl",
         isOpen && "rotate-90"
       )}
       aria-label={isOpen ? "Close chat" : "Open chat"}
