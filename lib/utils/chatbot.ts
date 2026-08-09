@@ -82,7 +82,6 @@ function sharedPrefixLength(a: string, b: string): number {
   return i;
 }
 
-/** Match user text to a keyword (substring, word overlap, or shared prefix for e.g. located/location). */
 function keywordMatchesQuery(lowerQuery: string, rawKeyword: string): boolean {
   const kw = String(rawKeyword).toLowerCase();
   if (kw.length < 2) return false;
@@ -95,13 +94,39 @@ function keywordMatchesQuery(lowerQuery: string, rawKeyword: string): boolean {
   return false;
 }
 
-// Knowledge base search (entries loaded from Firestore at runtime)
 export function findBestResponse(
   query: string,
   knowledgeBase: KnowledgeBaseItem[],
   phone?: string,
 ): { answer: string; actions?: ActionButton[] } {
   const lowerQuery = query.toLowerCase();
+
+  const EMERGENCY_POISON_KEYWORDS = [
+    "poison",
+    "poisoning",
+    "poisoned",
+    "ingested poison",
+    "swallowed chemical",
+    "chemical exposure",
+    "toxic",
+    "toxin",
+    "overdose",
+    "overdosed",
+    "bleach",
+    "rat poison",
+    "swallowed battery",
+    "anaphylaxis",
+    "can't breathe",
+    "cannot breathe",
+    "chest pain",
+    "heart attack",
+    "stroke",
+    "unconscious",
+    "severe bleeding",
+    "seizure",
+    "choking",
+    "collapse",
+  ];
 
   const PRESCRIPTION_KEYWORDS = [
     "prescribe",
@@ -118,10 +143,87 @@ export function findBestResponse(
     "issue medicine",
   ];
 
+  const SENSITIVE_HEALTH_KEYWORDS = [
+    "abortion",
+    "termination",
+    "morning after pill",
+    "emergency contraception",
+    "ellaone",
+    "levonorgestrel",
+    "pregnancy test",
+    "pregnant",
+    "unplanned pregnancy",
+    "bpas",
+    "msi reproductive",
+    "sti",
+    "std",
+    "chlamydia",
+    "gonorrhea",
+    "thrush",
+    "herpes",
+    "hiv",
+    "pep",
+    "prep",
+    "sexual health",
+    "depression",
+    "anxiety",
+    "panic attack",
+    "mental health",
+    "crisis",
+    "samaritans",
+    "suicide",
+    "suicidal",
+    "self harm",
+  ];
+
+  const SYMPTOM_KEYWORDS = [
+    "headache",
+    "head ache",
+    "migraine",
+    "pain",
+    "painful",
+    "ache",
+    "aching",
+    "sore",
+    "soreness",
+    "fever",
+    "feverish",
+    "temperature",
+    "sick",
+    "unwell",
+    "stomach",
+    "cough",
+    "sore throat",
+    "flu",
+    "dizzy",
+    "dizziness",
+    "nausea",
+    "rash",
+    "injury",
+    "hurt",
+    "cramps",
+    "vomiting",
+    "feeling ill",
+    "not feeling well",
+    "issue",
+    "problem",
+  ];
+
+  if (EMERGENCY_POISON_KEYWORDS.some((kw) => lowerQuery.includes(kw))) {
+    return {
+      answer:
+        "🚨 URGENT MEDICAL EMERGENCY NOTICE: If you or someone else has ingested poison, swallowed chemicals, taken an overdose, or is experiencing a life-threatening medical emergency (such as severe breathing difficulty or chest pain), PLEASE CALL 999 IMMEDIATELY for an emergency ambulance or go directly to the nearest hospital A&E department. You can also dial NHS 111 for urgent advice.",
+      actions: [
+        { label: "Call 999 Emergency", href: "tel:999", icon: "phone" as const },
+        { label: "Call NHS 111", href: "tel:111", icon: "phone" as const },
+      ],
+    };
+  }
+
   if (PRESCRIPTION_KEYWORDS.some((kw) => lowerQuery.includes(kw))) {
     return {
       answer:
-        "I am Bella, your AI pharmacy assistant. ⚠️ Please note that as an AI, I am strictly not permitted to prescribe medication, recommend prescription dosages, or offer medical diagnoses. For any prescription inquiries or medical advice, please consult our qualified pharmacist or a doctor.",
+        "I am Bella, your AI pharmacy assistant. I'm sorry to hear you're dealing with this. Please note that as an AI, I am strictly not permitted to prescribe medication, recommend prescription dosages, or offer medical diagnoses. For any prescription requests or clinical advice, please consult our qualified pharmacist or a doctor.",
       actions: [
         ...(phone
           ? [{ label: "Call Pharmacist", href: `tel:${phone.replace(/\s+/g, "")}`, icon: "phone" as const }]
@@ -132,7 +234,6 @@ export function findBestResponse(
   }
 
   let bestMatch = { score: 0, answer: "", actions: undefined as ActionButton[] | undefined };
-
 
   for (const item of knowledgeBase) {
     const keywords = Array.isArray(item.keywords) ? item.keywords : [];
@@ -150,9 +251,36 @@ export function findBestResponse(
     return { answer: bestMatch.answer, actions: bestMatch.actions };
   }
 
+  if (SENSITIVE_HEALTH_KEYWORDS.some((kw) => lowerQuery.includes(kw))) {
+    return {
+      answer:
+        "Please rest assured that your privacy is completely protected with us. For emergency contraception (morning-after pill), confidential advice on pregnancy choices, or sexual health care, our pharmacy offers private consultation rooms. You can also access confidential UK services via BPAS (03457 30 40 30) or NHS 111. Please speak with our pharmacist directly for caring, non-judgmental support.",
+      actions: [
+        ...(phone
+          ? [{ label: "Speak to Pharmacist Privately", href: `tel:${phone.replace(/\s+/g, "")}`, icon: "phone" as const }]
+          : []),
+        { label: "Book Consultation", href: "/services", icon: "calendar" as const },
+      ],
+    };
+  }
+
+  if (SYMPTOM_KEYWORDS.some((kw) => lowerQuery.includes(kw))) {
+    return {
+      answer:
+        "I'm so sorry to hear you're dealing with that. Being unwell or uncomfortable is never pleasant. While as an AI assistant I cannot diagnose conditions or prescribe medication, our pharmacy team is here to support you. Please feel free to speak directly with our pharmacist for advice on over-the-counter remedies or book a consultation.",
+      actions: [
+        ...(phone
+          ? [{ label: "Call Pharmacist", href: `tel:${phone.replace(/\s+/g, "")}`, icon: "phone" as const }]
+          : []),
+        { label: "Book Appointment", href: "/services", icon: "calendar" as const },
+        { label: "View Services", href: "/services", icon: "external" as const },
+      ],
+    };
+  }
+
   return {
     answer:
-      "I'm not sure about that specific question, but I'd be happy to help! You can ask me about our opening hours, services, prescriptions, vaccinations, or contact information. Alternatively, please call us or visit us in store for personalized assistance.",
+      "I understand you're looking for assistance! As your pharmacy assistant, I'd be glad to help you with our opening hours, NHS & private services, prescription collection, vaccinations, or connecting you directly with our pharmacist. How can I best help you right now?",
     actions: [
       ...(phone
         ? [{ label: "Call Us", href: `tel:${phone.replace(/\s/g, "")}`, icon: "phone" as const }]
