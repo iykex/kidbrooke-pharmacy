@@ -7,14 +7,10 @@ import {
   ChevronRight,
   ShieldCheck,
   Syringe,
-  Sparkles,
   ArrowRight,
   CheckCircle2,
-  Clock,
-  CalendarCheck,
+  Quote,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   DEFAULT_HERO_CAMPAIGNS,
   HeroCampaignSlide,
@@ -52,7 +48,7 @@ export function HeroCampaignCarousel({
     }, 150);
   };
 
-  // Auto-advance every 6 seconds unless user is hovering
+  // Auto-advance every 6.5s unless hovering
   useEffect(() => {
     if (isPaused || campaigns.length <= 1) return;
     const interval = setInterval(() => {
@@ -61,7 +57,7 @@ export function HeroCampaignCarousel({
         setCurrentIndex((prev) => (prev + 1) % campaigns.length);
         setFadeAnim(true);
       }, 150);
-    }, 6000);
+    }, 6500);
     return () => clearInterval(interval);
   }, [isPaused, campaigns.length]);
 
@@ -79,133 +75,143 @@ export function HeroCampaignCarousel({
 
   return (
     <div
-      className="relative w-full max-w-[460px] mx-auto lg:max-w-none"
+      className="relative w-full max-w-[430px] mx-auto lg:max-w-none pt-4"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Dynamic ambient background glow */}
-      <div className="absolute -inset-1.5 rounded-[2.2rem] bg-gradient-to-tr from-amber-500/25 via-primary/30 to-blue-500/20 blur-2xl opacity-80 pointer-events-none" />
-
-      {/* Main Glassmorphic Card */}
-      <div className="relative rounded-[2rem] border border-white/25 bg-slate-950/65 backdrop-blur-2xl p-6 sm:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden">
-        {/* Subtle decorative inner corner reflection */}
-        <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-white/10 to-transparent rounded-full blur-2xl pointer-events-none" />
-
-        {/* Top Header Row */}
-        <div className="flex items-center justify-between gap-3 mb-5">
-          <Badge
-            variant="secondary"
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/20 text-white border border-white/25 backdrop-blur-md text-[11px] font-bold tracking-wider uppercase transition-colors"
-          >
-            {activeSlide.badgeVariant === "private" ? (
-              <ShieldCheck className="size-3.5 text-amber-300 shrink-0" />
-            ) : (
-              <Syringe className="size-3.5 text-emerald-400 shrink-0" />
-            )}
-            <span>{activeSlide.badge}</span>
-          </Badge>
-
-          {/* Pill Indicators with smooth expansion */}
-          <div className="flex items-center gap-1.5 bg-black/30 p-1.5 rounded-full border border-white/10 backdrop-blur-sm">
-            {campaigns.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleSlideChange(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  idx === currentIndex
-                    ? "w-6 bg-gradient-to-r from-amber-400 to-amber-300 shadow-[0_0_8px_rgba(251,191,36,0.6)]"
-                    : "w-2 bg-white/30 hover:bg-white/60"
-                }`}
-              />
-            ))}
+      {/* Soft floating paper drop shadow & tilt */}
+      <div className="relative rotate-[1.5deg] hover:rotate-0 transition-transform duration-500 ease-out">
+        {/* Realistic 3D White Push Pin at Top Right */}
+        <div className="absolute -top-3.5 right-6 z-30 pointer-events-none drop-shadow-[0_8px_10px_rgba(0,0,0,0.45)]">
+          <div className="relative flex items-center justify-center">
+            {/* Pin head (spherical 3D dome) */}
+            <div className="size-8 rounded-full bg-radial from-white via-slate-100 to-slate-300 border border-white/90 shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(0,0,0,0.25)] flex items-center justify-center">
+              {/* Highlight specular reflection */}
+              <div className="size-2 rounded-full bg-white/90 blur-[0.5px] -mt-1.5 -ml-1.5" />
+            </div>
+            {/* Pin pinhead collar */}
+            <div className="absolute -bottom-1 size-5 rounded-full bg-slate-300 shadow-md -z-10" />
+            {/* Cast shadow behind pin onto the note */}
+            <div className="absolute top-2 left-4 w-7 h-4 rounded-full bg-black/40 blur-xs -z-20 rotate-45" />
           </div>
         </div>
 
-        {/* Content Body with Fade Transition */}
-        <div
-          className={`space-y-4 transition-all duration-200 ${
-            fadeAnim ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
-          }`}
-        >
-          {/* Title and Subtitle */}
-          <div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
-              {activeSlide.title}
-            </h3>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="inline-block size-1.5 rounded-full bg-amber-400" />
-              <p className="text-xs sm:text-[13px] font-bold tracking-wider text-amber-300 uppercase">
-                {activeSlide.subtitle}
-              </p>
+        {/* Paper Note Body - Textured Royal Blue Canvas */}
+        <div className="relative rounded-2xl bg-[#1e60b8] text-white p-7 sm:p-8 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.6),0_2px_10px_rgba(0,0,0,0.3)] border-t border-l border-white/20 overflow-hidden">
+          {/* Subtle paper fiber texture overlay */}
+          <div
+            className="absolute inset-0 opacity-15 pointer-events-none mix-blend-overlay"
+            style={{
+              backgroundImage:
+                "radial-gradient(#ffffff 1px, transparent 1px), radial-gradient(#000000 1px, transparent 1px)",
+              backgroundSize: "8px 8px",
+              backgroundPosition: "0 0, 4px 4px",
+            }}
+          />
+
+          {/* Top Row: Quote mark & Carousel Indicators */}
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <Quote className="size-6 text-white/90 fill-white/80 rotate-180" />
+              <span className="text-[11px] font-bold uppercase tracking-wider text-white/80 bg-white/15 px-2.5 py-0.5 rounded-md border border-white/20">
+                {activeSlide.badge}
+              </span>
+            </div>
+
+            {/* Slide Dots / Pill tracker */}
+            <div className="flex items-center gap-1.5 bg-black/20 px-2.5 py-1.5 rounded-full border border-white/15">
+              {campaigns.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleSlideChange(idx)}
+                  aria-label={`Go to note ${idx + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    idx === currentIndex
+                      ? "w-5 bg-amber-300 shadow-[0_0_6px_rgba(252,211,77,0.8)]"
+                      : "w-2 bg-white/40 hover:bg-white/70"
+                  }`}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Description */}
-          <p className="text-xs sm:text-sm text-slate-200/90 leading-relaxed font-normal">
-            {activeSlide.description}
-          </p>
+          {/* Animated Content Card */}
+          <div
+            className={`space-y-4 transition-all duration-200 ${
+              fadeAnim ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
+            }`}
+          >
+            {/* Description quote paragraph */}
+            <p className="text-sm sm:text-base text-white/90 font-normal leading-relaxed italic">
+              {activeSlide.description}
+            </p>
 
-          {/* Clinical Highlights - Elevated Pills */}
-          <div className="grid gap-2 pt-1">
-            {activeSlide.highlights.slice(0, 2).map((item, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.07] border border-white/10 backdrop-blur-sm text-xs font-medium text-slate-200"
-              >
-                <div className="size-5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0 border border-emerald-400/30">
-                  <CheckCircle2 className="size-3.5 text-emerald-400" />
-                </div>
-                <span className="truncate">{item}</span>
+            {/* Big Headline with White Tape / Sticky Highlight Accent */}
+            <div className="space-y-2 pt-1">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+                {activeSlide.title}
+              </h3>
+
+              {/* White Tape / Marker Highlight Style Strip */}
+              <div className="inline-block relative">
+                <span className="relative z-10 block bg-white text-[#154b92] font-black text-xs sm:text-sm tracking-wide uppercase px-3 py-1 rounded-sm shadow-md rotate-[-0.8deg]">
+                  {activeSlide.subtitle}
+                </span>
               </div>
-            ))}
-          </div>
+            </div>
 
-          {/* Primary Action Button */}
-          <div className="pt-2">
-            <Button
-              asChild
-              className="w-full group relative overflow-hidden bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 hover:from-amber-300 hover:to-amber-200 text-slate-950 font-extrabold text-sm sm:text-base h-12 rounded-2xl shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] border border-amber-200/60 transition-all duration-300 hover:shadow-[0_12px_30px_-5px_rgba(245,158,11,0.6)] hover:scale-[1.01]"
-            >
+            {/* Hand-drawn style circular highlights */}
+            <div className="space-y-2 pt-1">
+              {activeSlide.highlights.slice(0, 2).map((item, i) => (
+                <div key={i} className="flex items-center gap-2 text-xs text-white/90 font-medium">
+                  {/* Subtle hand-drawn ring circle around bullet */}
+                  <span className="inline-flex items-center justify-center size-5 rounded-full border-2 border-white/60 text-[10px] font-bold text-amber-300 shrink-0">
+                    ✓
+                  </span>
+                  <span className="leading-snug">{item}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Action CTA Strip */}
+            <div className="pt-3">
               <Link
                 href={activeSlide.ctaHref}
                 onClick={() =>
                   track("hero_carousel_cta_click", activeSlide.ctaHref)
                 }
-                className="flex items-center justify-center gap-2"
+                className="group w-full flex items-center justify-between px-5 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 active:scale-[0.99] text-slate-950 font-extrabold text-sm sm:text-base shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200"
               >
                 <span>{activeSlide.ctaText}</span>
-                <ArrowRight className="size-4.5 transition-transform duration-300 group-hover:translate-x-1.5" />
+                <span className="size-7 rounded-full bg-slate-950 text-amber-400 flex items-center justify-center transition-transform group-hover:translate-x-1">
+                  <ArrowRight className="size-4" />
+                </span>
               </Link>
-            </Button>
-          </div>
-        </div>
-
-        {/* Bottom Bar: Meta & Navigation Buttons */}
-        <div className="mt-5 pt-3.5 border-t border-white/15 flex items-center justify-between text-xs text-slate-300">
-          <div className="flex items-center gap-2 text-slate-200/90 font-medium">
-            <div className="p-1 rounded-md bg-amber-400/20 text-amber-300">
-              <Sparkles className="size-3.5" />
             </div>
-            <span>Seasonal Priority Clinic</span>
           </div>
 
-          {/* Circular Navigation Buttons */}
-          <div className="flex items-center gap-1.5">
-            <button
-              onClick={handlePrev}
-              aria-label="Previous Campaign"
-              className="size-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center border border-white/15 transition-all"
-            >
-              <ChevronLeft className="size-4" />
-            </button>
-            <button
-              onClick={handleNext}
-              aria-label="Next Campaign"
-              className="size-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center border border-white/15 transition-all"
-            >
-              <ChevronRight className="size-4" />
-            </button>
+          {/* Bottom Footer Note Bar with Tenant Signoff & Arrows */}
+          <div className="mt-5 pt-3 border-t border-white/20 flex items-center justify-between text-xs text-white/80">
+            <span className="font-extrabold uppercase tracking-widest text-[11px] text-white/90">
+              {tenant?.displayName ? `${tenant.displayName.toUpperCase()} CLINIC` : "MECKAY HEALTH"}
+            </span>
+
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={handlePrev}
+                aria-label="Previous Note"
+                className="size-7 rounded-lg bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center transition-all"
+              >
+                <ChevronLeft className="size-4" />
+              </button>
+              <button
+                onClick={handleNext}
+                aria-label="Next Note"
+                className="size-7 rounded-lg bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center transition-all"
+              >
+                <ChevronRight className="size-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
