@@ -6,8 +6,10 @@ import { Calendar } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import NHSImageSrc from "@/public/ui/nhs.jpg";
 import { Badge } from "../ui/badge";
 import { track } from "@/lib/analytics/tracker";
+import { PfpConditionsSkeleton } from "@/components/shared/tenant-skeletons";
 
 export const ConditionsSection = () => {
   const { conditions, loading } = usePfpConditions();
@@ -15,10 +17,18 @@ export const ConditionsSection = () => {
   if (loading || conditions.length === 0) {
     return (
       <section className="space-y-14">
-        <WidthConstraint>
-          <p className="text-center text-muted-foreground py-12">
-            Loading conditions…
-          </p>
+        <WidthConstraint className="space-y-8">
+          <SectionHeader heading="Health Conditions" />
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <h2 className="text-card-title font-bold text-foreground">
+              Conditions We Can Help With
+            </h2>
+            <p className="text-gray-600 dark:text-white/60 max-w-md mx-auto">
+              Our Pharmacy First service can help you with a range of common
+              conditions without needing to see a GP.
+            </p>
+          </div>
+          <PfpConditionsSkeleton />
         </WidthConstraint>
       </section>
     );
@@ -42,9 +52,9 @@ export const ConditionsSection = () => {
           {conditions.map((condition) => (
             <div
               key={condition.serviceId}
-              className="pfp-condition-card bg-card rounded-3xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20 flex flex-col h-full max-w-md relative"
+              className="group bg-white dark:bg-[#003b5c] rounded-3xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20 flex flex-col h-full max-w-md relative"
             >
-              <Badge className="absolute top-4 right-4 z-20 bg-accent-foreground dark:bg-background/60 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+              <Badge className="absolute top-4 right-4 z-20 bg-[#005EB8] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
                 {condition.badge}
               </Badge>
               <div className="relative h-54 overflow-hidden">
@@ -54,7 +64,7 @@ export const ConditionsSection = () => {
                   alt={condition.title}
                   loading="lazy"
                   placeholder="blur"
-                  className="pfp-condition-image h-full w-full object-cover"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <h3 className="absolute bottom-4 left-4 drop-shadow-xs drop-shadow-black/90 text-card-title font-bold text-white z-20">
                   {condition.title}
@@ -62,15 +72,15 @@ export const ConditionsSection = () => {
               </div>
               <div className="p-6 grow flex flex-col">
                 <p className="mb-6 grow opacity-70">{condition.description}</p>
-                <Button className="w-fit mx-auto rounded-sm px-4" asChild>
+                <Button className="group w-fit mx-auto rounded-sm px-4">
                   <Link
                     href={condition.href}
                     onClick={() => {
                       track(condition.tracking, condition.href);
                     }}
-                    className="interactive-hover-arrow-link flex items-center"
+                    className="flex items-center"
                   >
-                    <Calendar className="interactive-hover-arrow-link-icon mr-2 size-4" />
+                    <Calendar className="mr-2 size-4 transition-transform group-hover:translate-x-1" />
                     Book your Appointment
                   </Link>
                 </Button>
@@ -78,27 +88,13 @@ export const ConditionsSection = () => {
             </div>
           ))}
         </div>
-        <div className="w-full bg-linear-to-r from-[#012574] to-[#01574d] py-12 px-8 flex items-center justify-center rounded-2xl">
-          <div className="flex items-center gap-2">
-            <div className="text-white font-black tracking-tighter">
-              <span className="text-[12rem] leading-none inline-block text-shadow-[4px_4px_8px_rgba(0,0,0,0.2)]">
-                NHS
-              </span>
-            </div>
-
-            <div className="text-white font-bold uppercase leading-tight ml-4">
-              <div className="text-[2.8rem] tracking-wide text-shadow-[4px_4px_8px_rgba(0,0,0,0.2)]">
-                NATIONAL
-              </div>
-              <div className="text-[2.8rem] tracking-wide text-shadow-[4px_4px_8px_rgba(0,0,0,0.2)]">
-                HEALTH
-              </div>
-              <div className="text-[2.8rem] tracking-wide text-shadow-[4px_4px_8px_rgba(0,0,0,0.2)]">
-                SERVICE
-              </div>
-            </div>
-          </div>
-        </div>
+        <Image
+          src={NHSImageSrc}
+          alt="NHS"
+          loading="lazy"
+          placeholder="blur"
+          className="w-full rounded-xl aspect-video "
+        />
       </WidthConstraint>
     </section>
   );

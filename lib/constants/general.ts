@@ -113,6 +113,8 @@ export const INTERNAL_LINKS = {
   homePage: "/",
   pharmacyFirstPage: "/pharmacy-first",
   servicesPage: "/services",
+  pharmaciesPage: "/pharmacies",
+  bookPage: "/book",
   aboutPage: "/about-us",
   contactPage: "/contact-us",
   termsAndConditionsPage: "/terms-conditions",
@@ -125,6 +127,7 @@ export const MENU_LINKS = [
   { label: "Home", href: INTERNAL_LINKS.homePage },
   { label: "Pharmacy First", href: INTERNAL_LINKS.pharmacyFirstPage },
   { label: "Services", href: INTERNAL_LINKS.servicesPage },
+  { label: "Pharmacies", href: INTERNAL_LINKS.pharmaciesPage },
   { label: "About", href: INTERNAL_LINKS.aboutPage },
   { label: "Contact", href: INTERNAL_LINKS.contactPage },
 ];
@@ -263,6 +266,7 @@ export const ABOUT_PAGE_BANNER_BUTTONS = [
 
 export const DARK_HERO_PAGES = [
   INTERNAL_LINKS.homePage,
+  INTERNAL_LINKS.aboutPage,
   INTERNAL_LINKS.contactPage,
 ];
 

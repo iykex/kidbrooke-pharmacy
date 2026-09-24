@@ -6,6 +6,7 @@ import { INTERNAL_LINKS } from "@/lib/constants/general";
 import WidthConstraint from "../shared/width-constraint";
 import { track } from "@/lib/analytics/tracker";
 import { iconForConditionId, type NhsPfpHomeCard } from "@/lib/utils/service-ui";
+import { HomePfpSkeleton } from "@/components/shared/tenant-skeletons";
 
 export function NHSPharmacyFirstSection({
   cards,
@@ -13,7 +14,7 @@ export function NHSPharmacyFirstSection({
   cards: NhsPfpHomeCard[];
 }) {
   return (
-    <section className="relative">
+    <section className="relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)/5_1px,transparent_1px),linear-gradient(to_bottom,var(--border)/5_1px,transparent_1px)] bg-size-[24px_24px]"></div>
 
@@ -48,64 +49,60 @@ export function NHSPharmacyFirstSection({
             <Button
               asChild
               size="lg"
-              className="section-header-primary-cta bg-primary text-primary-foreground font-semibold px-8 rounded-xl shadow-lg"
+              className="group bg-primary hover:bg-primary/90 text-white font-semibold px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <Link
                 href={INTERNAL_LINKS.pharmacyFirstPage}
-                className="interactive-hover-arrow-link flex items-center gap-2"
+                className="flex items-center gap-2"
               >
                 View All Conditions
-                <ArrowRight className="section-header-primary-cta-icon interactive-hover-arrow-link-icon size-4" />
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
           </div>
 
           {/* Services Grid */}
-          <div className="grid grid-cols-1 gap-6 py-4 sm:grid-cols-2 lg:grid-cols-4">
-            {cards.map((service, index) => {
-              const Icon = iconForConditionId(service.conditionId);
-              return (
-                <div
-                  key={index}
-                  className="interactive-hover-surface relative flex min-h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm dark:shadow-lg/30"
-                >
+          {cards.length === 0 ? (
+            <HomePfpSkeleton />
+          ) : (
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 py-4">
+              {cards.map((service, index) => {
+                const Icon = iconForConditionId(service.conditionId);
+                return (
                   <div
-                    aria-hidden
-                    className="interactive-hover-fill pointer-events-none absolute inset-0 origin-bottom scale-y-0 bg-primary/10 dark:bg-primary/20"
-                  />
-                  <div className="relative z-10 flex min-h-full flex-col justify-between p-6">
+                    key={index}
+                    className="flex flex-col justify-between group bg-white dark:bg-[#003b5c] rounded-2xl p-6 shadow-sm dark:shadow-lg/30 hover:shadow-lg dark:hover:shadow-lg/50 transition-all duration-300 hover:-translate-y-2 border border-gray-200 dark:border-[#1a4d6e]"
+                  >
                     {/* Icon */}
-                    <div>
-                      <div
-                        className={`interactive-hover-icon ${service.bgColor} mb-4 flex size-12 items-center justify-center rounded-xl shadow-sm`}
-                      >
-                        <Icon className={`size-6 ${service.color}`} />
-                      </div>
-
-                      {/* Content */}
-                      <h3 className="interactive-hover-title mb-3 text-lg font-bold text-gray-900 dark:text-white">
-                        {service.title}
-                      </h3>
-                      <p className="mb-5 line-clamp-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                        {service.description}
-                      </p>
+                    <div
+                      className={`${service.bgColor} size-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm`}
+                    >
+                      <Icon className={`size-6 ${service.color}`} />
                     </div>
+
+                    {/* Content */}
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-5 leading-relaxed line-clamp-2">
+                      {service.description}
+                    </p>
 
                     {/* Book Button */}
                     <Link
                       href={service.href}
                       onClick={() => track(service.tracking, service.href)}
-                      className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
+                      className="group/btn inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors mt-auto"
                     >
                       <Calendar className="size-4" />
                       Book Now
-                      <ArrowRight className="interactive-hover-surface-link-icon size-3" />
+                      <ArrowRight className="size-3 transition-transform group-hover/btn:translate-x-1" />
                     </Link>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
 
           {/* NHS Badge */}
           <div className="mt-10">

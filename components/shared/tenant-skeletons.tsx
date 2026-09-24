@@ -38,13 +38,6 @@ export function InfoBarRowSkeleton({
     };
   })();
 
-  /** Match info-bar `renderItem`: icon size-3 (12px) → sm:size-4 (16px); label hidden below sm so bars start compact */
-  const textBarClass = [
-    "w-[4.75rem] sm:w-32 md:w-40 lg:w-52",
-    "w-[5.25rem] sm:w-36 md:w-44",
-    "w-[6rem] sm:w-28 md:w-32",
-  ] as const;
-
   return (
     <div
       aria-hidden={ariaHidden || undefined}
@@ -54,7 +47,7 @@ export function InfoBarRowSkeleton({
         <div
           key={i}
           className={cn(
-            "flex min-w-0 shrink-0 items-center gap-1 sm:gap-2 rounded-md border px-1 py-0.5 sm:px-1.5 backdrop-blur-xl",
+            "flex shrink-0 items-center gap-1 sm:gap-2 rounded-md border px-1.5 py-0.5 backdrop-blur-xl",
             glassOnHero
               ? "border-white/20 bg-white/5"
               : "border-border/40 bg-background/40 dark:border-white/10 dark:bg-white/5"
@@ -62,27 +55,19 @@ export function InfoBarRowSkeleton({
         >
           <Skeleton
             circle
-            width={12}
-            height={12}
-            className="shrink-0 leading-none sm:!h-4 sm:!w-4"
+            width={14}
+            height={14}
+            className="shrink-0 leading-none"
             baseColor={baseColor}
             highlightColor={highlightColor}
           />
-          <div
-            className={cn(
-              "min-w-0 shrink",
-              textBarClass[i] ?? textBarClass[0]
-            )}
-          >
-            <Skeleton
-              height={12}
-              borderRadius={6}
-              width="100%"
-              className="!leading-none"
-              baseColor={baseColor}
-              highlightColor={highlightColor}
-            />
-          </div>
+          <Skeleton
+            width={i === 0 ? 160 : i === 1 ? 140 : 100}
+            height={12}
+            borderRadius={6}
+            baseColor={baseColor}
+            highlightColor={highlightColor}
+          />
         </div>
       ))}
     </div>
@@ -274,5 +259,70 @@ export function AppStoreDownloadButtonsSkeleton() {
 export function PrimaryCtaSkeleton({ className }: { className?: string }) {
   return (
     <Skeleton height={48} borderRadius={12} className={className ?? "!w-56"} />
+  );
+}
+
+/** Services Grid Skeleton when loading Firestore services */
+export function ServicesGridSkeleton() {
+  return (
+    <div className="grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div
+          key={i}
+          className="max-w-lg mx-auto w-full bg-background rounded-none rounded-tr-4xl rounded-bl-4xl overflow-hidden border border-border/40 shadow-sm p-4 space-y-4"
+        >
+          <Skeleton height={240} className="w-full !rounded-tr-3xl !rounded-bl-3xl" />
+          <div className="space-y-2 pt-2">
+            <Skeleton width="40%" height={14} />
+            <Skeleton width="80%" height={22} />
+            <Skeleton count={2} height={14} />
+          </div>
+          <div className="space-y-2 pt-2 border-t border-border/40">
+            <Skeleton width="90%" height={16} />
+            <Skeleton width="75%" height={16} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Pharmacy First Conditions Skeleton */
+export function PfpConditionsSkeleton() {
+  return (
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 pb-10">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div
+          key={i}
+          className="bg-white dark:bg-[#003b5c] rounded-3xl overflow-hidden shadow-sm flex flex-col h-full max-w-md border border-gray-100 dark:border-white/5"
+        >
+          <Skeleton height={216} className="w-full" />
+          <div className="p-6 grow flex flex-col space-y-4">
+            <Skeleton width="60%" height={20} />
+            <Skeleton count={2} height={14} />
+            <Skeleton height={40} width={180} borderRadius={6} className="mx-auto mt-auto" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Homepage Pharmacy First Section Skeleton */
+export function HomePfpSkeleton() {
+  return (
+    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 py-4">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div
+          key={i}
+          className="flex flex-col justify-between bg-white dark:bg-[#003b5c] rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-[#1a4d6e] space-y-4"
+        >
+          <Skeleton width={48} height={48} borderRadius={12} />
+          <Skeleton width="75%" height={20} />
+          <Skeleton count={2} height={14} />
+          <Skeleton width={100} height={18} className="mt-4" />
+        </div>
+      ))}
+    </div>
   );
 }

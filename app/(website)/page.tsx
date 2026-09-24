@@ -3,6 +3,7 @@
 import DownloadAppSection from "@/components/general/download-app-section";
 import KeyBenefits from "@/components/general/key-benefits";
 import Banner from "@/components/general/landing-page-banner";
+import CampaignBannerSection from "@/components/general/campaign-banner-section";
 import Menu from "@/components/navigation/navigation-menu";
 import NewsletterSection from "@/components/general/newsletter";
 import { OurProcessSection } from "@/components/general/our-process-section";
@@ -21,8 +22,9 @@ export default function LandingPage() {
       <header className="fixed top-0 w-full z-50">
         <Menu />
       </header>
-      <div className="min-w-0 space-y-20 sm:space-y-30 pb-30 w-full overflow-x-hidden">
+      <div className="overflow-hidden space-y-20 sm:space-y-30 pb-30 w-full">
         <Banner />
+        <CampaignBannerSection />
         <PharmacyServicesMarquee marketing={marketing} />
         <NHSPharmacyFirstSection cards={pfpCards} />
         <KeyBenefits

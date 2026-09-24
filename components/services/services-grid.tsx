@@ -4,6 +4,7 @@ import ServiceCard from "./service-card";
 import { SERVICE_CATEGORIES } from "@/lib/constants/general";
 import WidthConstraint from "../shared/width-constraint";
 import { useServicesList } from "@/hooks/use-services";
+import { ServicesGridSkeleton } from "@/components/shared/tenant-skeletons";
 
 export function ServicesGrid() {
   const { services, loading, error } = useServicesList();
@@ -12,9 +13,7 @@ export function ServicesGrid() {
     return (
       <section>
         <WidthConstraint>
-          <p className="text-center text-muted-foreground py-16">
-            Loading services…
-          </p>
+          <ServicesGridSkeleton />
         </WidthConstraint>
       </section>
     );
@@ -70,48 +69,46 @@ export function ServicesGrid() {
             </TabsList>
           </div>
 
-          {SERVICE_CATEGORIES.map((category) => (
-            <TabsContent key={category.id} value={category.id} className="mt-8">
-              {(() => {
-                const filtered = services.filter(
-                  (service) =>
-                    category.id === "all" || service.category === category.id,
-                );
-                if (filtered.length === 0) {
-                  return (
-                    <p className="py-10 text-center text-muted-foreground">
-                      No services available in this category yet.
-                    </p>
-                  );
-                }
-                return (
+          {SERVICE_CATEGORIES.map((category) => {
+            const filtered = services.filter(
+              (service) =>
+                category.id === "all" || service.category === category.id,
+            );
+
+            return (
+              <TabsContent key={category.id} value={category.id} className="mt-8">
+                {filtered.length === 0 ? (
+                  <p className="py-10 text-center text-muted-foreground">
+                    No services available in this category yet.
+                  </p>
+                ) : (
                   <div className="grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                     {filtered.map((service) => {
-                  const IconComponent = service.icon;
-                  return (
-                    <ServiceCard
-                      key={service.id}
-                      id={service.id}
-                      description={service.description}
-                      image={service.image}
-                      link={service.link}
-                      title={service.title}
-                      features={service.features}
-                      borderColor={service.borderColor}
-                      category={service.category}
-                      color={service.color}
-                      icon={IconComponent}
-                      tracking={service.tracking}
-                      fundingLabel={service.fundingLabel}
-                      providerLabel={service.providerLabel}
-                    />
-                  );
-                })}
+                      const IconComponent = service.icon;
+                      return (
+                        <ServiceCard
+                          key={service.id}
+                          id={service.id}
+                          description={service.description}
+                          image={service.image}
+                          link={service.link}
+                          title={service.title}
+                          features={service.features}
+                          borderColor={service.borderColor}
+                          category={service.category}
+                          color={service.color}
+                          icon={IconComponent}
+                          tracking={service.tracking}
+                          fundingLabel={service.fundingLabel}
+                          providerLabel={service.providerLabel}
+                        />
+                      );
+                    })}
                   </div>
-                );
-              })()}
-            </TabsContent>
-          ))}
+                )}
+              </TabsContent>
+            );
+          })}
         </Tabs>
       </WidthConstraint>
     </section>

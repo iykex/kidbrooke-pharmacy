@@ -92,155 +92,200 @@ function parseFirestoreDoc<T extends object>(
 }
 
 export async function getTenant(slug: TenantSlug): Promise<TenantDoc | null> {
-  const snap = await getDoc(doc(db, "tenants", slug));
-  if (!snap.exists()) return null;
-  return parseFirestoreDoc("tenants", snap.id, snap.data(), tenantDocSchema, {
-    attachId: true,
-  });
+  try {
+    const snap = await getDoc(doc(db, "tenants", slug));
+    if (!snap.exists()) return null;
+    return parseFirestoreDoc("tenants", snap.id, snap.data(), tenantDocSchema, {
+      attachId: true,
+    });
+  } catch (error) {
+    console.warn(`[Firestore Offline / Error] getTenant(${slug}):`, error);
+    return null;
+  }
 }
 
 export async function getServicesForTenant(
   slug: TenantSlug,
 ): Promise<ServiceDoc[]> {
-  const q = query(
-    collection(db, "services"),
-    where("tenantIds", "array-contains", slug),
-    where("published", "==", true),
-  );
-  const snap = await getDocs(q);
-  const rows: ServiceDoc[] = [];
-  snap.forEach((d) => {
-    rows.push(
-      parseFirestoreDoc("services", d.id, d.data(), serviceDocSchema, {
-        attachId: true,
-      }),
+  try {
+    const q = query(
+      collection(db, "services"),
+      where("tenantIds", "array-contains", slug),
+      where("published", "==", true),
     );
-  });
-  return rows.sort((a, b) => a.title.localeCompare(b.title));
+    const snap = await getDocs(q);
+    const rows: ServiceDoc[] = [];
+    snap.forEach((d) => {
+      rows.push(
+        parseFirestoreDoc("services", d.id, d.data(), serviceDocSchema, {
+          attachId: true,
+        }),
+      );
+    });
+    return rows.sort((a, b) => a.title.localeCompare(b.title));
+  } catch (error) {
+    console.warn(`[Firestore Offline / Error] getServicesForTenant(${slug}):`, error);
+    return [];
+  }
 }
 
 export async function getPharmacyFirstConditionsForTenant(
   slug: TenantSlug,
 ): Promise<PharmacyFirstConditionDoc[]> {
-  const q = query(
-    collection(db, "pharmacy_first_conditions"),
-    where("tenantIds", "array-contains", slug),
-    where("published", "==", true),
-  );
-  const snap = await getDocs(q);
-  const rows: PharmacyFirstConditionDoc[] = [];
-  snap.forEach((d) => {
-    rows.push(
-      parseFirestoreDoc(
-        "pharmacy_first_conditions",
-        d.id,
-        d.data(),
-        pharmacyFirstConditionDocSchema,
-        { attachId: true },
-      ),
+  try {
+    const q = query(
+      collection(db, "pharmacy_first_conditions"),
+      where("tenantIds", "array-contains", slug),
+      where("published", "==", true),
     );
-  });
-  return rows.sort((a, b) => a.title.localeCompare(b.title));
+    const snap = await getDocs(q);
+    const rows: PharmacyFirstConditionDoc[] = [];
+    snap.forEach((d) => {
+      rows.push(
+        parseFirestoreDoc(
+          "pharmacy_first_conditions",
+          d.id,
+          d.data(),
+          pharmacyFirstConditionDocSchema,
+          { attachId: true },
+        ),
+      );
+    });
+    return rows.sort((a, b) => a.title.localeCompare(b.title));
+  } catch (error) {
+    console.warn(`[Firestore Offline / Error] getPharmacyFirstConditionsForTenant(${slug}):`, error);
+    return [];
+  }
 }
 
 export async function getTestimonialsForTenant(
   slug: TenantSlug,
 ): Promise<TestimonialDoc[]> {
-  const q = query(
-    collection(db, "testimonials"),
-    where("tenantId", "==", slug),
-    where("published", "==", true),
-  );
-  const snap = await getDocs(q);
-  const rows: TestimonialDoc[] = [];
-  snap.forEach((d) => {
-    rows.push(
-      parseFirestoreDoc("testimonials", d.id, d.data(), testimonialDocSchema, {
-        attachId: true,
-      }),
+  try {
+    const q = query(
+      collection(db, "testimonials"),
+      where("tenantId", "==", slug),
+      where("published", "==", true),
     );
-  });
-  return rows.sort((a, b) =>
-    (a.id ?? "").localeCompare(b.id ?? ""),
-  );
+    const snap = await getDocs(q);
+    const rows: TestimonialDoc[] = [];
+    snap.forEach((d) => {
+      rows.push(
+        parseFirestoreDoc("testimonials", d.id, d.data(), testimonialDocSchema, {
+          attachId: true,
+        }),
+      );
+    });
+    return rows.sort((a, b) =>
+      (a.id ?? "").localeCompare(b.id ?? ""),
+    );
+  } catch (error) {
+    console.warn(`[Firestore Offline / Error] getTestimonialsForTenant(${slug}):`, error);
+    return [];
+  }
 }
 
 export async function getTeamMembersForTenant(
   slug: TenantSlug,
 ): Promise<TeamMemberDoc[]> {
-  const q = query(
-    collection(db, "team_members"),
-    where("tenantId", "==", slug),
-    where("published", "==", true),
-  );
-  const snap = await getDocs(q);
-  const rows: TeamMemberDoc[] = [];
-  snap.forEach((d) => {
-    rows.push(
-      parseFirestoreDoc("team_members", d.id, d.data(), teamMemberDocSchema, {
-        attachId: true,
-      }),
+  try {
+    const q = query(
+      collection(db, "team_members"),
+      where("tenantId", "==", slug),
+      where("published", "==", true),
     );
-  });
-  return rows.sort((a, b) => a.name.localeCompare(b.name));
+    const snap = await getDocs(q);
+    const rows: TeamMemberDoc[] = [];
+    snap.forEach((d) => {
+      rows.push(
+        parseFirestoreDoc("team_members", d.id, d.data(), teamMemberDocSchema, {
+          attachId: true,
+        }),
+      );
+    });
+    return rows.sort((a, b) => a.name.localeCompare(b.name));
+  } catch (error) {
+    console.warn(`[Firestore Offline / Error] getTeamMembersForTenant(${slug}):`, error);
+    return [];
+  }
 }
 
 export async function getFaqsForTenant(slug: TenantSlug): Promise<FaqDoc[]> {
-  const q = query(
-    collection(db, "faqs"),
-    where("tenantIds", "array-contains", slug),
-    where("published", "==", true),
-  );
-  const snap = await getDocs(q);
-  const rows: FaqDoc[] = [];
-  snap.forEach((d) => {
-    rows.push(parseFirestoreDoc("faqs", d.id, d.data(), faqDocSchema, { attachId: true }));
-  });
-  return rows.sort((a, b) => a.question.localeCompare(b.question));
+  try {
+    const q = query(
+      collection(db, "faqs"),
+      where("tenantIds", "array-contains", slug),
+      where("published", "==", true),
+    );
+    const snap = await getDocs(q);
+    const rows: FaqDoc[] = [];
+    snap.forEach((d) => {
+      rows.push(parseFirestoreDoc("faqs", d.id, d.data(), faqDocSchema, { attachId: true }));
+    });
+    return rows.sort((a, b) => a.question.localeCompare(b.question));
+  } catch (error) {
+    console.warn(`[Firestore Offline / Error] getFaqsForTenant(${slug}):`, error);
+    return [];
+  }
 }
 
 export async function getChatbotEntriesForTenant(
   slug: TenantSlug,
 ): Promise<ChatbotEntryDoc[]> {
-  const q = query(
-    collection(db, "chatbot_entries"),
-    where("tenantIds", "array-contains", slug),
-    where("published", "==", true),
-  );
-  const snap = await getDocs(q);
-  const rows: ChatbotEntryDoc[] = [];
-  snap.forEach((d) => {
-    rows.push(
-      parseFirestoreDoc("chatbot_entries", d.id, d.data(), chatbotEntryDocSchema, {
-        attachId: true,
-      }),
+  try {
+    const q = query(
+      collection(db, "chatbot_entries"),
+      where("tenantIds", "array-contains", slug),
+      where("published", "==", true),
     );
-  });
-  return rows.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+    const snap = await getDocs(q);
+    const rows: ChatbotEntryDoc[] = [];
+    snap.forEach((d) => {
+      rows.push(
+        parseFirestoreDoc("chatbot_entries", d.id, d.data(), chatbotEntryDocSchema, {
+          attachId: true,
+        }),
+      );
+    });
+    return rows.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+  } catch (error) {
+    console.warn(`[Firestore Offline / Error] getChatbotEntriesForTenant(${slug}):`, error);
+    return [];
+  }
 }
 
 export async function getMarketingBlocks(
   slug: TenantSlug,
 ): Promise<MarketingBlocksDoc | null> {
-  const snap = await getDoc(doc(db, "marketing_blocks", slug));
-  if (!snap.exists()) return null;
-  return parseFirestoreDoc(
-    "marketing_blocks",
-    snap.id,
-    snap.data(),
-    marketingBlocksDocSchema,
-  );
+  try {
+    const snap = await getDoc(doc(db, "marketing_blocks", slug));
+    if (!snap.exists()) return null;
+    return parseFirestoreDoc(
+      "marketing_blocks",
+      snap.id,
+      snap.data(),
+      marketingBlocksDocSchema,
+    );
+  } catch (error) {
+    console.warn(`[Firestore Offline / Error] getMarketingBlocks(${slug}):`, error);
+    return null;
+  }
 }
 
 export async function getLegalDocument(
   id: LegalDocumentId,
 ): Promise<LegalDocumentDoc | null> {
-  const snap = await getDoc(doc(db, "legal_documents", id));
-  if (!snap.exists()) return null;
-  return parseFirestoreDoc(
-    "legal_documents",
-    snap.id,
-    snap.data(),
-    legalDocumentDocSchema,
-  );
+  try {
+    const snap = await getDoc(doc(db, "legal_documents", id));
+    if (!snap.exists()) return null;
+    return parseFirestoreDoc(
+      "legal_documents",
+      snap.id,
+      snap.data(),
+      legalDocumentDocSchema,
+    );
+  } catch (error) {
+    console.warn(`[Firestore Offline / Error] getLegalDocument(${id}):`, error);
+    return null;
+  }
 }

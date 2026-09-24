@@ -1,11 +1,11 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   // Canonical site for sitemap + robots Sitemap: line. Set per deploy, e.g.
-  // NEXT_PUBLIC_SITE_URL=https://your-pharmacy.example pnpm build
+  // NEXT_PUBLIC_SITE_URL=https://www.kidbrookepharmacy.com pnpm build
   siteUrl:
     process.env.NEXT_PUBLIC_SITE_URL ??
     process.env.NEXT_PUBLIC_APP_URL ??
-    "https://belvederepharmacy.net",
+    "https://www.kidbrookepharmacy.com",
   generateRobotsTxt: true,
   exclude: ["/icon.png"],
   robotsTxtOptions: {
