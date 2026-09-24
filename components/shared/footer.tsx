@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { LEGAL_LINKS, MENU_LINKS } from "@/lib/constants/general";
 import WidthConstraint from "../shared/width-constraint";
@@ -7,120 +8,133 @@ import { useTenantContext } from "@/components/providers/tenant-provider";
 import { FooterSkeleton } from "@/components/shared/tenant-skeletons";
 import { footerContactIconLinks } from "@/lib/utils/footer-contact-links";
 import { formatAddressLines } from "@/lib/utils/format-tenant";
-import { useServicesList } from "@/hooks/use-services";
 import { externalLinkProps } from "@/lib/utils/external-link";
 
 export function Footer() {
   const { tenant, isTenantReady } = useTenantContext();
-  const { services } = useServicesList();
 
   if (!isTenantReady || !tenant) {
     return <FooterSkeleton />;
   }
 
   const contactIconLinks = footerContactIconLinks(tenant);
+  const addressLines = formatAddressLines(tenant);
+  const currentYear = new Date().getFullYear();
 
-  const contactLines = [
-    ...formatAddressLines(tenant),
-    tenant.phone,
-    tenant.email,
-  ];
+  const megaBrandName = (tenant.displayName || "PHARMACY").toUpperCase();
 
   return (
-    <WidthConstraint className="py-8 md:py-12 px-0">
-      <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1fr] text-white">
-        {/* Column 1: Logo and social */}
-        <div className="space-y-4">
-          <h3 className="font-semibold text-card-title mb-2">
-            {tenant.displayName}
-          </h3>
-          <p className="text-white/70 text-sm sm:max-w-xs">
-            Your trusted local pharmacy providing quality healthcare services to
-            the community.
-          </p>
-          <div className="flex space-x-4 pt-2">
-            {contactIconLinks.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  {...externalLinkProps(item.href)}
-                  onClick={() => track(item.tracking, item.href)}
-                  className="text-gray-600 hover:text-primary transition-colors"
-                >
-                  <Icon className="text-ring size-5" />
-                  <span className="sr-only">{item.label}</span>
-                </Link>
-              );
-            })}
+    <footer className="w-full bg-[#0a0d12] text-white pt-16 pb-6 overflow-hidden select-none border-t border-white/5">
+      <WidthConstraint className="space-y-16">
+        {/* Top 3-Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 items-start">
+          {/* Column 1: Navigation Links */}
+          <div className="space-y-3">
+            <nav aria-label="Footer Navigation">
+              <ul className="space-y-2.5">
+                {MENU_LINKS.map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      href={item.href}
+                      className="text-[15px] font-medium text-white/80 hover:text-white transition-colors duration-200 inline-block"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+
+          {/* Column 2: Center Follow Us / Contact Details & Social/Action Buttons */}
+          <div className="flex flex-col items-start md:items-center text-left md:text-center space-y-5">
+            <span className="text-[13px] font-medium text-white/50 tracking-wider uppercase">
+              Get in touch
+            </span>
+
+            <div className="space-y-1">
+              <a
+                href={`mailto:${tenant.email}`}
+                className="block text-[15px] font-medium text-white/90 hover:text-white transition-colors"
+              >
+                {tenant.email}
+              </a>
+              <a
+                href={`tel:${tenant.phone.replace(/\s/g, "")}`}
+                className="block text-[15px] font-medium text-white/70 hover:text-white transition-colors"
+              >
+                {tenant.phone}
+              </a>
+            </div>
+
+            {/* Icon Buttons in Rounded Containers matching image reference */}
+            <div className="flex items-center gap-3 pt-2">
+              {contactIconLinks.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    {...externalLinkProps(item.href)}
+                    onClick={() => track(item.tracking, item.href)}
+                    className="size-11 rounded-2xl bg-white/10 hover:bg-white/20 active:scale-95 flex items-center justify-center text-white/90 hover:text-white transition-all duration-200 border border-white/10 shadow-sm"
+                    title={item.label}
+                    aria-label={item.label}
+                  >
+                    <Icon className="size-5" />
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Column 3: Address */}
+          <div className="flex flex-col items-start md:items-end text-left md:text-right space-y-3">
+            <span className="text-[13px] font-medium text-white/50 tracking-wider uppercase">
+              Address
+            </span>
+            <address className="not-italic text-[15px] text-white/75 leading-relaxed space-y-1">
+              {addressLines.map((line, idx) => (
+                <span key={idx} className="block">
+                  {line}
+                </span>
+              ))}
+            </address>
           </div>
         </div>
 
-        {/* Column 2: Quick Links */}
-        <div className="space-y-4">
-          <h3 className="font-semibold text-card-title mb-2">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            {MENU_LINKS.map((item) => (
-              <li key={item.label}>
-                <Link href={item.href} className="text-ring hover:text-primary">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Divider / Secondary Legal Row */}
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[13px] text-white/50">
+          <p>
+            &copy; {currentYear} {tenant.displayName}. All Rights Reserved.
+          </p>
 
-        {/* Column 3: Services */}
-        <div className="space-y-4">
-          <h3 className="font-semibold text-card-title mb-2">Services</h3>
-          <ul className="space-y-2 text-sm">
-            {services.slice(0, 5).map((service) => (
-              <li key={service.title}>
-                <Link
-                  href={service.link}
-                  {...externalLinkProps(service.link)}
-                  onClick={() => track(service.tracking, service.link)}
-                  className="text-ring hover:text-primary"
-                >
-                  {service.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Column 4: Contact Us */}
-        <div className="space-y-4">
-          <h3 className="font-bold text-lg mb-2">Contact Us</h3>
-          <address className="not-italic text-white/70 space-y-2 text-sm">
-            {contactLines.map((line) => (
-              <p key={line}>{line}</p>
-            ))}
-          </address>
-        </div>
-      </div>
-
-      {/* Bottom section with copyright and links */}
-      <div className="border-t mt-8 pt-6 flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center">
-        <p className="text-xs text-white/70">
-          &copy; {new Date().getFullYear()} {tenant.displayName}. All rights
-          reserved.
-        </p>
-        <div className="flex flex-wrap gap-4">
-          {LEGAL_LINKS.map((item) => {
-            return (
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+            {LEGAL_LINKS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-xs text-ring hover:text-primary"
+                className="hover:text-white/90 transition-colors"
               >
                 {item.label}
               </Link>
-            );
-          })}
+            ))}
+          </div>
+
+          <div className="hidden lg:block text-xs text-white/40">
+            NHS Contracted Healthcare Provider
+          </div>
         </div>
-      </div>
-    </WidthConstraint>
+
+        {/* Giant Monolithic Hero Brand Typography across the base */}
+        <div className="pt-4 pb-2 w-full flex items-center justify-center select-none overflow-hidden pointer-events-none">
+          <div className="flex items-center justify-center w-full">
+            <span className="text-center font-extrabold tracking-tighter text-white uppercase text-[clamp(2.75rem,11vw,10.5rem)] leading-none select-none font-sans drop-shadow-2xl">
+              {megaBrandName}
+            </span>
+          </div>
+        </div>
+      </WidthConstraint>
+    </footer>
   );
 }

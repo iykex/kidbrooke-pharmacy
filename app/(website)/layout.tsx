@@ -30,7 +30,7 @@ export default async function RootLayout({
   const rootJsonLd = buildRootLayoutJsonLd(tenant, siteUrl);
 
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.className} ${plusJakartaSans.variable} antialiased`}
       >
@@ -45,9 +45,7 @@ export default async function RootLayout({
               <JsonLd data={rootJsonLd} />
               <PageTracker>
                 <main className="dashed-grid-bg min-h-screen">{children}</main>
-                <footer className="w-full bg-foreground dark:bg-background">
-                  <Footer />
-                </footer>
+                <Footer />
 
                 <FAQChatbot />
 
