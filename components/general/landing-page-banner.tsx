@@ -1,19 +1,16 @@
 import WidthConstraint from "@/components/shared/width-constraint";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, BadgeCheckIcon, Download } from "lucide-react";
+import { ArrowRight, BadgeCheckIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import bannerImage from "@/public/ui/home-banner.png";
 import { track } from "@/lib/analytics/tracker";
-import { buildAppStoreLinks } from "@/lib/utils/app-store-links";
 import { TRACKING_EVENTS } from "@/lib/constants/general";
 import { useTenantContext } from "@/components/providers/tenant-provider";
-import {
-  AppStoreCompactListSkeleton,
-  BannerHeroActionsSkeleton,
-} from "@/components/shared/tenant-skeletons";
+import { BannerHeroActionsSkeleton } from "@/components/shared/tenant-skeletons";
 import { externalLinkProps } from "@/lib/utils/external-link";
+import { HeroCampaignCarousel } from "./hero-campaign-carousel";
 
 export default function Banner() {
   const { tenant, isTenantReady } = useTenantContext();
@@ -39,7 +36,7 @@ export default function Banner() {
       : null;
 
   return (
-    <section className="h-screen overflow-hidden relative pt-20">
+    <section className="min-h-screen lg:h-screen overflow-hidden relative pt-24 pb-12 lg:py-0 flex items-center">
       {/* Background Image with CDN optimization */}
       <Image
         src={bannerImage}
@@ -53,15 +50,16 @@ export default function Banner() {
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-linear-to-r from-[#001a33]/95 via-[#001a33]/85 to-[#001a33]/50 dark:from-[#001122]/95 dark:via-[#001122]/85 dark:to-[#001122]/40" />
+
       {/* Content */}
       <div className="relative w-full h-full flex items-center">
         <WidthConstraint>
-          <div className="grid lg:grid-cols-5 gap-8 items-center">
-            {/* Left Content - Takes 3 columns */}
-            <div className="lg:col-span-3 space-y-8">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            {/* Left Content - Takes 7 columns */}
+            <div className="lg:col-span-7 space-y-6 sm:space-y-8">
               <Badge
                 variant="secondary"
-                className="border border-white/40 bg-[#002f4b]/90 px-5 py-2 text-base font-bold text-white shadow-sm backdrop-blur-sm sm:text-lg"
+                className="border border-white/40 bg-[#002f4b]/90 px-5 py-2 text-sm sm:text-base font-bold text-white shadow-sm backdrop-blur-sm"
               >
                 <BadgeCheckIcon className="size-4 mr-2 text-amber-300" />
                 NHS & Private Healthcare Services
@@ -111,72 +109,9 @@ export default function Banner() {
               </div>
             </div>
 
-            {/* Right Side - Download App Section (Desktop Only) - Takes 2 columns */}
-            <div className="hidden lg:flex lg:col-span-2 justify-center items-center">
-              <div className="relative">
-                {/* Pulsing ring animation */}
-                <div className="absolute -inset-3 animate-ping-slow rounded-3xl bg-primary/20" />
-                <div className="absolute -inset-6 animate-pulse rounded-3xl bg-primary/10" />
-
-                {/* App Download Card */}
-                <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 w-72 hover:bg-white/15 transition-all duration-500 hover:scale-105">
-                  {/* Floating download icon */}
-                  <div className="absolute -top-5 -right-5 p-3 bg-primary rounded-xl shadow-lg shadow-primary/40 animate-bounce-slow">
-                    <Download className="size-6 text-white" />
-                  </div>
-
-                  <div className="space-y-5">
-                    <div className="space-y-2">
-                      <p className="text-primary font-semibold text-xs uppercase tracking-wider">
-                        Mobile App
-                      </p>
-                      <h3 className="text-xl font-bold text-white">
-                        Download Our App
-                      </h3>
-                      <p className="text-white/70 text-sm leading-relaxed">
-                        Manage prescriptions & book appointments on the go.
-                      </p>
-                    </div>
-
-                    {/* App Store Buttons */}
-                    <div className="flex flex-col gap-2">
-                      {isTenantReady && tenant ? (
-                        buildAppStoreLinks(tenant).map((store) => (
-                          <Link
-                            key={store.name}
-                            href={store.href}
-                            {...externalLinkProps(store.href)}
-                            onClick={() => {
-                              track(store.tracking, store.href);
-                            }}
-                            className="group flex items-center gap-3 bg-white/10 hover:bg-white/20 rounded-xl p-2.5 transition-all duration-300"
-                          >
-                            <Image
-                              src={store.image}
-                              alt={store.name}
-                              width={28}
-                              height={28}
-                              className="rounded-md"
-                              loading="lazy"
-                            />
-                            <div className="flex-1">
-                              <p className="text-[10px] text-white/60">
-                                {store.label}
-                              </p>
-                              <p className="text-xs font-semibold text-white">
-                                {store.platform}
-                              </p>
-                            </div>
-                            <ArrowRight className="size-3 text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white" />
-                          </Link>
-                        ))
-                      ) : (
-                        <AppStoreCompactListSkeleton />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Right Side - Dynamic Hero Campaign Carousel - Takes 5 columns */}
+            <div className="lg:col-span-5 w-full flex justify-center items-center">
+              <HeroCampaignCarousel />
             </div>
           </div>
         </WidthConstraint>
